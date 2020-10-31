@@ -12,8 +12,9 @@
 
 body {
     background-image: url(./img/background.png);
-    background-size: cover;
+    background-size: contain;
     background-color: #D7EEAA;
+    background-repeat: no-repeat;
 
     margin: 0;
     padding: 0;
@@ -57,23 +58,26 @@ div {
     background-position-x: right;
     background-position-y: top;
     background-repeat: no-repeat;
-    display: flex;
-    flex-flow: row-reverse;
+    /* display: flex;
+    flex-flow: row-reverse; */
 }
 
 main
 {
-
-    padding: 2em;
+    /* flex: 1 1 auto; */
+    padding-top: 2em;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 header
 {
-    padding-top: 20%;
+    float: right;
+    padding-top: 30%;
 }
 
 .intro {
-    width: 70%;
+    padding-right: 25%;
 }
 
 h3 {

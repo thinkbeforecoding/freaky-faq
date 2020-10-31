@@ -138,11 +138,11 @@ let fenceEn =
     { Title = "Fence"
       Qs = [
         { Q = [ Html.text "No fence on the border of my field?" ]
-          A = [ Html.text "Exactly, fences are useless on the border (as well as inside) your field (except for fallow lands of course!). Besides, as soon as you take over plots, the fence becomes the border and is removed."] }
+          A = [ Html.text "Exactly, fences are useless on the border (as well as inside) your field (except for fallow lands of course!). Besides, as soon as you take over plots, the fence becomes the border and is therefore removed."] }
         { Q = [ Html.text "What should I do when I have no fence left?" ]
           A = [ Html.text "There are officially 24 fences max (20 for 3 or 4 players). Beyond that, you cannot pull more fences. You have to go back and find a shorter path. But you can, if you wish and decide before starting the game, play with a (virtually) infinite number of fences, like on BoardGameArena."] }
         { Q = [ Html.text "When I have only 1 or 2 fences behind me, is the starting point protected?" ]
-          A = [ Html.text "Yes, Fence protection (2 fences on 3 crossroads) also protect the starting point if included, which is always the case when you have 1 or 2 fences." ] }
+          A = [ Html.text "Yes, Fence protection (2 fences on 3 crossroads) also protects the starting point if included, which is always the case when you have 1 or 2 fences." ] }
         { Q = [ Html.text "What if I pull a fence all around my field and connect it back to itself before going back to my field?"]
           A = [ Html.text "It's like for a simple loop, the part that makes a loop is removed. There is no annexation."]}
         { Q = [ Html.text "Help! An opponent took the plot where my fence was connected! My fence is now dangling!" ]
@@ -181,7 +181,7 @@ let moveEn =
             A = [ Html.text "All moves are mandatory! However you can go back. Si, if you have for instance 5 moves, you can virtually make 1 or 3 moves, but not 2 or 4."]}
           { Q = [ Html.text "Can I move inside (or on the border of) my field?"]
             A = [ Html.text "Yes, you just don't pull fences. Place fences only when you get out."]}
-          { Q = [ Html.text "What if you repeat endlessly the same moves and nobody wants to concede?"]
+          { Q = [ Html.text "What if we repeat endlessly the same moves and nobody wants to concede?"]
             A = [ Html.text "Like in chess, when a position is repeated 3 times, the game ends in a tie. This rule is called tie by repetition."] }
           { Q = [ Html.text "Ok, moves are mandatory. But what if no move is possible?" ]
             A = [ Html.text "Right, it can happen that no move is possible. When you're blocked by: a hay bale, a protected fence, an opponent's tractor… Then your moves are lost and you stay where you are." ]}
@@ -214,8 +214,8 @@ let powerlessEn =
           { Q = [ Html.text "How can I go back in my field when the opponent's fence is on the way?"]
             A = [ Html.text "When powerless, you cannot cut opponents' fences, but you can cross or stay on them, except for the last 2 protected fences behind the opponent's tractors. You can also go back instantly using an Helicopter."
                   Html.br []
-                  Html.text "Remark: as soon as you reach your field, you can cut opponents' fence, hence, when you reconnect to your field at a crossroad occupied by an opponent's fence, it's cut instantly."] }
-          { Q = [ Html.text "What happens when the game ends just when my fence has been cut?"]
+                  Html.text "Remark: as soon as you reach your field, you can cut opponents' fence again, hence, when you reconnect to your field at a crossroad occupied by an opponent's fence, it's cut instantly."] }
+          { Q = [ Html.text "What happens when the game ends just after my fence has been cut?"]
             A = [ Html.text "Excellent question! When your fence is cut, you're most often disconnected from your field. So, you're momentarily without a main field (see Fallow land). Now, the score is at all time equal to the size of the main field, which means: "
                   Html.strong "ZERO"
                   Html.text "! Be careful, this is a way for a player that has a lower score to win on a nasty trick."] }
@@ -230,7 +230,7 @@ let conceptsEn =
     { Title = "Concepts"
       Qs = [
           { Q = [ Html.text "The common plot stack for 2 players, How does it work?"]
-            A = [ Html.text "In a 2 players game, you share a single stack of (reversible) plots. There is a communicating vessels mechanism: annexed empty plots lead both players nearer the end of the game."] }
+            A = [ Html.text "In a 2 players game, you share a single stack of (reversible) plots. There is a communicating vessels mechanism: annexing empty plots leads BOTH players nearer the end of the game."] }
       ] }
 let rare =
     { Title = "Cas rares"
@@ -244,9 +244,9 @@ let rareEn =
     { Title = "Rares cases"
       Qs = [
           { Q = [ Html.text "What happens? I'm INSIDE one of my fallow land with a fence that starts from my main field."]
-            A = [ Html.text "Ah! This is an interesting case. Actually, the fallow land still belongs to you, but is useless as long as you did not take back the plots that connect it to your main field. It is inactive and behaves for you as an empty plot. You can move on the border or inside if you want. This is the only case where you can have a fence touching your own plots. Whatever happens, you'll have to go back in contact to your main field to finish an annexation."] }
-          { Q = [ Html.text "Even more involved: what if my fence goes through my fallow land and an opponent cuts it? Can I keep a part of my fence that starts from the fallow land (that becomes a main field in the process)?"]
-            A = [ Html.text "No, the fence is cut, it disappears  totally. It can lead to a main field/fallow land change, but the fence is lost anyway."] }
+            A = [ Html.text "Ah! This is an interesting case. Actually, the fallow land still belongs to you, but is useless as long as you did not take back the plots that connect it to your main field. It is inactive and behaves for you as an empty plot. You can move on the border or inside if you want. This is the only case where you can have a fence bordering your own plots. Whatever happens, you'll have to go back in contact to your main field to finish an annexation."] }
+          { Q = [ Html.text "Even more involved: what if my fence goes through my fallow land and an opponent cuts it? Can I keep a part of my fence that now starts from the fallow land (that becomes a main field in the process)?"]
+            A = [ Html.text "No, the fence is cut, it disappears  totally. It can lead to a main field/fallow land switch, but the fence is lost anyway."] }
       ] }
 
 let card (name: string) =
@@ -292,14 +292,14 @@ let bonusEn =
       Qs = [
           { Q = [ Html.text "Can I play a bonus card as soon as I draw it?"]
             A = [ Html.text "Yes."] }
-          { Q = [ Html.text "Can I play 2 "; card "Hay Bales"; Html.text " on the same path?"]
+          { Q = [ Html.text "Can I place 2 "; card "Hay Bales"; Html.text " on the same path?"]
             A = [ Html.text "No."] }
           { Q = [ Html.text "Can I use 2, or 3 "; card "Helicopters"; Html.text " in a single turn?"]
             A = [ Html.text "As much as you wish. And combined with other bonus cards if you want."] }
-          { Q = [ Html.text "Does an "; card "Helicopter"; Html.text " move cost a move?"]
+          { Q = [ Html.text "Does an "; card "Helicopter"; Html.text " move cost one standard move?"]
             A = [ Html.text "No, it's free." ]}
           { Q = [ Html.text "Can I cross a fence (without cutting) just after an "; card  "Helicopter" ; Html.text " card?"]
-            A = [ Html.text "No, after an Helicopter, you can assume that opponents fences are indestructible and uncrossable on their full length until the end of the turn."] }
+            A = [ Html.text "No, after an Helicopter, you can assume that opponents fences are indestructible and uncrossable on their full length until the end of your turn."] }
           { Q = [ Html.text "Does the "; card "High Voltage"; Html.text " protect also the starting point of my fence?"]
             A = [ Html.text "Yes. But there is still a way to cut it: when an opponent takes the plot where your fence starts."] }
           { Q = [ Html.text "I don't understand well which plots can be taken with a "; card "Bribe"; Html.text " card?"]
@@ -314,7 +314,7 @@ let bonusEn =
                   Html.text "By “immediate effect”, we mean when the Bribe is used to take directly the last plot needed to win, this is forbidden. However, if the Bribe is used to take a plot that closes a fence, which then causes an annexation which ends the game, the Bribe did not cause the end of the game by immediate effect. There were intermediate effects, thus the Bribe is allowed."
                   ] }
           { Q = [ Html.text "Does the "; card "Watchdog"; Html.text " protect fallow lands? And does it protect against Bribe?"]
-            A = [ Html.text "Yes and yes."] }
+            A = [ Html.text "Yes and yes. Good dog."] }
       ] }
 
 let crazyBonus =
@@ -330,7 +330,7 @@ let crazyBonusEn =
   { Title = "Crazy Bonus"
     Qs = 
       [
-      { Q = [Html.text "Can I play the hay bale for a "; card "Blockade"; Html.text " on a crossroad on the border of the board\xa0?"]
+      { Q = [Html.text "Can I place the hay bale for a "; card "Blockade"; Html.text " on a crossroad on the border of the board\xa0?"]
         A = [Html.text "Yes, wherever you want, even the border. It's even allowed to lock an opponent, it's for one turn only!" ]}
     ]
   }
@@ -374,7 +374,7 @@ let cowEn =
     { Title = "Mad Cow mode"
       Qs = [
           { Q = [ Html.text "Is there a limited number of plots for the Mad Cow mode?"]
-            A = [ Html.text "Now. It's not a problem since it's really hard to reach. But if it happens to you, use plots of other colors to end the game (and send us your score, it should be impressive!)."] }
+            A = [ Html.text "No. It's not a problem since it's really hard to reach. But if it happens to you, use plots of other colors to end the game (and send us your score, it should be impressive!)."] }
           { Q = [ Html.text "I didn't really get how the Mad Cow places their Hay Bales."]
             A = [ Html.text "Here is a picture to help you, it should make it more obvious."
                   Html.figure [
@@ -401,7 +401,7 @@ let team =
     prop.className "variant"
     prop.children [
       Html.h2 "2 contre 2"
-      Html.p "À 4 joueurs, vous pouvez jouer Rouge et Bleu contre Jaune et Violet. Faites la même mise en place que pour 2 joueurs. Les partenaires démarrent de la même parcelle et jouent avec la même couleur de clôtures et de parcelles\xa0: les Rouge contre les Jaune. Jouez en alternant\xa0: Rouge→Jaune→Bleu→Violet→… Les règles normales s’appliquent avec quelques précisions\xa0:"
+      Html.p "À 4 joueurs, vous pouvez jouer Rouge et Jaune contre Bleu et Violet. Faites la même mise en place que pour 2 joueurs. Les partenaires démarrent de la même parcelle et jouent avec la même couleur de clôtures et de parcelles\xa0: les Rouge contre les Bleu. Jouez en alternant\xa0: Rouge→Bleu→Jaune→Violet→… Les règles normales s’appliquent avec quelques précisions\xa0:"
       Html.p [ Html.strong "Annexion"; Html.text ". Lorsque vous touchez la clôture de votre partenaire, vous réalisez une annexion “en équipe” des cases entourées par votre champ et les deux clôtures. Enlevez seulement les portions de clôture qui ne servent plus."]
       Html.p [ Html.strong "Clôture"; Html.text ". La protection de clôture n’affecte pas les partenaires entre eux. Cependant il est toujours interdit de mettre deux tracteurs sur le même croisement, mais aussi de se déplacer le long d’une clôture de son partenaire si ce déplacement entraîne normalement la pose d’une clôture à soi." ]
       Html.p [ Html.strong "Bonus"; Html.text ". Les partenaires mettent leurs bonus en commun, la limite de 6 s’applique par équipe." ]
@@ -414,7 +414,7 @@ let teamEn =
     prop.className "variant"
     prop.children [
       Html.h2 "2 VS 2"
-      Html.p "With 4 players, you can play Red and Blue against Yellow and Purple. Use the same setup as for 2 players. Partners start from the same plot and play with the same plot and fence color: Red vs Yellow. Play alternatively: Red→Yellow→Blue→Purple→… Standard rules apply with a few precisions:"
+      Html.p "With 4 players, you can play Red and Yellow against Blue and Purple. Use the same setup as for 2 players. Partners start from the same plot and play with the same plot and fence color: Red vs Blue. Play alternatively: Red→Blue→Yellow→Purple→… Standard rules apply with a few precisions:"
       Html.p [ Html.strong "Annexation"; Html.text ". When you touch your partner's fence, you make a “team” annexation of the plots surrounded by your field and the two fences. Remove only part of the fences that are on the border of the new field."]
       Html.p [ Html.strong "Fence"; Html.text ". Fence protection doesn't apply between partners. However it's still forbidden to place two tractors on the same crossroad. It is also forbidden to move along a partner fence if the move should normally pull a fence for you." ]
       Html.p [ Html.strong "Bonus"; Html.text ". Partners share their bonus. The limit of 6 applies to the team." ]
@@ -447,7 +447,7 @@ let river =
     prop.className "variant"
     prop.children [
       Html.h2 "Rivière de Bonus"
-      Html.p "Piochez 5 bonus et mettez-les face visible à côté de la pioche. Chaque fois que vous récoltez un bonus, choisissez parmi les 5, et remplacez-le immédiatement pour compléter la rivière de Bonus."
+      Html.p "Piochez 5 bonus et mettez-les face visible à côté de la pioche. Chaque fois que vous récoltez des bonus, choisissez parmi les 5, et remplacez-les ensuite pour compléter la rivière de Bonus."
     ]
   ]
 let riverEn =
@@ -455,7 +455,7 @@ let riverEn =
     prop.className "variant"
     prop.children [
       Html.h2 "Bonus River"
-      Html.p "Draw 5 bonus and place them face up next to the draw pile. Each time you take a bonus, choose between the 5 available, and replace them immediately to complete the Bonus River."
+      Html.p "Draw 5 bonus and place them face up next to the draw pile. Each time you take some bonuses, choose between the 5 available, and replace them to complete the Bonus River once done."
     ]
   ]
 
