@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "fable": {
+      "version": "3.0.0-nagareyama-beta-004",
+      "commands": [
+        "fable"
+      ]
+    },
+    "paket": {
+      "version": "5.251.0",
+      "commands": [
+        "paket"
+      ]
+    }
+  }
+}

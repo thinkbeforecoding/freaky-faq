@@ -1,0 +1,123 @@
+@font-face {
+	font-family: 'BrushCrush';
+	src: url('font/brush-crush.eot');
+	src: url('font/brush-crush.eot?#iefix') format('embedded-opentype'),
+             url('font/brush-crush.woff2') format('woff2'),
+	     url('font/brush-crush.woff') format('woff'),
+	     url('font/brush-crush.ttf') format('truetype'),
+	     url('font/brush-crush.svg#youworkforthem') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+    background-image: url(./img/background.png);
+    background-size: cover;
+    background-color: #D7EEAA;
+
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12pt;
+}
+
+h1 {
+    font-family: BrushCrush;
+    color: #E84737;
+    font-size: 200%;
+    text-shadow: 0.05em 0.05em rgba(0,0,0, 0.9);
+    width: 70%;
+}
+h1::first-letter {
+    font-size: 120%;
+}
+
+h2 {
+    font-family: BrushCrush;
+    font-size: 160%;
+    color: black;
+}
+
+h2::first-letter {
+    font-size: 120%;
+}
+
+div {
+    margin: 0;
+    padding: 0;
+}
+
+.frame {
+    background-image: url(./img/crazyfarmers.png);
+    width: 100%;
+    min-height: 100%;
+    margin-left: auto;
+    margin-right: 0;
+    background-size: 40%;
+    background-position-x: right;
+    background-position-y: top;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-flow: row-reverse;
+}
+
+main
+{
+
+    padding: 2em;
+}
+
+header
+{
+    padding-top: 20%;
+}
+
+.intro {
+    width: 70%;
+}
+
+h3 {
+    max-width: 51.5em;
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 110%;
+}
+
+.answer, .variant {
+    max-width: 60em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.answer::before {
+    content: '→ ';
+}
+
+.answer li {
+    list-style-type: '→ ';
+}
+
+
+figure {
+    text-align: center;
+}
+
+
+
+.bonus {
+    font-weight: bolder;
+}
+
+a, a:visited {
+    color: #E84737;
+}
+
+
+
+.lang {
+    display: flex;
+    flex-flow: column;
+}
+.lang img {
+    width: 5em;
+}

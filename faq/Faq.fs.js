@@ -1,0 +1,306 @@
+import { Union, Record } from "./.fable/fable-library.3.0.0-nagareyama-beta-004/Types.js";
+import { union_type, string_type, record_type, list_type, class_type } from "./.fable/fable-library.3.0.0-nagareyama-beta-004/Reflection.js";
+import { React_functionComponent_2F9D7239 } from "./.fable/Feliz.1.16.0/React.fs.js";
+import { mkStyle, mkAttr, reactApi, reactElement } from "./.fable/Feliz.1.16.0/Interop.fs.js";
+import { createObjDebug } from "./.fable/fable-library.3.0.0-nagareyama-beta-004/Util.js";
+import { empty, ofSeq, ofArray, singleton } from "./.fable/fable-library.3.0.0-nagareyama-beta-004/List.js";
+import { singleton as singleton_1, append, map, delay } from "./.fable/fable-library.3.0.0-nagareyama-beta-004/Seq.js";
+import { join } from "./.fable/fable-library.3.0.0-nagareyama-beta-004/String.js";
+import { RouterModule_router, RouterModule_encodeParts, RouterModule_urlSegments } from "./.fable/Feliz.Router.3.2.0/Router.fs.js";
+import { defaultArg } from "./.fable/fable-library.3.0.0-nagareyama-beta-004/Option.js";
+import * as react from "react";
+import { ProgramModule_run, ProgramModule_mkSimple } from "./.fable/Fable.Elmish.3.1.0/program.fs.js";
+import { Program_withReactSynchronous } from "./.fable/Fable.Elmish.React.3.0.1/react.fs.js";
+
+export class Question extends Record {
+    constructor(Q, A) {
+        super();
+        this.Q = Q;
+        this.A = A;
+    }
+}
+
+export function Question$reflection() {
+    return record_type("Faq.Question", [], Question, () => [["Q", list_type(class_type("Fable.React.ReactElement"))], ["A", list_type(class_type("Fable.React.ReactElement"))]]);
+}
+
+export const question = React_functionComponent_2F9D7239((props) => {
+    let xs;
+    const children_2 = ofArray([reactElement("h3", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(props.Q))]))), (xs = ofArray([mkAttr("className", "answer"), mkAttr("children", reactApi.Children.toArray(Array.from(props.A)))]), reactElement("div", createObjDebug(xs)))]);
+    return reactElement("div", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])));
+});
+
+export class Section extends Record {
+    constructor(Title, Qs) {
+        super();
+        this.Title = Title;
+        this.Qs = Qs;
+    }
+}
+
+export function Section$reflection() {
+    return record_type("Faq.Section", [], Section, () => [["Title", string_type], ["Qs", list_type(Question$reflection())]]);
+}
+
+export const section = React_functionComponent_2F9D7239((props) => {
+    let xs, elems;
+    const children = ofArray([reactElement("h2", createObjDebug(singleton(["children", [props.Title]]))), (xs = singleton((elems = ofSeq(delay(() => map(question, props.Qs))), mkAttr("children", reactApi.Children.toArray(Array.from(elems))))), reactElement("div", createObjDebug(xs)))]);
+    return reactElement("div", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+});
+
+export const intro = (() => {
+    let elems, children, children_16, children_2, xs, children_4, xs_1, children_6, xs_2, children_8, xs_3, children_10, xs_4, children_12, xs_5, children_14, xs_6;
+    const xs_7 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [reactElement("p", createObjDebug(singleton(["children", ["2042… Sale temps pour les subventions à l’agriculture qui ont pratiquement disparu. Pour mettre du fuel dans les tracteur, les fermiers ont inventé une compétition télévisée. Mélange improbable de Monster Truck, catch mexicain et foire agricole, l’Ultimate Farming Championship (UFC pour les intimes), ce nouveau sport a rapidement trouvé sa place dans un paysage audiovisuel tout aussi dévasté."]]))), reactElement("p", createObjDebug(singleton(["children", ["En 2043, pour fêter cette première saison de l\u0027UFC, les producteurs ont organisé cette grande Foire Agricole aux Questions !"]]))), reactElement("p", createObjDebug(singleton(["children", ["Vous trouverez ci dessous :"]]))), (children = ofArray([reactElement("li", createObjDebug(singleton(["children", ["Des rappels des règles et des points de précisions"]]))), reactElement("li", createObjDebug(singleton(["children", ["Des précisions sur les Crazy Bonus"]]))), reactElement("li", createObjDebug(singleton(["children", ["Vos questions (la Faq sera mise à jour régulièrement)"]])))]), reactElement("ul", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), reactElement("p", createObjDebug(singleton(["children", ["mais d’abord quelques liens utiles"]]))), (children_16 = ofArray([(children_2 = ofArray([(xs = ofArray([mkAttr("children", "VIDEO RÈGLE EN 7mn"), mkAttr("href", "https://youtu.be/-uC8oUSei_Y")]), reactElement("a", createObjDebug(xs))), " (version PROTO... de 2016)"]), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])))), (children_4 = singleton((xs_1 = ofArray([mkAttr("children", "RÈGLES OFFICIELLES en pdf"), mkAttr("href", "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/FR-CrazyFarmers2k20RULES_v5.2.pdf")]), reactElement("a", createObjDebug(xs_1)))), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_4))])))), (children_6 = singleton((xs_2 = ofArray([mkAttr("children", "LES VARIANTES"), mkAttr("href", "#variantes")]), reactElement("a", createObjDebug(xs_2)))), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_6))])))), (children_8 = singleton((xs_3 = ofArray([mkAttr("children", "LA LISTE DES BOUTIQUES"), mkAttr("href", "#boutiques")]), reactElement("a", createObjDebug(xs_3)))), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_8))])))), (children_10 = ofArray([(xs_4 = ofArray([mkAttr("children", "LA PAGE FACEBOOK DES AUTEURS"), mkAttr("href", "https://www.facebook.com/CrazyFarmersLeJeu")]), reactElement("a", createObjDebug(xs_4))), " (sur laquelle vous pouvez nous envoyer vos questions, remarques, photos rigolotes… en MP ou directement sur la page)"]), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_10))])))), (children_12 = ofArray([(xs_5 = ofArray([mkAttr("children", "LA PAGE FACEBOOK DE THE FREAKY 42"), mkAttr("href", "https://www.facebook.com/TheFreaky42")]), reactElement("a", createObjDebug(xs_5))), " (pour ne rien rater des futurs projets)"]), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_12))])))), (children_14 = ofArray([(xs_6 = ofArray([mkAttr("children", "CRAZY FARMERS SUR BOARDGAMEARENA"), mkAttr("href", "https://boardgamearena.com/gamepanel?game=crazyfarmers")]), reactElement("a", createObjDebug(xs_6))), " pour jouer en ligne (cherchez iquentin et thinkb4coding pour nous défier personnellement !)"]), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_14))]))))]), reactElement("ul", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_16))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObjDebug(xs_7));
+})();
+
+export const introEn = (() => {
+    let elems, children, children_16, children_2, xs, children_4, xs_1, children_6, xs_2, children_8, xs_3, children_10, xs_4, children_12, xs_5, children_14, xs_6;
+    const xs_7 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [reactElement("p", createObjDebug(singleton(["children", ["2042… Bad time for agricultural subsidies... To fuel up their tractors, farmers invented a new trash TV competition. Improbable mix of Monster Truck, mexican wrestling and agricultural fair, the Ultimate Farming Championship (UFC for connoisseurs). This new sport quickly found its place in this devastated  audiovisual landscape."]]))), reactElement("p", createObjDebug(singleton(["children", ["In 2043, to celebrate the first UFC season, the productors have organised this Faire of the Agricultural Questions!"]]))), reactElement("p", createObjDebug(singleton(["children", ["You\u0027ll find thereafter :"]]))), (children = ofArray([reactElement("li", createObjDebug(singleton(["children", ["Rules reminders and clarifications"]]))), reactElement("li", createObjDebug(singleton(["children", ["Precisions about Crazy Bonus"]]))), reactElement("li", createObjDebug(singleton(["children", ["Your questions (this Faq will be updated on a regular basis)"]])))]), reactElement("ul", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), reactElement("p", createObjDebug(singleton(["children", ["First some useful links:"]]))), (children_16 = ofArray([(children_2 = ofArray([(xs = ofArray([mkAttr("children", "VIDEO RULES IN 7mn"), mkAttr("href", "https://youtu.be/-uC8oUSei_Y")]), reactElement("a", createObjDebug(xs))), " (PROTO version... from 2016, in french but you can activate subtitles)"]), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])))), (children_4 = singleton((xs_1 = ofArray([mkAttr("children", "OFFICIAL RULES in pdf"), mkAttr("href", "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/EN-CrazyFarmers2k20RULES_v3.2.pdf")]), reactElement("a", createObjDebug(xs_1)))), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_4))])))), (children_6 = singleton((xs_2 = ofArray([mkAttr("children", "VARIANTES"), mkAttr("href", "#en/variants")]), reactElement("a", createObjDebug(xs_2)))), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_6))])))), (children_8 = singleton((xs_3 = ofArray([mkAttr("children", "GAME STORES"), mkAttr("href", "#en/gamestores")]), reactElement("a", createObjDebug(xs_3)))), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_8))])))), (children_10 = ofArray([(xs_4 = ofArray([mkAttr("children", "AUTHORS\u0027 FACEBOOK PAGE"), mkAttr("href", "https://www.facebook.com/CrazyFarmersLeJeu")]), reactElement("a", createObjDebug(xs_4))), " (where you can send your questions, remarks, crazy pictures… PM or directly on the page)"]), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_10))])))), (children_12 = ofArray([(xs_5 = ofArray([mkAttr("children", "THE FREAKY 42\u0027S FACEBOOK PAGE"), mkAttr("href", "https://www.facebook.com/TheFreaky42")]), reactElement("a", createObjDebug(xs_5))), " (don\u0027t miss future projects)"]), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_12))])))), (children_14 = ofArray([(xs_6 = ofArray([mkAttr("children", "CRAZY FARMERS ON BOARDGAMEARENA"), mkAttr("href", "https://boardgamearena.com/gamepanel?game=crazyfarmers")]), reactElement("a", createObjDebug(xs_6))), " to play online (look for iquentin and thinkb4coding to play with us!)"]), reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_14))]))))]), reactElement("ul", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_16))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObjDebug(xs_7));
+})();
+
+export const field = new Section("Champ", ofArray([new Question(singleton("Peut-on reprendre des parcelles appartenant à un adversaire ?"), ofArray(["Oui, c’est même fortement conseillé. On peut tout à fait tirer une clôture ", reactElement("u", createObjDebug(singleton(["children", ["à travers un champ adverse"]]))), " et prendre ou reprendre des parcelles."])), new Question(singleton("La parcelle initiale a-t-elle une importance particulière ? "), singleton("Non, aucune."))]));
+
+export const fieldEn = new Section("Field", ofArray([new Question(singleton("Can I take back plots from an opponent?"), ofArray(["Yes, it\u0027s even highly advised. You can pull a fence ", reactElement("u", createObjDebug(singleton(["children", ["through an opponent\u0027s field"]]))), " and take or take back plots."])), new Question(singleton("Does the initial plot have anything special? "), singleton("No, nothing special."))]));
+
+export const fence = new Section("Clôture", ofArray([new Question(singleton("Comment ça pas de clôtures sur les bords de mon champ ?"), singleton("Effectivement, les clôtures sont inutiles sur les bords (et à l’intérieur) de votre champ (sauf dans sa jachère bien sûr !). D’ailleurs, dès que vous faites une annexion, la clôture devient le bord et donc elle disparaît.")), new Question(singleton("Que faire si on arrive à court de barrières pour sa clôture ?"), singleton("Il y a officiellement 24 barrières de clôtures maximum (20 à 3 ou 4 joueurs). Au-delà, on ne peut plus continuer sa clôture. Il faut revenir en arrière et trouver un chemin plus court. Mais rien ne vous empêche, si vous le décidez en début de partie, de jouer avec un nombre (virtuellement) infini de barrières, comme sur BoardGameArena.")), new Question(singleton("Si ma clôture ne fait que 1 ou 2 de barrières de long, est-ce que sa base est protégée quand même ?"), singleton("Oui, la protection de clôture (2 clôtures sur 3 croisements) s’applique y compris sur la base (le croisement d’où part la clôture) si celle-ci est comprise dedans, ce qui est forcément le cas pour une clôture de longueur 1 ou 2.")), new Question(singleton("Et si je tire une clôture qui fait le tour de mon propre champ et finit par se toucher elle-même avant de rentrer dans mon champ ?"), singleton("C’est comme une boucle simple, la partie de la clôture qui fait boucle est retirée. Il n’y a pas d’annexion.")), new Question(singleton("Au secours ! L\u0027adversaire m\u0027a pris la parcelle d\u0027où partait ma clôture ! Je me retrouve avec une clôture attachée à rien !"), singleton("Oui, c\u0027est dommage. Votre clôture disparaît, comme si elle avait été coupée, et ce même si vous aviez joué une Surcharge."))]));
+
+export const fenceEn = new Section("Fence", ofArray([new Question(singleton("No fence on the border of my field?"), singleton("Exactly, fences are useless on the border (as well as inside) your field (except for fallow lands of course!). Besides, as soon as you take over plots, the fence becomes the border and is removed.")), new Question(singleton("What should I do when I have no fence left?"), singleton("There are officially 24 fences max (20 for 3 or 4 players). Beyond that, you cannot pull more fences. You have to go back and find a shorter path. But you can, if you wish and decide before starting the game, play with a (virtually) infinite number of fences, like on BoardGameArena.")), new Question(singleton("When I have only 1 or 2 fences behind me, is the starting point protected?"), singleton("Yes, Fence protection (2 fences on 3 crossroads) also protect the starting point if included, which is always the case when you have 1 or 2 fences.")), new Question(singleton("What if I pull a fence all around my field and connect it back to itself before going back to my field?"), singleton("It\u0027s like for a simple loop, the part that makes a loop is removed. There is no annexation.")), new Question(singleton("Help! An opponent took the plot where my fence was connected! My fence is now dangling!"), singleton("Yes, that\u0027s sad. Your fence is removed, as if it had been cut, even if you had played High Voltage."))]));
+
+export const move = new Section("Déplacement", ofArray([new Question(singleton("Cas pratique de déplacement : Que se passe-t-il si j’utilise, à mon tour de jeu, un bonus Nitro+2 et une accélération de clôture de 1 pour rentrer chez moi (à une distance de 4) ? Puis-je effectuer encore 2 déplacements une fois rentré ?"), singleton("Premièrement, la limite de 5 s\u0027applique, donc le Nitro+2 ne vaut que +1. Par contre, les 5 déplacements cumulés (3 de base + 1 accélération + 1 de Nitro) sont à utiliser. Donc même une fois rentré après 4 déplacements, il reste encore 1 déplacement à faire.")), new Question(singleton("Et si je n’ai pas envie de faire mes 3 déplacements ?"), singleton("Les déplacements de base et d’accélération sont obligatoires ! Par contre on peut revenir en arrière. Donc, si l’on a par exemple 5 déplacements on peut virtuellement en faire 1 ou 3, mais pas 2 ou 4.")), new Question(singleton("Puis-je me déplacer à l’intérieur (ou sur le bord) de mon champ ?"), singleton("Oui, c’est juste qu’on ne tire pas de clôture dans son champ, uniquement quand on en sort.")), new Question(singleton("Que se passe-t-il si l’on répète indéfiniment les mêmes déplacements en boucle et que personne ne veut céder ?"), singleton("À l’image des Échecs, si une position est répétée 3 fois, la partie se termine sur une égalité. Nous appellerons cela la règle du nul par répétition de positions.")), new Question(singleton("Les déplacements sont obligatoires, d’accord. Mais alors que faire quand aucun déplacement n’est possible ?"), singleton("Effectivement, il est possible qu’aucun déplacement ne soit possible. Si vous êtes complètement bloqué par : une botte de foin, une partie de clôture protégée, un tracteur adverse… alors vos déplacements sont perdus et vous restez sur place.")), new Question(singleton("Si j’en suis déjà à 4 déplacements, est-ce que j’ai le droit de prendre un Nitro+2, quitte à n’avoir qu’un déplacement en plus ?"), singleton("Oui, 4+2 = 6, mais 5 max donc 1 déplacement perdu.")), new Question(singleton("Si on joue contre moi 2 bonus Ornière, j’ai 0 déplacement ?"), singleton("Oui, 3 - 4 = -1, mais je ne peux pas faire -1 alors je ne bouge pas. Et si je joue une Nitro+2 pour m’en sortir quand même ? → Je fais 3 - 4 + 2 = 1 déplacement.")), new Question(singleton("Je peux aller sur le même croisement qu’un autre tracteur ?"), singleton("Non. Jamais 2 tracteurs au même endroit.")), new Question(singleton("Si on repart en arrière juste après avoir annexé, dans le même tour, ça annule l’annexion ?"), singleton("Non. L\u0027annexion est acquise au moment même où le tracteur revient au contact de son champ."))]));
+
+export const moveEn = new Section("Moves", ofArray([new Question(singleton("Practical case: What happens if I use, during my turn, A Nitro+2 bonus and a fence acceleration to go back in my field (with a distance of 4)? Can I make 2 more moves once back home?"), singleton("First, the limit of 5 moves applies, so the Nitro+2 is worth only +1. However, the 5 moves (3 basic moves + 1 acceleration + 1 for the Nitro) have to be done. So after 4 moves to go back in the field, there is 1 move left to be done.")), new Question(singleton("And what if I don\u0027t want to make my 3 moves?"), singleton("All moves are mandatory! However you can go back. Si, if you have for instance 5 moves, you can virtually make 1 or 3 moves, but not 2 or 4.")), new Question(singleton("Can I move inside (or on the border of) my field?"), singleton("Yes, you just don\u0027t pull fences. Place fences only when you get out.")), new Question(singleton("What if you repeat endlessly the same moves and nobody wants to concede?"), singleton("Like in chess, when a position is repeated 3 times, the game ends in a tie. This rule is called tie by repetition.")), new Question(singleton("Ok, moves are mandatory. But what if no move is possible?"), singleton("Right, it can happen that no move is possible. When you\u0027re blocked by: a hay bale, a protected fence, an opponent\u0027s tractor… Then your moves are lost and you stay where you are.")), new Question(singleton("When I already used 4 moves, can I play a Nitro+2 bonus, even if it gives only one extra move?"), singleton("Yes, 4+2 = 6, but 5 max so 1 move is lost.")), new Question(singleton("When someone plays 2 Rut bonus against me, do I have 0 moves?"), singleton("Yes, 3 - 4 = -1, but I cannot do -1 move so I don\u0027t move. And if I play Nitro+2 bonus to move nonetheless? → I do 3 - 4 + 2 = 1 move.")), new Question(singleton("Can I go on the same crossroad as another tractor?"), singleton("No. Never 2 tractors in the same place.")), new Question(singleton("When I go back on the same path just after an annexation, in the same turn, does it cancel the annexation?"), singleton("No. Annexation is acquired at the very moment when the tractor is in contact with the field."))]));
+
+export const powerless = new Section("Hors tension", ofArray([new Question(singleton("Comment rentrer chez moi après une coupure si l’adversaire me barre la route avec sa clôture ?"), ofArray(["Lorsqu’on est hors tension, on ne peut plus couper les clôtures adverses, mais on a le droit de passer dessus ou même de s’y arrêter, sauf sur les 2 clôtures protégées derrière le tracteur adverse. On peut aussi rentrer chez soi directement en utilisant un Hélicoptère.", reactElement("br", createObjDebug(empty())), "Remarque : dès qu’on rentre chez soi, on a de nouveau le droit de couper les adversaires, ainsi, si l’on rentre chez soi sur un croisement occupé par une clôture adverse, cette dernière est coupée immédiatement."])), new Question(singleton("Que se passe-t-il si le jeu se termine juste quand je viens de me faire couper ma clôture ?"), ofArray(["Très bonne question ! Lorsqu’on vient de se faire couper, on est généralement déconnecté de son champ. Du coup, on est momentanément sans champ principal (voir Jachère). Or le score est à tout moment la taille du champ principal, c’est-à-dire ici : ", reactElement("strong", createObjDebug(singleton(["children", ["ZÉRO"]]))), " ! Attention, c’est un moyen pour le joueur qui est mené de gagner sur un coup de Tra(cteur)falgar."]))]));
+
+export const powerlessEn = new Section("Powerless", ofArray([new Question(singleton("How can I go back in my field when the opponent\u0027s fence is on the way?"), ofArray(["When powerless, you cannot cut opponents\u0027 fences, but you can cross or stay on them, except for the last 2 protected fences behind the opponent\u0027s tractors. You can also go back instantly using an Helicopter.", reactElement("br", createObjDebug(empty())), "Remark: as soon as you reach your field, you can cut opponents\u0027 fence, hence, when you reconnect to your field at a crossroad occupied by an opponent\u0027s fence, it\u0027s cut instantly."])), new Question(singleton("What happens when the game ends just when my fence has been cut?"), ofArray(["Excellent question! When your fence is cut, you\u0027re most often disconnected from your field. So, you\u0027re momentarily without a main field (see Fallow land). Now, the score is at all time equal to the size of the main field, which means: ", reactElement("strong", createObjDebug(singleton(["children", ["ZERO"]]))), "! Be careful, this is a way for a player that has a lower score to win on a nasty trick."]))]));
+
+export const concepts = new Section("Concepts", singleton(new Question(singleton("La pile de parcelles commune pour 2 joueurs, comment ça marche ?"), singleton("À 2 joueurs, on partage la même pile de parcelles (réversibles). Il y a donc un système de vases communicants : les cases vides annexées rapprochent les 2 joueurs de la fin de la partie."))));
+
+export const conceptsEn = new Section("Concepts", singleton(new Question(singleton("The common plot stack for 2 players, How does it work?"), singleton("In a 2 players game, you share a single stack of (reversible) plots. There is a communicating vessels mechanism: annexed empty plots lead both players nearer the end of the game."))));
+
+export const rare = new Section("Cas rares", ofArray([new Question(singleton("Que se passe-t-il ? Je suis DANS une partie en jachère de mon champ avec une clôture qui part de mon champ principal."), singleton("Ah ! Voilà un cas intéressant. Effectivement, la jachère vous appartient toujours, mais elle ne sert à rien tant que vous n’avez pas réussi à reprendre les cases qui font la jonction. Elle est inactive et se comporte pour vous comme une case vide ( = “en friche”). Vous pouvez donc passer sur le bord ou à travers si cela vous chante. C’est d’ailleurs le seul cas où vous aurez une clôture dans votre propre champ. Quoi qu’il arrive, il faudra revenir au contact de votre champ principal pour conclure une annexion.")), new Question(singleton("Encore plus incroyable : et si j’ai une clôture qui passe au contact de ma jachère et qu’un adversaire me coupe, est-ce que je peux garder la partie de ma clôture qui repart de ma Jachère (qui se transforme donc en champ principal à l’occasion) ?"), singleton("Non, la clôture est coupée, elle disparaît entièrement. Cela peut effectivement entraîner un changement de champ principal/jachère, mais la clôture est perdue quoi qu’il arrive."))]));
+
+export const rareEn = new Section("Rares cases", ofArray([new Question(singleton("What happens? I\u0027m INSIDE one of my fallow land with a fence that starts from my main field."), singleton("Ah! This is an interesting case. Actually, the fallow land still belongs to you, but is useless as long as you did not take back the plots that connect it to your main field. It is inactive and behaves for you as an empty plot. You can move on the border or inside if you want. This is the only case where you can have a fence touching your own plots. Whatever happens, you\u0027ll have to go back in contact to your main field to finish an annexation.")), new Question(singleton("Even more involved: what if my fence goes through my fallow land and an opponent cuts it? Can I keep a part of my fence that starts from the fallow land (that becomes a main field in the process)?"), singleton("No, the fence is cut, it disappears  totally. It can lead to a main field/fallow land change, but the fence is lost anyway."))]));
+
+export function card(name) {
+    const xs = ofArray([mkAttr("className", "bonus"), mkAttr("children", name)]);
+    return reactElement("span", createObjDebug(xs));
+}
+
+export const bonus = new Section("Les Bonus", ofArray([new Question(singleton("Puis-je jouer un bonus dès que je le pioche ?"), singleton("Oui.")), new Question(ofArray(["Peut-on poser 2 ", card("Bottes de Foin"), " sur le même chemin ?"]), singleton("Non.")), new Question(ofArray(["Puis-je utiliser 2, voire 3 ", card("Hélicoptères"), " dans le même tour ?"]), singleton("Autant que vous voulez. Et combinés avec d\u0027autres bonus si bon vous semble.")), new Question(ofArray(["Un déplacement en ", card("Hélicoptère"), " coûte-t-il un déplacement ?"]), singleton("Non, c’est gratuit.")), new Question(ofArray(["Peut-on traverser (sans la couper) une clôture après un ", card("Hélicoptère"), " ?"]), singleton("Non, après un Hélicoptère, on peut considérer que toutes les clôtures adverses sont indestructibles et infranchissables sur toute leur longueur jusqu’à la fin de son tour.")), new Question(ofArray(["La ", card("Surcharge"), " protège-t-elle aussi le point de départ de ma clôture ?"]), singleton("Oui. Mais il reste un moyen de couper une clôture en Surcharge : prendre la parcelle de départ de cette clôture.")), new Question(ofArray(["Je ne comprends pas bien sur quelles parcelles adverses exactement je peux utiliser un ", card("Pot de Vin"), " ?"]), ofArray(["Le Pot de Vin a beaucoup de restrictions car la corruption, c’est mal, donc on se doit de rester discrets. Voici les conditions pour l’utiliser :", (() => {
+    const children = ofArray([reactElement("li", createObjDebug(singleton(["children", ["La parcelle visée doit toucher une parcelle de votre propre champ (principal ou jachère),"]]))), reactElement("li", createObjDebug(singleton(["children", ["La parcelle visée ne doit pas avoir de grange,"]]))), reactElement("li", createObjDebug(singleton(["children", ["La parcelle visée ne doit pas être la parcelle de départ de la clôture de son propriétaire,"]]))), reactElement("li", createObjDebug(singleton(["children", ["Le propriétaire ne doit pas être sur le bord de la parcelle visée,"]]))), reactElement("li", createObjDebug(singleton(["children", ["et enfin, la partie ne peut être gagnée par l’effet immédiat d’un Pot de Vin (ou de toute autre carte bonus d’ailleurs)."]])))]);
+    return reactElement("ul", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+})(), "Par “effet immédiat”, nous voulons dire que si le Pot de Vin est utilisé pour prendre directement la dernière parcelle qui nous manquait pour gagner, il n’est pas autorisé. Par contre, si le Pot de Vin entraîne (par exemple) une fermeture de clôture qui produit une annexion permettant de gagner, ce n’est pas l’effet immédiat du Pot de Vin qui a permis la victoire. Il y avait des effets intermédiaires et donc le Pot de Vin est autorisé."])), new Question(ofArray(["Est-ce que le ", card("Chien de Garde"), " protège les champs en jachère ? Et est-ce qu’il peut empêcher un Pot de Vin ?"]), singleton("Oui et oui."))]));
+
+export const bonusEn = new Section("Bonus cards", ofArray([new Question(singleton("Can I play a bonus card as soon as I draw it?"), singleton("Yes.")), new Question(ofArray(["Can I play 2 ", card("Hay Bales"), " on the same path?"]), singleton("No.")), new Question(ofArray(["Can I use 2, or 3 ", card("Helicopters"), " in a single turn?"]), singleton("As much as you wish. And combined with other bonus cards if you want.")), new Question(ofArray(["Does an ", card("Helicopter"), " move cost a move?"]), singleton("No, it\u0027s free.")), new Question(ofArray(["Can I cross a fence (without cutting) just after an ", card("Helicopter"), " card?"]), singleton("No, after an Helicopter, you can assume that opponents fences are indestructible and uncrossable on their full length until the end of the turn.")), new Question(ofArray(["Does the ", card("High Voltage"), " protect also the starting point of my fence?"]), singleton("Yes. But there is still a way to cut it: when an opponent takes the plot where your fence starts.")), new Question(ofArray(["I don\u0027t understand well which plots can be taken with a ", card("Bribe"), " card?"]), ofArray(["The Bribe has many restrictions because corruption is bad, and must remain discreet. Here are the conditions to use it:", (() => {
+    const children = ofArray([reactElement("li", createObjDebug(singleton(["children", ["The target plot must be in contact with your own field (main field or fallow land),"]]))), reactElement("li", createObjDebug(singleton(["children", ["The target plot must not contain a barn,"]]))), reactElement("li", createObjDebug(singleton(["children", ["The target plot must not be the starting point of the owners fence,"]]))), reactElement("li", createObjDebug(singleton(["children", ["The owner must not be on the border the target plot,"]]))), reactElement("li", createObjDebug(singleton(["children", ["and finally, the game cannot be over by the immediate effect of the bribe (or any other bonus card by the way)."]])))]);
+    return reactElement("ul", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+})(), "By “immediate effect”, we mean when the Bribe is used to take directly the last plot needed to win, this is forbidden. However, if the Bribe is used to take a plot that closes a fence, which then causes an annexation which ends the game, the Bribe did not cause the end of the game by immediate effect. There were intermediate effects, thus the Bribe is allowed."])), new Question(ofArray(["Does the ", card("Watchdog"), " protect fallow lands? And does it protect against Bribe?"]), singleton("Yes and yes."))]));
+
+export const crazyBonus = new Section("Crazy Bonus", singleton(new Question(ofArray(["Peut on poser la botte de foin d\u0027un ", card("Blocus"), " sur un croisement du bord du terrain ?"]), singleton("Oui, n\u0027importe où et même sur le bord. Il est même permis d\u0027enfermer un adversaire, c\u0027est que pour un tour !"))));
+
+export const crazyBonusEn = new Section("Crazy Bonus", singleton(new Question(ofArray(["Can I play the hay bale for a ", card("Blockade"), " on a crossroad on the border of the board ?"]), singleton("Yes, wherever you want, even the border. It\u0027s even allowed to lock an opponent, it\u0027s for one turn only!"))));
+
+export const stadiumEvent = new Section("Evenements de Stade", singleton(new Question(ofArray(["Avec le ", card("Verglas"), " que se passe-t-il si je ne peux plus avancer ?"]), singleton("Tant qu\u0027un chemin est possible vous devez avancer, mais si vous êtes bloqué, vous perdez les mouvements restant !"))));
+
+export const stadiumEventEn = new Section("Stadium Events", singleton(new Question(ofArray(["Peut on poser la botte de foin d\u0027un ", card("Blocus"), " sur un croisement du bord du terrain ?"]), singleton("Oui, n\u0027importe où et même sur le bord. Il est même permis d\u0027enfermer un adversaire, c\u0027est que pour un tour !"))));
+
+export const cow = new Section("Mode Vache folle", ofArray([new Question(singleton("Y a-t-il un nombre de parcelles limité en mode Vache Folle ?"), singleton("Non. Cela n’a pas beaucoup d’importance car, on n’y arrive pratiquement jamais. Si cela vous arrive quand même utilisez les parcelles d’une autre couleur pour finir la partie (et envoyez nous votre score, il sera probablement fameux !).")), new Question(singleton("Je n’ai pas bien compris comment la Vache Folle place ses Bottes de foin."), ofArray(["Voici un schema pour vous aider, il complète l’explication de la règle.", (() => {
+    let xs, properties, value_6;
+    const children = singleton((xs = ofArray([mkAttr("src", "./img/solo-bottes-fr.png"), (properties = singleton((value_6 = (20 + "em"), mkStyle("width", value_6))), mkAttr("style", createObjDebug(properties)))]), reactElement("img", createObjDebug(xs))));
+    return reactElement("figure", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+})()])), new Question(singleton("En co-op, c’est quelle clôture qui compte pour déterminer le retour de bâton ?"), singleton("C’est le total de toutes les clôtures des joueurs.")), new Question(singleton("La Vache Folle peut-elle gagner la partie sur un Pot de Vin ?"), singleton("Non, elle est soumise à la même contrainte que celle des joueurs. Par contre, si elle ne parvient pas à joueur son Pot de Vin, elle perd la carte.")), new Question(singleton("La Vache folle prend l’Hélicoptère, a-t-elle le droit de couper ma clôture juste après ?"), singleton("Oui, c’est une vache."))]));
+
+export const cowEn = new Section("Mad Cow mode", ofArray([new Question(singleton("Is there a limited number of plots for the Mad Cow mode?"), singleton("Now. It\u0027s not a problem since it\u0027s really hard to reach. But if it happens to you, use plots of other colors to end the game (and send us your score, it should be impressive!).")), new Question(singleton("I didn\u0027t really get how the Mad Cow places their Hay Bales."), ofArray(["Here is a picture to help you, it should make it more obvious.", (() => {
+    let xs, properties, value_6;
+    const children = singleton((xs = ofArray([mkAttr("src", "./img/solo-bottes-en.png"), (properties = singleton((value_6 = (20 + "em"), mkStyle("width", value_6))), mkAttr("style", createObjDebug(properties)))]), reactElement("img", createObjDebug(xs))));
+    return reactElement("figure", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+})()])), new Question(singleton("In co-op mode, which fence should we take into account to determine bonus backlash mode?"), singleton("Use the total length of all players\u0027 fences.")), new Question(singleton("Can the Mad Cow win with a Bribe?"), singleton("No, the cow is limited to the same constraints as players. Moreover, if it cannot play a Bribe, the card is discarded.")), new Question(singleton("The Mad Cow uses an Helicopter. Can it cut my fence just after?"), singleton("Yes, it\u0027s a cow."))]));
+
+export function boutique(name, link) {
+    let xs;
+    const children = singleton((xs = ofArray([mkAttr("children", name), mkAttr("href", link)]), reactElement("a", createObjDebug(xs))));
+    return reactElement("li", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+}
+
+export const team = (() => {
+    let elems, children, children_2, children_4, children_6;
+    const xs = ofArray([mkAttr("className", "variant"), (elems = [reactElement("h2", createObjDebug(singleton(["children", ["2 contre 2"]]))), reactElement("p", createObjDebug(singleton(["children", ["À 4 joueurs, vous pouvez jouer Rouge et Bleu contre Jaune et Violet. Faites la même mise en place que pour 2 joueurs. Les partenaires démarrent de la même parcelle et jouent avec la même couleur de clôtures et de parcelles : les Rouge contre les Jaune. Jouez en alternant : Rouge→Jaune→Bleu→Violet→… Les règles normales s’appliquent avec quelques précisions :"]]))), (children = ofArray([reactElement("strong", createObjDebug(singleton(["children", ["Annexion"]]))), ". Lorsque vous touchez la clôture de votre partenaire, vous réalisez une annexion “en équipe” des cases entourées par votre champ et les deux clôtures. Enlevez seulement les portions de clôture qui ne servent plus."]), reactElement("p", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), (children_2 = ofArray([reactElement("strong", createObjDebug(singleton(["children", ["Clôture"]]))), ". La protection de clôture n’affecte pas les partenaires entre eux. Cependant il est toujours interdit de mettre deux tracteurs sur le même croisement, mais aussi de se déplacer le long d’une clôture de son partenaire si ce déplacement entraîne normalement la pose d’une clôture à soi."]), reactElement("p", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])))), (children_4 = ofArray([reactElement("strong", createObjDebug(singleton(["children", ["Bonus"]]))), ". Les partenaires mettent leurs bonus en commun, la limite de 6 s’applique par équipe."]), reactElement("p", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_4))])))), (children_6 = ofArray([reactElement("strong", createObjDebug(singleton(["children", ["Jachère"]]))), ". En cas de jachère, des tracteurs partenaires peuvent avoir des champs principaux différents. Dans ce cas, un croisement entre leurs clôtures ne provoque pas forcément une annexion. En effet, si des cases ne sont pas totalement entourées, il ne peut y avoir d’annexion. Il y a alors coupure entre partenaires !"]), reactElement("p", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_6))])))), reactElement("p", createObjDebug(singleton(["children", ["Vous pouvez jouer les bonus pour votre partenaire comme indiqué dans la variante Solidarité Agricole."]])))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObjDebug(xs));
+})();
+
+export const teamEn = (() => {
+    let elems, children, children_2, children_4, children_6;
+    const xs = ofArray([mkAttr("className", "variant"), (elems = [reactElement("h2", createObjDebug(singleton(["children", ["2 VS 2"]]))), reactElement("p", createObjDebug(singleton(["children", ["With 4 players, you can play Red and Blue against Yellow and Purple. Use the same setup as for 2 players. Partners start from the same plot and play with the same plot and fence color: Red vs Yellow. Play alternatively: Red→Yellow→Blue→Purple→… Standard rules apply with a few precisions:"]]))), (children = ofArray([reactElement("strong", createObjDebug(singleton(["children", ["Annexation"]]))), ". When you touch your partner\u0027s fence, you make a “team” annexation of the plots surrounded by your field and the two fences. Remove only part of the fences that are on the border of the new field."]), reactElement("p", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), (children_2 = ofArray([reactElement("strong", createObjDebug(singleton(["children", ["Fence"]]))), ". Fence protection doesn\u0027t apply between partners. However it\u0027s still forbidden to place two tractors on the same crossroad. It is also forbidden to move along a partner fence if the move should normally pull a fence for you."]), reactElement("p", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])))), (children_4 = ofArray([reactElement("strong", createObjDebug(singleton(["children", ["Bonus"]]))), ". Partners share their bonus. The limit of 6 applies to the team."]), reactElement("p", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_4))])))), (children_6 = ofArray([reactElement("strong", createObjDebug(singleton(["children", ["Fallow land"]]))), ". In case of fallow land, partners\u0027 tractors can be connected to different main fields. In this case, touching a partner fence does not necessarily lead to an annexation. If plots are not totally surrounded, there can be no annexation. The partner\u0027s fence is then cut!"]), reactElement("p", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children_6))])))), reactElement("p", createObjDebug(singleton(["children", ["You can play bonus for your partner like indicated in the Agricultural Solidarity variant."]])))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObjDebug(xs));
+})();
+
+export const bonusforothers = (() => {
+    let elems;
+    const xs = ofArray([mkAttr("className", "variant"), (elems = [reactElement("h2", createObjDebug(singleton(["children", ["Solidarité Agricole"]]))), reactElement("p", createObjDebug(singleton(["children", ["Vous pouvez jouer un bonus au profit d’un autre joueur avec son accord. Surcharges, Chien de garde et Hélicoptère prennent effet immédiatement et terminent au début du prochain tour du joueur qui a joué la carte bonus."]]))), reactElement("p", createObjDebug(singleton(["children", ["Si un joueur joue un pot de vin au cadastre pour un autre joueur, et que ca lui fait faire une annexion en dehors de son tour.. L’annexion est faite tout de suite. Le joueur prend les cases et les bonus (sans pouvoir les jouer)."]])))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObjDebug(xs));
+})();
+
+export const bonusforothersEn = (() => {
+    let elems;
+    const xs = ofArray([mkAttr("className", "variant"), (elems = [reactElement("h2", createObjDebug(singleton(["children", ["Agricultural Solidarity"]]))), reactElement("p", createObjDebug(singleton(["children", ["You can play a bonus for another player\u0027s profit if this player agrees. High Voltage, Watchdog and Helicopter take effect immediately and end at the beginning  of the next turn of the player who played the bonus card."]]))), reactElement("p", createObjDebug(singleton(["children", ["When a player plays a Bribe for another player, and causes an annexation out of their turn, the annexation is resolved immediately. The player takes the plots and the cards (but cannot play them until it\u0027s their turn)."]])))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObjDebug(xs));
+})();
+
+export const river = (() => {
+    let elems;
+    const xs = ofArray([mkAttr("className", "variant"), (elems = [reactElement("h2", createObjDebug(singleton(["children", ["Rivière de Bonus"]]))), reactElement("p", createObjDebug(singleton(["children", ["Piochez 5 bonus et mettez-les face visible à côté de la pioche. Chaque fois que vous récoltez un bonus, choisissez parmi les 5, et remplacez-le immédiatement pour compléter la rivière de Bonus."]])))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObjDebug(xs));
+})();
+
+export const riverEn = (() => {
+    let elems;
+    const xs = ofArray([mkAttr("className", "variant"), (elems = [reactElement("h2", createObjDebug(singleton(["children", ["Bonus River"]]))), reactElement("p", createObjDebug(singleton(["children", ["Draw 5 bonus and place them face up next to the draw pile. Each time you take a bonus, choose between the 5 available, and replace them immediately to complete the Bonus River."]])))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObjDebug(xs));
+})();
+
+export const variantes = (() => {
+    let elems, xs;
+    const xs_1 = singleton((elems = [(xs = ofArray([mkAttr("children", "Les variantes"), mkAttr("id", "variantes")]), reactElement("h1", createObjDebug(xs))), team, bonusforothers, river], mkAttr("children", reactApi.Children.toArray(Array.from(elems)))));
+    return reactElement("div", createObjDebug(xs_1));
+})();
+
+export const variantesEn = (() => {
+    let elems, xs;
+    const xs_1 = singleton((elems = [(xs = ofArray([mkAttr("children", "Variants"), mkAttr("id", "en/variants")]), reactElement("h1", createObjDebug(xs))), teamEn, bonusforothersEn, riverEn], mkAttr("children", reactApi.Children.toArray(Array.from(elems)))));
+    return reactElement("div", createObjDebug(xs_1));
+})();
+
+export const boutiques = (() => {
+    let elems, xs, children;
+    const xs_1 = singleton((elems = [(xs = ofArray([mkAttr("children", "Les boutiques"), mkAttr("id", "boutiques")]), reactElement("h1", createObjDebug(xs))), reactElement("p", createObjDebug(singleton(["children", ["Les boutiques ci-dessous nous ont fait confiance en participant comme vous à la campagne, vous avez la possibilité de voir avec eux s’ils sont ok pour vous réserver un exemplaire avec l’ensemble des bonus débloqués pendant la campagne :"]]))), (children = ofArray([boutique("BCD Jeux", "https://www.facebook.com/BCDJeux/"), boutique("Le Troll à 2 Têtes", "https://www.facebook.com/Trolla2Tetes/"), boutique("Esprit Jeu", "https://www.facebook.com/espritjeu/"), boutique("Thylgames", "https://www.facebook.com/Thylgames-510835646046348/"), boutique("Troll2jeux", "https://www.facebook.com/Troll2jeux/"), boutique("Cinegoodies", "https://www.facebook.com/cinegoodiesleblog/"), boutique("Le Gobelin", "https://www.facebook.com/LeGobelin.fr/")]), reactElement("ul", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems)))));
+    return reactElement("div", createObjDebug(xs_1));
+})();
+
+export const boutiquesEn = (() => {
+    let elems, xs, children;
+    const xs_1 = singleton((elems = [(xs = ofArray([mkAttr("children", "Game Stores"), mkAttr("id", "en/gamestores")]), reactElement("h1", createObjDebug(xs))), reactElement("p", createObjDebug(singleton(["children", ["The following game stores trusted us by pledging like you during the Kickstarter campaign. You can contact them to check whether they can send you a box with all the bonus unlocked during the KS:"]]))), (children = ofArray([boutique("BCD Jeux", "https://www.facebook.com/BCDJeux/"), boutique("Le Troll à 2 Têtes", "https://www.facebook.com/Trolla2Tetes/"), boutique("Esprit Jeu", "https://www.facebook.com/espritjeu/"), boutique("Thylgames", "https://www.facebook.com/Thylgames-510835646046348/"), boutique("Troll2jeux", "https://www.facebook.com/Troll2jeux/"), boutique("Cinegoodies", "https://www.facebook.com/cinegoodiesleblog/"), boutique("Le Gobelin", "https://www.facebook.com/LeGobelin.fr/")]), reactElement("ul", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems)))));
+    return reactElement("div", createObjDebug(xs_1));
+})();
+
+export const rootFr = (() => {
+    let xs, elems;
+    const children = ofArray([reactElement("h1", createObjDebug(singleton(["children", ["Foire Agricole aux Questions"]]))), (xs = ofArray([mkAttr("className", "content"), (elems = [intro, section(field), section(fence), section(move), section(powerless), section(concepts), section(rare), section(bonus), section(crazyBonus), section(cow), variantes, boutiques], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]), reactElement("div", createObjDebug(xs)))]);
+    return reactElement("main", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+})();
+
+export const rootEn = (() => {
+    let xs, elems;
+    const children = ofArray([reactElement("h1", createObjDebug(singleton(["children", ["Fair of the Agricultural Questions"]]))), (xs = ofArray([mkAttr("className", "content"), (elems = [introEn, section(fieldEn), section(fenceEn), section(moveEn), section(powerlessEn), section(conceptsEn), section(rareEn), section(bonusEn), section(crazyBonusEn), section(cowEn), variantesEn, boutiquesEn], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]), reactElement("div", createObjDebug(xs)))]);
+    return reactElement("main", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+})();
+
+export class Lang extends Union {
+    constructor(tag, ...fields) {
+        super();
+        this.tag = (tag | 0);
+        this.fields = fields;
+    }
+    cases() {
+        return ["Fr", "En"];
+    }
+}
+
+export function Lang$reflection() {
+    return union_type("Faq.Lang", [], Lang, () => [[], []]);
+}
+
+export class State extends Record {
+    constructor(Lang) {
+        super();
+        this.Lang = Lang;
+    }
+}
+
+export function State$reflection() {
+    return record_type("Faq.State", [], State, () => [["Lang", Lang$reflection()]]);
+}
+
+export class Msg extends Union {
+    constructor(tag, ...fields) {
+        super();
+        this.tag = (tag | 0);
+        this.fields = fields;
+    }
+    cases() {
+        return ["UrlChanged"];
+    }
+}
+
+export function Msg$reflection() {
+    return union_type("Faq.Msg", [], Msg, () => [[["Item", list_type(string_type)]]]);
+}
+
+export function parseUrlLang(url) {
+    if (url.tail != null) {
+        if (url.head === "en") {
+            return new Lang(1);
+        }
+        else {
+            return void 0;
+        }
+    }
+    else {
+        return new Lang(0);
+    }
+}
+
+export function init() {
+    let option, url;
+    return new State((option = (url = RouterModule_urlSegments(window.location.hash, 1), (parseUrlLang(url))), (defaultArg(option, new Lang(0)))));
+}
+
+export function update(_arg1, state) {
+    const segments = _arg1.fields[0];
+    const matchValue = parseUrlLang(segments);
+    if (matchValue == null) {
+        return state;
+    }
+    else {
+        const lang = matchValue;
+        return new State(lang);
+    }
+}
+
+export const frIcon = (() => {
+    const xs = singleton(mkAttr("src", "./img/fr.png"));
+    return reactElement("img", createObjDebug(xs));
+})();
+
+export const enIcon = (() => {
+    const xs = singleton(mkAttr("src", "./img/en.png"));
+    return reactElement("img", createObjDebug(xs));
+})();
+
+export function render(state, dispatch) {
+    let elements;
+    const props_1 = ofArray([["onUrlChanged", (arg) => {
+        let arg0;
+        dispatch((arg0 = arg, (new Msg(0, arg0))));
+    }], (elements = ofSeq(delay(() => {
+        let children, xs_2, elems_2;
+        return append(singleton_1((children = singleton((xs_2 = ofArray([mkAttr("className", "lang"), (elems_2 = ofSeq(delay(() => {
+            let xs_1, value_2;
+            return (state.Lang.tag === 1) ? append(singleton_1((xs_1 = ofArray([(value_2 = RouterModule_encodeParts(singleton(""), 1), mkAttr("href", value_2)), mkAttr("children", reactApi.Children.toArray([frIcon]))]), reactElement("a", createObjDebug(xs_1)))), delay(() => singleton_1(enIcon))) : append(singleton_1(frIcon), delay(() => {
+                let xs, value_1;
+                return singleton_1((xs = ofArray([(value_1 = RouterModule_encodeParts(singleton("en"), 1), mkAttr("href", value_1)), mkAttr("children", reactApi.Children.toArray([enIcon]))]), reactElement("a", createObjDebug(xs))));
+            }));
+        })), mkAttr("children", reactApi.Children.toArray(Array.from(elems_2))))]), reactElement("div", createObjDebug(xs_2)))), reactElement("header", createObjDebug(singleton(["children", reactApi.Children.toArray(Array.from(children))]))))), delay(() => ((state.Lang.tag === 1) ? singleton_1(rootEn) : singleton_1(rootFr))));
+    })), ["application", react.createElement(react.Fragment, {}, ...elements)])]);
+    return RouterModule_router(createObjDebug(props_1));
+}
+
+(function () {
+    let program_1;
+    const program = ProgramModule_mkSimple(init, update, render);
+    program_1 = Program_withReactSynchronous("root", program);
+    ProgramModule_run(program_1);
+})();
+
