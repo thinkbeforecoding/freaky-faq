@@ -54,6 +54,7 @@ let intro =
                       Html.li [ Html.a [ prop.text "RÈGLES OFFICIELLES en pdf"; prop.href "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/FR-CrazyFarmers2k20RULES_v5.2.pdf"] ]
                       Html.li [ Html.a [ prop.text "LES VARIANTES"; prop.href "#variantes"] ]
                       Html.li [ Html.a [ prop.text "LA LISTE DES BOUTIQUES"; prop.href "#boutiques"] ]
+                      Html.li [ Html.a [ prop.text "LES INSTRUCTIONS DE MONTAGE"; prop.href "#assembly"] ]
                       Html.li [ Html.a [ prop.text "LA PAGE FACEBOOK DES AUTEURS"; prop.href "https://www.facebook.com/CrazyFarmersLeJeu"];
                                 Html.text " (sur laquelle vous pouvez nous envoyer vos questions, remarques, photos rigolotes… en MP ou directement sur la page)" ]
                       Html.li [ Html.a [ prop.text "LA PAGE FACEBOOK DE THE FREAKY 42"; prop.href "https://www.facebook.com/TheFreaky42"] 
@@ -86,6 +87,7 @@ let introEn =
                       Html.li [ Html.a [ prop.text "OFFICIAL RULES in pdf"; prop.href "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/EN-CrazyFarmers2k20RULES_v3.2.pdf"] ]
                       Html.li [ Html.a [ prop.text "VARIANTES"; prop.href "#en/variants"] ]
                       Html.li [ Html.a [ prop.text "GAME STORES"; prop.href "#en/gamestores"] ]
+                      Html.li [ Html.a [ prop.text "ASSEMBLY INSTRUCTIONS"; prop.href "#en/assembly"] ]
                       Html.li [ Html.a [ prop.text "AUTHORS' FACEBOOK PAGE"; prop.href "https://www.facebook.com/CrazyFarmersLeJeu"];
                                 Html.text " (where you can send your questions, remarks, crazy pictures… PM or directly on the page)" ]
                       Html.li [ Html.a [ prop.text "THE FREAKY 42'S FACEBOOK PAGE"; prop.href "https://www.facebook.com/TheFreaky42"] 
@@ -513,7 +515,139 @@ let boutiquesEn =
     ]
   ]
 
+let montageFr =
+  Html.div [
+    prop.children [
+      Html.h1 [ prop.text "Intstructions de montage"; prop.id "assembly" ]
+      Html.p [
+        prop.children [
+         Html.text "Votre boite de Crazy Farmers contients des pieces en bois qui demandent un peu de montage:"
+         Html.ul [
+           Html.li [ prop.text "les clôtures" ]
+           Html.li [ prop.text "Les tracteurs" ]
+           Html.li [ prop.text "La vache folle" ]
+           Html.li [ prop.text "Les granges (Super Nitro uniquement)" ]
+           Html.li [ prop.text "Les bottes de foin (Super Nitro uniquement)" ]
+           ]
+         ]
+        ]
+      Html.h2 [ prop.text "Clôtures"]
+      Html.p [
+        prop.text "Pour les clôtures c'est simple, il suffit de les détacher de leur support:"
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/assembly0.png"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
+      Html.h2 [ prop.text "Tracteurs"]
+      Html.p [
+        prop.children [
+          Html.text "Détachez les deux moitiées du tracteur de leur support et utilisez le socle de la même couleur (celui qui n'est pas sur le support tient mieux). Mettez les deux moitiées de tracteur dos à dos en prenant soin à mettre les parties décorées à l'extérieur. "
+          Html.text "Placez l'extrémité des deux pièces dans le socle et appuez fermement."
+        ]
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/assembly1.png"
+                     prop.style [ style.width (length.em 20)] ]
+          Html.img [ prop.src "./img/assembly2.png"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
+      Html.h2 [ prop.text "Vache folle"]
+      Html.p [
+        prop.children [
+          Html.text "Procedez de même pour la vache folle en utilisant le socle en forme de goutte. Fait attention à placer la partie pointue de la forme vers l'avant. "
+          Html.text "Celle-ci sert à indiquer clairement la direction de la vache folle dans le mode solo."
+        ]
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/assembly3.png"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
 
+      Html.h2 [ prop.text "Granges et Bottes de foin"]
+      Html.p [
+        prop.children [
+          Html.text "Pour les granges, prenez une moitié avec une porte et une sans porte, ainsi qu'un socle. Pour les bottes de foin, les motifs des deux cotés sont identiques. "
+          Html.text "Procedez comme pour les tracteurs en faisant bien attention à ce que les faces décorées soit visibles."
+        ]
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/assembly4.png"
+                     prop.style [ style.width (length.em 20)] ]
+          Html.img [ prop.src "./img/assembly5.png"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
+    ]
+  ]
+
+let montageEn =
+  Html.div [
+    prop.children [
+      Html.h1 [ prop.text "Assembly instructions"; prop.id "en/assembly" ]
+      Html.p [
+        prop.children [
+         Html.text "Your Crazy Farmers box contains wooden tokens that require some DIY:"
+         Html.ul [
+           Html.li [ prop.text "Fences" ]
+           Html.li [ prop.text "Tractors" ]
+           Html.li [ prop.text "Mad cow" ]
+           Html.li [ prop.text "Barns (Super Nitro only)" ]
+           Html.li [ prop.text "Hay bales (Super Nitro only)" ]
+           ]
+         ]
+        ]
+      Html.h2 [ prop.text "Fences"]
+      Html.p [
+        prop.text "For fences, you only have to detach them:"
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/assembly0.png"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
+      Html.h2 [ prop.text "Tractors"]
+      Html.p [
+        prop.children [
+          Html.text "Detach both halves of the tractor from their frame and use the base of the same color (the one that is not in the frame should fit better). Put the two halves of the tractor back to back and take care that the decorated sides remain visible. "
+          Html.text "Put the extremity of the two pieces in the base and press firmly."
+        ]
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/assembly1.png"
+                     prop.style [ style.width (length.em 20)] ]
+          Html.img [ prop.src "./img/assembly2.png"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
+      Html.h2 [ prop.text "Mad Cow"]
+      Html.p [
+        prop.children [
+          Html.text "Proceed for the mad cow as you did for the tractor, using the drop shaped base. Place the tip of the drop toward the head of the cow. "
+          Html.text "It's used to indicate clearly the direction of the cow in the solo mode. "
+          Html.i "You won't need the cardboard cow token if you use the wooden one."
+        ]
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/assembly3.png"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
+
+      Html.h2 [ prop.text "Barns and Hay bales"]
+      Html.p [
+        prop.children [
+          Html.text "For barns, take an half with a door and one without, as well as a base. For hay bales, drawings are identical on both sides. "
+          Html.text "Proceed like for tractors and take care to let decorated sides visible. "
+          Html.i "You won't need the cardboard barns and hay bales if you use the wooden ones."
+        ]
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/assembly4.png"
+                     prop.style [ style.width (length.em 20)] ]
+          Html.img [ prop.src "./img/assembly5.png"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
+    ]
+    
+    
+  ]
 let rootFr = 
     Html.main [
       Html.h1 "Foire Agricole aux Questions"
@@ -532,6 +666,7 @@ let rootFr =
               section cow
               variantes
               boutiques
+              montageFr
               ]
       ]
     ]
@@ -554,6 +689,7 @@ let rootEn =
               section cowEn
               variantesEn
               boutiquesEn
+              montageEn
               ]
       ]
     ]
