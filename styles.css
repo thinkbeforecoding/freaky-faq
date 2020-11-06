@@ -125,3 +125,13 @@ a, a:visited {
 .lang img {
     width: 5em;
 }
+
+figure div {
+    display: inline-block;
+}
+
+img.madcow {
+    width: 10em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+}

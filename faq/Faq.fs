@@ -358,6 +358,51 @@ let cow =
       Qs = [
           { Q = [ Html.text "Y a-t-il un nombre de parcelles limité en mode Vache Folle\xa0?"]
             A = [ Html.text "Non. Cela n’a pas beaucoup d’importance car, on n’y arrive pratiquement jamais. Si cela vous arrive quand même utilisez les parcelles d’une autre couleur pour finir la partie (et envoyez nous votre score, il sera probablement fameux\xa0!)."] }
+          { Q = [ Html.text "La vache, quand elle se déplace, elle doit exactement suivre le tracé de la flèche ou elle doit juste aller sur la case d'arrivée et en adopter l'orientation ?"]
+            A = [ Html.text "La vache prend la case de destination uniquement. Sur un demi tour elle prend la case derrière elle et se retrouve dans la direction opposée."
+                  Html.p "En partant de la position suivante:"
+                  Html.figure [ Html.img [ prop.src "img/madcow-0-start.jpg"; prop.style [ style.width (length.em 10) ]] ]
+                  Html.p "Voici pour chaque type de carte la position et l'orientation finale:" 
+                  Html.figure [ 
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-1-forward.jpg" ] 
+                     Html.legend "en avant"
+                  ]
+                  Html.figure [
+                    Html.div [ 
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-2-slide-left.jpg" ] 
+                     Html.legend "glisser à gauche"
+                    ]
+                    Html.div [
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-3-slide-right.jpg" ] 
+                     Html.legend "glisser à droite"
+                    ]
+                  ]
+                  Html.figure [
+                    Html.div [
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-4-turn-left.jpg" ] 
+                     Html.legend "tourner à gauche"
+                    ]
+                    Html.div [
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-5-turn-right.jpg" ] 
+                     Html.legend "tourner à droite"
+                    ]
+                  ]
+                  Html.figure [
+                      Html.div [
+                       Html.img [ prop.className "madcow"; prop.src "img/madcow-6-rear-left.jpg" ] 
+                       Html.legend "arrière gauche"
+                      ]
+                      Html.div [
+                       Html.img [ prop.className "madcow"; prop.src "img/madcow-7-rear-right.jpg" ] 
+                       Html.legend "arrère droite"
+                      ]
+                  ]
+                  Html.figure [
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-8-uturn.jpg" ] 
+                     Html.legend "demi tour"
+                  ]
+                  Html.p "Si le chemin entre la parcelle de départ de la vache et celle d'arrivée contient un obstacle, la vache doit se réorienter. Si il contient une clôture non protégée, celle-ci est coupée."
+            ]}
           { Q = [ Html.text "Je n’ai pas bien compris comment la Vache Folle place ses Bottes de foin."]
             A = [ Html.text "Voici un schema pour vous aider, il complète l’explication de la règle."
                   Html.figure [
@@ -377,6 +422,51 @@ let cowEn =
       Qs = [
           { Q = [ Html.text "Is there a limited number of plots for the Mad Cow mode?"]
             A = [ Html.text "No. It's not a problem since it's really hard to reach. But if it happens to you, use plots of other colors to end the game (and send us your score, it should be impressive!)."] }
+          { Q = [ Html.text "When the mad cow moves, does she follow the path of the arrow on the card or does she just go on the destination tile with a new orientation?"]
+            A = [ Html.text "The mad cow only takes the destination parcel. On a U-Turn, she takes the parcel behind her and is now in the opposit direction."
+                  Html.p "Starting from the following position:"
+                  Html.figure [ Html.img [ prop.src "img/madcow-0-start.jpg"; prop.style [ style.width (length.em 10) ]] ]
+                  Html.p "Here is for each move type the final position and orientation:" 
+                  Html.figure [ 
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-1-forward.jpg" ] 
+                     Html.legend "forward"
+                  ]
+                  Html.figure [
+                    Html.div [ 
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-2-slide-left.jpg" ] 
+                     Html.legend "slide left"
+                    ]
+                    Html.div [
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-3-slide-right.jpg" ] 
+                     Html.legend "slide right"
+                    ]
+                  ]
+                  Html.figure [
+                    Html.div [
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-4-turn-left.jpg" ] 
+                     Html.legend "turn left"
+                    ]
+                    Html.div [
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-5-turn-right.jpg" ] 
+                     Html.legend "turn right"
+                    ]
+                  ]
+                  Html.figure [
+                      Html.div [
+                       Html.img [ prop.className "madcow"; prop.src "img/madcow-6-rear-left.jpg" ] 
+                       Html.legend "rear left"
+                      ]
+                      Html.div [
+                       Html.img [ prop.className "madcow"; prop.src "img/madcow-7-rear-right.jpg" ] 
+                       Html.legend "rear right"
+                      ]
+                  ]
+                  Html.figure [
+                     Html.img [ prop.className "madcow"; prop.src "img/madcow-8-uturn.jpg" ] 
+                     Html.legend "u-turn"
+                  ]
+                  Html.p "When the path between the starting tile and the destination tile contains an obstacle, the mad cow has to be reoriented. If it contains a fence that is not protected, the fence is cut."
+            ]}
           { Q = [ Html.text "I didn't really get how the Mad Cow places their Hay Bales."]
             A = [ Html.text "Here is a picture to help you, it should make it more obvious."
                   Html.figure [
