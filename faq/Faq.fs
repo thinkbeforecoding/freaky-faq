@@ -49,8 +49,8 @@ let intro =
             ]
             Html.p "mais d’abord quelques liens utiles"
             Html.ul [
-                      Html.li [ Html.a [ prop.text "VIDEO RÈGLE EN 7mn"; prop.href "https://youtu.be/-uC8oUSei_Y" ]
-                                Html.text " (version PROTO... de 2016)"  ]
+                      Html.li [ Html.a [ prop.text "VIDEO RÈGLES EN 6'42\""; prop.href "https://youtu.be/TEV-ssCFjtg" ]
+                                Html.text " (Nouvelle Version 2020\xa0!)"  ]
                       Html.li [ Html.a [ prop.text "RÈGLES OFFICIELLES en pdf"; prop.href "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/FR-CrazyFarmers2k20RULES_v5.2.pdf"] ]
                       Html.li [ Html.a [ prop.text "LES VARIANTES"; prop.href "#variantes"] ]
                       Html.li [ Html.a [ prop.text "LA LISTE DES BOUTIQUES"; prop.href "#boutiques"] ]
@@ -82,8 +82,8 @@ let introEn =
             ]
             Html.p "First some useful links:"
             Html.ul [
-                      Html.li [ Html.a [ prop.text "VIDEO RULES IN 7mn"; prop.href "https://youtu.be/-uC8oUSei_Y" ]
-                                Html.text " (PROTO version... from 2016, in french but you can activate subtitles)"  ]
+                      Html.li [ Html.a [ prop.text "VIDEO RULES IN 6'42\""; prop.href "https://youtu.be/TEV-ssCFjtg" ]
+                                Html.text " (New version 2020! In french but you can activate subtitles)"  ]
                       Html.li [ Html.a [ prop.text "OFFICIAL RULES in pdf"; prop.href "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/EN-CrazyFarmers2k20RULES_v3.2.pdf"] ]
                       Html.li [ Html.a [ prop.text "VARIANTES"; prop.href "#en/variants"] ]
                       Html.li [ Html.a [ prop.text "GAME STORES"; prop.href "#en/gamestores"] ]
