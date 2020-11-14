@@ -193,7 +193,11 @@ h3 {
 
 figure {
     text-align: center;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-evenly;
 }
+
 
 
 
@@ -212,6 +216,11 @@ a, a:visited {
 figure div {
     display: inline-block;
 }
+figure img {
+    margin-bottom: 0.5em;
+}
+
+
 
 img.madcow {
     width: 10em;

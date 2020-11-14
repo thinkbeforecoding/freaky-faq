@@ -14,6 +14,7 @@ type Page =
   | GameStores
   | Variants
   | Videos
+  | Makers
 
 let parsePage url =
   match url with
@@ -23,10 +24,12 @@ let parsePage url =
   | ["en";"assembly"] -> Some En, Some Assembly
   | ["boutiques"] -> Some Fr, Some GameStores
   | ["videos"] -> Some Fr, Some Videos
+  | ["makers"] -> Some Fr, Some Makers
   | [ "en"; "gamestores"] -> Some En, Some GameStores
   | [ "variantes"] -> Some Fr, Some Variants
   | [ "en"; "variants"] -> Some En, Some Variants
   | [ "en"; "videos"] -> Some En, Some Videos
+  | [ "en"; "makers"] -> Some En, Some Makers
   | "en":: _ -> Some En, None
   | _ -> None, None
 
@@ -37,11 +40,13 @@ let pageLink lang page =
   | Fr, Variants -> Router.format("variantes")
   | Fr, GameStores -> Router.format("boutiques")
   | Fr, Videos -> Router.format("videos")
+  | Fr, Makers -> Router.format("makers")
   | En, Faq -> Router.format("en")
   | En, Assembly -> Router.format("en","assembly")
   | En, Variants -> Router.format("en","variants")
   | En, GameStores -> Router.format("en", "gamestores")
   | En, Videos -> Router.format("en", "videos")
+  | En, Makers -> Router.format("en","makers")
 
 type Question =
     { Q: ReactElement list
@@ -91,6 +96,7 @@ let intro =
                       Html.li [ Html.a [ prop.text "LES VARIANTES"; prop.href "#variantes"] ]
                       Html.li [ Html.a [ prop.text "LA LISTE DES BOUTIQUES"; prop.href "#boutiques"] ]
                       Html.li [ Html.a [ prop.text "LES INSTRUCTIONS DE MONTAGE"; prop.href "#assembly"] ]
+                      Html.li [ Html.a [ prop.text "LE COIN DES MAKERS"; prop.href (pageLink Fr Makers)] ]
                       Html.li [ Html.a [ prop.text "LA PAGE FACEBOOK DES AUTEURS"; prop.href "https://www.facebook.com/CrazyFarmersLeJeu"];
                                 Html.text " (sur laquelle vous pouvez nous envoyer vos questions, remarques, photos rigolotes… en MP ou directement sur la page)" ]
                       Html.li [ Html.a [ prop.text "LA PAGE FACEBOOK DE THE FREAKY 42"; prop.href "https://www.facebook.com/TheFreaky42"] 
@@ -125,6 +131,7 @@ let introEn =
                       Html.li [ Html.a [ prop.text "VARIANTES"; prop.href "#en/variants"] ]
                       Html.li [ Html.a [ prop.text "GAME STORES"; prop.href "#en/gamestores"] ]
                       Html.li [ Html.a [ prop.text "ASSEMBLY INSTRUCTIONS"; prop.href "#en/assembly"] ]
+                      Html.li [ Html.a [ prop.text "MAKERS' CORNER"; prop.href (pageLink En Makers)] ]
                       Html.li [ Html.a [ prop.text "AUTHORS' FACEBOOK PAGE"; prop.href "https://www.facebook.com/CrazyFarmersLeJeu"];
                                 Html.text " (where you can send your questions, remarks, crazy pictures… PM or directly on the page)" ]
                       Html.li [ Html.a [ prop.text "THE FREAKY 42'S FACEBOOK PAGE"; prop.href "https://www.facebook.com/TheFreaky42"] 
@@ -400,9 +407,11 @@ let cow =
                   Html.p "En partant de la position suivante:"
                   Html.figure [ Html.img [ prop.src "img/madcow-0-start.jpg"; prop.style [ style.width (length.em 10) ]] ]
                   Html.p "Voici pour chaque type de carte la position et l'orientation finale:" 
-                  Html.figure [ 
+                  Html.figure [
+                    Html.div [
                      Html.img [ prop.className "madcow"; prop.src "img/madcow-1-forward.jpg" ] 
                      Html.legend "en avant"
+                    ]
                   ]
                   Html.figure [
                     Html.div [ 
@@ -435,8 +444,10 @@ let cow =
                       ]
                   ]
                   Html.figure [
+                    Html.div [
                      Html.img [ prop.className "madcow"; prop.src "img/madcow-8-uturn.jpg" ] 
                      Html.legend "demi tour"
+                    ]
                   ]
                   Html.p "Si le chemin entre la parcelle de départ de la vache et celle d'arrivée contient un obstacle, la vache doit se réorienter. Si il contient une clôture non protégée, celle-ci est coupée."
             ]}
@@ -465,8 +476,10 @@ let cowEn =
                   Html.figure [ Html.img [ prop.src "img/madcow-0-start.jpg"; prop.style [ style.width (length.em 10) ]] ]
                   Html.p "Here is for each move type the final position and orientation:" 
                   Html.figure [ 
+                    Html.div [
                      Html.img [ prop.className "madcow"; prop.src "img/madcow-1-forward.jpg" ] 
                      Html.legend "forward"
+                    ]
                   ]
                   Html.figure [
                     Html.div [ 
@@ -499,8 +512,10 @@ let cowEn =
                       ]
                   ]
                   Html.figure [
+                    Html.div [
                      Html.img [ prop.className "madcow"; prop.src "img/madcow-8-uturn.jpg" ] 
                      Html.legend "u-turn"
+                    ]
                   ]
                   Html.p "When the path between the starting tile and the destination tile contains an obstacle, the mad cow has to be reoriented. If it contains a fence that is not protected, the fence is cut."
             ]}
@@ -709,6 +724,7 @@ let montageFr =
     ]
   ]
 
+
 let montageEn =
   Html.div [
     prop.children [
@@ -777,14 +793,146 @@ let montageEn =
     
     
   ]
+
 module prop =
   let frameborder (value: int) =
         prop.custom("frameborder", value)
   let allow (value: string) =
         prop.custom("allow", value)
-  let allowfullscreen =
-      prop.custom("allowfullscreen","")
+  let allowfullscreen (value:bool) =
+      prop.custom("allowfullscreen", if value then "true" else "false")
+  let scrolling (value: string) =
+      prop.custom("scrolling",value)
 
+
+let makersFr =
+  Html.div [
+    prop.children [
+      Html.h1 [ prop.text "Le coin des Makers"]
+      Html.h2 "Insert"
+
+      Html.div [
+        prop.className "intro"
+        prop.children [
+          Html.a [ prop.href "https://www.facebook.com/Kashi3D"; prop.text "Kashi 3D" ]
+          Html.text " a réalisé un "
+          Html.a [ prop.href "https://www.facebook.com/Kashi3D/posts/102622451670082"; prop.text "INCROYABLE insert"]
+          Html.text " pour la boite de Crazy Farmers:"
+          Html.figure [
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125324010_102621238336870_1470170402172363631_o.jpg?_nc_cat=105&ccb=2&_nc_sid=730e14&_nc_ohc=HNLnzecUyZYAX8dBzPX&_nc_ht=scontent-bru2-1.xx&oh=6be3f5cf590ad920f2d3977c72d9b105&oe=5FD6D6C6" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125237042_102621258336868_2771305653774885088_o.jpg?_nc_cat=103&ccb=2&_nc_sid=730e14&_nc_ohc=dWYSMZKwcuwAX94eXoB&_nc_ht=scontent-bru2-1.xx&oh=9c95612101c8044d3497f6bb54fe5e4f&oe=5FD419E9" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125232017_102621251670202_638308216677885424_o.jpg?_nc_cat=110&ccb=2&_nc_sid=730e14&_nc_ohc=VOoYermBlNMAX-PktWC&_nc_ht=scontent-bru2-1.xx&oh=f57be5ab183e60dee3f74149a6c515ac&oe=5FD4D8B1" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125312005_102621195003541_6063707372507633864_o.jpg?_nc_cat=102&ccb=2&_nc_sid=730e14&_nc_ohc=v-cThj7prFgAX8hloBx&_nc_ht=scontent-bru2-1.xx&oh=2a984979b5e13b34c4371adaf765a2cc&oe=5FD3E8A4" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125084623_102621158336878_2022315872859104225_o.jpg?_nc_cat=107&ccb=2&_nc_sid=730e14&_nc_ohc=PLVMZ5BnF-8AX9y0qDQ&_nc_ht=scontent-bru2-1.xx&oh=94056c8260eafdbe3c0f5948cdfa1c8d&oe=5FD5CFBB" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125183432_102621208336873_4643605993977201047_o.jpg?_nc_cat=104&ccb=2&_nc_sid=730e14&_nc_ohc=YkTlPQkn7MQAX_r1nIa&_nc_ht=scontent-bru2-1.xx&oh=e013607bf02b7364cec43e918793db42&oe=5FD3E601" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125354377_102621281670199_5468288408934105549_o.jpg?_nc_cat=105&ccb=2&_nc_sid=730e14&_nc_ohc=M8IaKV5xG6QAX9UIC6Q&_nc_ht=scontent-bru2-1.xx&oh=3c181c319c42063bee1f8ddfa9bdeca2&oe=5FD5097E" 
+                       prop.style [ style.width (length.em 20)]]
+          ]
+          Html.text "Si vous êtes intéressé, n'hésitez pas à le contacter."
+        ]
+      ]
+
+      Html.h2 "Origami"
+      Html.text "Pour ceux qui n'ont pas d'imprimante 3D, et qui prefèrent plier du papier, "
+      Html.a [ prop.href "https://www.facebook.com/FabriceMalga"; prop.text "Fabrice Malga"]
+      Html.text " a réalisé "
+      Html.a [ prop.href "https://www.facebook.com/groups/406940570021633/permalink/644834316232256"; prop.text "un ensemble de boites en origami"]
+      Html.text " pour ranger le matériel."
+
+      Html.figure [
+        Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/122760335_10159021582278573_3361773235691061182_o.jpg?_nc_cat=109&ccb=2&_nc_sid=730e14&_nc_ohc=2scprdddI-sAX8DSp0a&_nc_ht=scontent-bru2-1.xx&oh=596b4524cf8f13e9eed38742566ca4ac&oe=5FD45E1D"
+                   prop.style [style.width (length.em 20)]]
+        Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/123082210_10159021582313573_1720017841932097342_o.jpg?_nc_cat=105&ccb=2&_nc_sid=730e14&_nc_ohc=c3yjwVXW7s4AX-jT2Vf&_nc_ht=scontent-bru2-1.xx&oh=2ae599e631b43c37fb8944fbbcc6907c&oe=5FD43A41"
+                   prop.style [style.width (length.em 20)]]
+        Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/122812829_10159021582343573_6274609562151583051_o.jpg?_nc_cat=103&ccb=2&_nc_sid=730e14&_nc_ohc=i6FFw77vLFcAX-spEmL&_nc_ht=scontent-bru2-1.xx&oh=960e8230c560d08da881bc27063a08d7&oe=5FD6DBB8"
+                   prop.style [style.width (length.em 20)]]
+        Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/122752685_10159021582433573_417580108166458123_o.jpg?_nc_cat=109&ccb=2&_nc_sid=730e14&_nc_ohc=dUHcJCI-UIcAX-6jVlE&_nc_ht=scontent-bru2-1.xx&oh=e511906204b52d7e7933e99681dd8a41&oe=5FD3EF94"
+                   prop.style [style.width (length.em 20)]]
+      ]
+
+      Html.h2 "Tracteurs"
+      Html.p [
+        Html.text "Nicolas H. a utilisé un model en Creative Commons disponible sur "
+        Html.a [ prop.text "thingiverse"; prop.href "https://www.thingiverse.com/thing:2490769" ]
+        Html.text " pour se faire des tracteurs plus réalistes. Le tout en bioplastique (PLA) bio-dégradable bien sur\xa0!"
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/tractor-3d.jpg"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
+    ]
+  ]
+
+
+let makersEn =
+  Html.div [
+    prop.children [
+      Html.h1 [ prop.text "Makers' corner"]
+      Html.h2 "Filler"
+
+      Html.div [
+        prop.className "intro"
+        prop.children [
+          Html.a [ prop.href "https://www.facebook.com/Kashi3D"; prop.text "Kashi 3D" ]
+          Html.text " has created an "
+          Html.a [ prop.href "https://www.facebook.com/Kashi3D/posts/102622451670082"; prop.text "INCREDIBLE filler"]
+          Html.text " for Crazy Farmers' box:"
+          Html.figure [
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125324010_102621238336870_1470170402172363631_o.jpg?_nc_cat=105&ccb=2&_nc_sid=730e14&_nc_ohc=HNLnzecUyZYAX8dBzPX&_nc_ht=scontent-bru2-1.xx&oh=6be3f5cf590ad920f2d3977c72d9b105&oe=5FD6D6C6" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125237042_102621258336868_2771305653774885088_o.jpg?_nc_cat=103&ccb=2&_nc_sid=730e14&_nc_ohc=dWYSMZKwcuwAX94eXoB&_nc_ht=scontent-bru2-1.xx&oh=9c95612101c8044d3497f6bb54fe5e4f&oe=5FD419E9" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125232017_102621251670202_638308216677885424_o.jpg?_nc_cat=110&ccb=2&_nc_sid=730e14&_nc_ohc=VOoYermBlNMAX-PktWC&_nc_ht=scontent-bru2-1.xx&oh=f57be5ab183e60dee3f74149a6c515ac&oe=5FD4D8B1" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125312005_102621195003541_6063707372507633864_o.jpg?_nc_cat=102&ccb=2&_nc_sid=730e14&_nc_ohc=v-cThj7prFgAX8hloBx&_nc_ht=scontent-bru2-1.xx&oh=2a984979b5e13b34c4371adaf765a2cc&oe=5FD3E8A4" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125084623_102621158336878_2022315872859104225_o.jpg?_nc_cat=107&ccb=2&_nc_sid=730e14&_nc_ohc=PLVMZ5BnF-8AX9y0qDQ&_nc_ht=scontent-bru2-1.xx&oh=94056c8260eafdbe3c0f5948cdfa1c8d&oe=5FD5CFBB" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125183432_102621208336873_4643605993977201047_o.jpg?_nc_cat=104&ccb=2&_nc_sid=730e14&_nc_ohc=YkTlPQkn7MQAX_r1nIa&_nc_ht=scontent-bru2-1.xx&oh=e013607bf02b7364cec43e918793db42&oe=5FD3E601" 
+                       prop.style [ style.width (length.em 20)]]
+            Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/125354377_102621281670199_5468288408934105549_o.jpg?_nc_cat=105&ccb=2&_nc_sid=730e14&_nc_ohc=M8IaKV5xG6QAX9UIC6Q&_nc_ht=scontent-bru2-1.xx&oh=3c181c319c42063bee1f8ddfa9bdeca2&oe=5FD5097E" 
+                       prop.style [ style.width (length.em 20)]]
+          ]
+          Html.text "Don't hesitate to contact him to get the models."
+          ]
+        ]
+
+      Html.h2 "Origami"
+      Html.text "You don't own a 3D printer, and you prefer folding paper? "
+      Html.a [ prop.href "https://www.facebook.com/FabriceMalga"; prop.text "Fabrice Malga"]
+      Html.text " created an "
+      Html.a [ prop.href "https://www.facebook.com/groups/406940570021633/permalink/644834316232256"; prop.text "origami box set"]
+      Html.text " to store your game."
+
+      Html.figure [
+        Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/122760335_10159021582278573_3361773235691061182_o.jpg?_nc_cat=109&ccb=2&_nc_sid=730e14&_nc_ohc=2scprdddI-sAX8DSp0a&_nc_ht=scontent-bru2-1.xx&oh=596b4524cf8f13e9eed38742566ca4ac&oe=5FD45E1D"
+                   prop.style [style.width (length.em 20)]]
+        Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/123082210_10159021582313573_1720017841932097342_o.jpg?_nc_cat=105&ccb=2&_nc_sid=730e14&_nc_ohc=c3yjwVXW7s4AX-jT2Vf&_nc_ht=scontent-bru2-1.xx&oh=2ae599e631b43c37fb8944fbbcc6907c&oe=5FD43A41"
+                   prop.style [style.width (length.em 20)]]
+        Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/122812829_10159021582343573_6274609562151583051_o.jpg?_nc_cat=103&ccb=2&_nc_sid=730e14&_nc_ohc=i6FFw77vLFcAX-spEmL&_nc_ht=scontent-bru2-1.xx&oh=960e8230c560d08da881bc27063a08d7&oe=5FD6DBB8"
+                   prop.style [style.width (length.em 20)]]
+        Html.img [ prop.src "https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/122752685_10159021582433573_417580108166458123_o.jpg?_nc_cat=109&ccb=2&_nc_sid=730e14&_nc_ohc=dUHcJCI-UIcAX-6jVlE&_nc_ht=scontent-bru2-1.xx&oh=e511906204b52d7e7933e99681dd8a41&oe=5FD3EF94"
+                   prop.style [style.width (length.em 20)]]
+      ]
+
+      Html.h2 "Tractors"
+      Html.p [
+        Html.text "Nicolas H. used a Creative Commons model available on "
+        Html.a [ prop.text "thingiverse"; prop.href "https://www.thingiverse.com/thing:2490769" ]
+        Html.text " for more realistic tractors. Using bioplastic (PLA) of course!"
+      ]
+      Html.figure [
+          Html.img [ prop.src "./img/tractor-3d.jpg"
+                     prop.style [ style.width (length.em 20)] ]
+        ]
+    ]
+  ]
 let youtube url =
   Html.div [
       prop.className "video"
@@ -798,7 +946,7 @@ let youtube url =
               prop.src url
               prop.frameborder 0
               prop.allow "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              prop.allowfullscreen ] ] ] ] ]
+              prop.allowfullscreen true ] ] ] ] ]
 
 let videos =
   Html.div [
@@ -930,6 +1078,7 @@ let render state dispatch =
                      menuItem state "Variantes" Variants
                      menuItem state "Boutiques" GameStores
                      menuItem state "Montage" Assembly
+                     menuItem state "Makers" Makers
                    ]]
                  | En ->
                     Html.nav [ prop.children [
@@ -937,7 +1086,7 @@ let render state dispatch =
                      menuItem state "Videos" Videos
                      menuItem state "Variants" Variants
                      menuItem state "Game Stores" GameStores
-                     menuItem state "Assembly" Assembly
+                     menuItem state "Makers" Makers
                    ]]
                ]
                Html.div [
@@ -973,6 +1122,7 @@ let render state dispatch =
              | Fr, Variants -> variantes
              | Fr, GameStores -> boutiques
              | Fr, Assembly -> montageFr
+             | Fr, Makers -> makersFr
              | En, Faq ->
                   introEn
                   section fieldEn
@@ -988,6 +1138,7 @@ let render state dispatch =
              | En, Variants -> variantesEn
              | En, GameStores -> boutiquesEn
              | En, Assembly -> montageEn
+             | En, Makers -> makersEn
           ]
         ]
     ]
