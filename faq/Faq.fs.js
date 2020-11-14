@@ -1,16 +1,210 @@
-import { Union, Record } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/Types.js";
-import { union_type, string_type, record_type, list_type, class_type } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/Reflection.js";
+import { Record, Union } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/Types.js";
+import { string_type, record_type, list_type, class_type, union_type } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/Reflection.js";
+import { RouterModule_router, RouterModule_urlSegments, RouterModule_encodeParts } from "./.fable/Feliz.Router.3.2.0/Router.fs.js";
+import { empty, ofSeq, singleton, ofArray } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/List.js";
 import { React_functionComponent_2F9D7239 } from "./.fable/Feliz.1.16.0/React.fs.js";
 import { mkStyle, mkAttr, reactApi, reactElement } from "./.fable/Feliz.1.16.0/Interop.fs.js";
 import { createObj } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/Util.js";
-import { empty, ofSeq, ofArray, singleton } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/List.js";
-import { singleton as singleton_1, append, map, delay } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/Seq.js";
+import { append, singleton as singleton_1, map, delay } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/Seq.js";
 import { join } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/String.js";
-import { RouterModule_router, RouterModule_encodeParts, RouterModule_urlSegments } from "./.fable/Feliz.Router.3.2.0/Router.fs.js";
 import { defaultArg } from "./.fable/fable-library.3.0.0-nagareyama-rc-006/Option.js";
 import * as react from "react";
 import { ProgramModule_run, ProgramModule_mkSimple } from "./.fable/Fable.Elmish.3.1.0/program.fs.js";
 import { Program_withReactSynchronous } from "./.fable/Fable.Elmish.React.3.0.1/react.fs.js";
+
+export class Lang extends Union {
+    constructor(tag, ...fields) {
+        super();
+        this.tag = (tag | 0);
+        this.fields = fields;
+    }
+    cases() {
+        return ["Fr", "En"];
+    }
+}
+
+export function Lang$reflection() {
+    return union_type("Faq.Lang", [], Lang, () => [[], []]);
+}
+
+export class Page extends Union {
+    constructor(tag, ...fields) {
+        super();
+        this.tag = (tag | 0);
+        this.fields = fields;
+    }
+    cases() {
+        return ["Faq", "Assembly", "GameStores", "Variants", "Videos"];
+    }
+}
+
+export function Page$reflection() {
+    return union_type("Faq.Page", [], Page, () => [[], [], [], [], []]);
+}
+
+export function parsePage(url) {
+    let pattern_matching_result;
+    if (url.tail != null) {
+        if (url.head === "en") {
+            if (url.tail.tail != null) {
+                if (url.tail.head === "assembly") {
+                    if (url.tail.tail.tail == null) {
+                        pattern_matching_result = 3;
+                    }
+                    else {
+                        pattern_matching_result = 10;
+                    }
+                }
+                else if (url.tail.head === "gamestores") {
+                    if (url.tail.tail.tail == null) {
+                        pattern_matching_result = 6;
+                    }
+                    else {
+                        pattern_matching_result = 10;
+                    }
+                }
+                else if (url.tail.head === "variants") {
+                    if (url.tail.tail.tail == null) {
+                        pattern_matching_result = 8;
+                    }
+                    else {
+                        pattern_matching_result = 10;
+                    }
+                }
+                else if (url.tail.head === "videos") {
+                    if (url.tail.tail.tail == null) {
+                        pattern_matching_result = 9;
+                    }
+                    else {
+                        pattern_matching_result = 10;
+                    }
+                }
+                else {
+                    pattern_matching_result = 10;
+                }
+            }
+            else {
+                pattern_matching_result = 1;
+            }
+        }
+        else if (url.head === "assembly") {
+            if (url.tail.tail == null) {
+                pattern_matching_result = 2;
+            }
+            else {
+                pattern_matching_result = 11;
+            }
+        }
+        else if (url.head === "boutiques") {
+            if (url.tail.tail == null) {
+                pattern_matching_result = 4;
+            }
+            else {
+                pattern_matching_result = 11;
+            }
+        }
+        else if (url.head === "videos") {
+            if (url.tail.tail == null) {
+                pattern_matching_result = 5;
+            }
+            else {
+                pattern_matching_result = 11;
+            }
+        }
+        else if (url.head === "variantes") {
+            if (url.tail.tail == null) {
+                pattern_matching_result = 7;
+            }
+            else {
+                pattern_matching_result = 11;
+            }
+        }
+        else {
+            pattern_matching_result = 11;
+        }
+    }
+    else {
+        pattern_matching_result = 0;
+    }
+    switch (pattern_matching_result) {
+        case 0: {
+            return [new Lang(0), new Page(0)];
+        }
+        case 1: {
+            return [new Lang(1), new Page(0)];
+        }
+        case 2: {
+            return [new Lang(0), new Page(1)];
+        }
+        case 3: {
+            return [new Lang(1), new Page(1)];
+        }
+        case 4: {
+            return [new Lang(0), new Page(2)];
+        }
+        case 5: {
+            return [new Lang(0), new Page(4)];
+        }
+        case 6: {
+            return [new Lang(1), new Page(2)];
+        }
+        case 7: {
+            return [new Lang(0), new Page(3)];
+        }
+        case 8: {
+            return [new Lang(1), new Page(3)];
+        }
+        case 9: {
+            return [new Lang(1), new Page(4)];
+        }
+        case 10: {
+            return [new Lang(1), void 0];
+        }
+        case 11: {
+            return [void 0, void 0];
+        }
+    }
+}
+
+export function pageLink(lang, page) {
+    const matchValue = [lang, page];
+    if (matchValue[0].tag === 1) {
+        if (matchValue[1].tag === 1) {
+            const xs = ["en", "assembly"];
+            return RouterModule_encodeParts(ofArray(xs), 1);
+        }
+        else if (matchValue[1].tag === 3) {
+            const xs_1 = ["en", "variants"];
+            return RouterModule_encodeParts(ofArray(xs_1), 1);
+        }
+        else if (matchValue[1].tag === 2) {
+            const xs_2 = ["en", "gamestores"];
+            return RouterModule_encodeParts(ofArray(xs_2), 1);
+        }
+        else if (matchValue[1].tag === 4) {
+            const xs_3 = ["en", "videos"];
+            return RouterModule_encodeParts(ofArray(xs_3), 1);
+        }
+        else {
+            return RouterModule_encodeParts(singleton("en"), 1);
+        }
+    }
+    else if (matchValue[1].tag === 1) {
+        return RouterModule_encodeParts(singleton("assembly"), 1);
+    }
+    else if (matchValue[1].tag === 3) {
+        return RouterModule_encodeParts(singleton("variantes"), 1);
+    }
+    else if (matchValue[1].tag === 2) {
+        return RouterModule_encodeParts(singleton("boutiques"), 1);
+    }
+    else if (matchValue[1].tag === 4) {
+        return RouterModule_encodeParts(singleton("videos"), 1);
+    }
+    else {
+        return RouterModule_encodeParts(singleton(""), 1);
+    }
+}
 
 export class Question extends Record {
     constructor(Q, A) {
@@ -49,14 +243,14 @@ export const section = React_functionComponent_2F9D7239((props) => {
 });
 
 export const intro = (() => {
-    let elems, children, children_18, children_2, xs, children_4, xs_1, children_6, xs_2, children_8, xs_3, children_10, xs_4, children_12, xs_5, children_14, xs_6, children_16, xs_7;
-    const xs_8 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [reactElement("p", createObj(singleton(["children", ["2042… Sale temps pour les subventions à l’agriculture qui ont pratiquement disparu. Pour mettre du fuel dans les tracteur, les fermiers ont inventé une compétition télévisée. Mélange improbable de Monster Truck, catch mexicain et foire agricole, l’Ultimate Farming Championship (UFC pour les intimes), ce nouveau sport a rapidement trouvé sa place dans un paysage audiovisuel tout aussi dévasté."]]))), reactElement("p", createObj(singleton(["children", ["En 2043, pour fêter cette première saison de l\u0027UFC, les producteurs ont organisé cette grande Foire Agricole aux Questions !"]]))), reactElement("p", createObj(singleton(["children", ["Vous trouverez ci dessous :"]]))), (children = ofArray([reactElement("li", createObj(singleton(["children", ["Des rappels des règles et des points de précisions"]]))), reactElement("li", createObj(singleton(["children", ["Des précisions sur les Crazy Bonus"]]))), reactElement("li", createObj(singleton(["children", ["Vos questions (la Faq sera mise à jour régulièrement)"]])))]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), reactElement("p", createObj(singleton(["children", ["mais d’abord quelques liens utiles"]]))), (children_18 = ofArray([(children_2 = ofArray([(xs = ofArray([mkAttr("children", "VIDEO RÈGLES EN 6\u002742\""), mkAttr("href", "https://youtu.be/TEV-ssCFjtg")]), reactElement("a", createObj(xs))), " (Nouvelle Version 2020 !)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])))), (children_4 = singleton((xs_1 = ofArray([mkAttr("children", "RÈGLES OFFICIELLES en pdf"), mkAttr("href", "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/FR-CrazyFarmers2k20RULES_v5.2.pdf")]), reactElement("a", createObj(xs_1)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_4))])))), (children_6 = singleton((xs_2 = ofArray([mkAttr("children", "LES VARIANTES"), mkAttr("href", "#variantes")]), reactElement("a", createObj(xs_2)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_6))])))), (children_8 = singleton((xs_3 = ofArray([mkAttr("children", "LA LISTE DES BOUTIQUES"), mkAttr("href", "#boutiques")]), reactElement("a", createObj(xs_3)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_8))])))), (children_10 = singleton((xs_4 = ofArray([mkAttr("children", "LES INSTRUCTIONS DE MONTAGE"), mkAttr("href", "#assembly")]), reactElement("a", createObj(xs_4)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_10))])))), (children_12 = ofArray([(xs_5 = ofArray([mkAttr("children", "LA PAGE FACEBOOK DES AUTEURS"), mkAttr("href", "https://www.facebook.com/CrazyFarmersLeJeu")]), reactElement("a", createObj(xs_5))), " (sur laquelle vous pouvez nous envoyer vos questions, remarques, photos rigolotes… en MP ou directement sur la page)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_12))])))), (children_14 = ofArray([(xs_6 = ofArray([mkAttr("children", "LA PAGE FACEBOOK DE THE FREAKY 42"), mkAttr("href", "https://www.facebook.com/TheFreaky42")]), reactElement("a", createObj(xs_6))), " (pour ne rien rater des futurs projets)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_14))])))), (children_16 = ofArray([(xs_7 = ofArray([mkAttr("children", "CRAZY FARMERS SUR BOARDGAMEARENA"), mkAttr("href", "https://boardgamearena.com/gamepanel?game=crazyfarmers")]), reactElement("a", createObj(xs_7))), " pour jouer en ligne (cherchez iquentin et thinkb4coding pour nous défier personnellement !)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_16))]))))]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_18))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    let elems, children, children_18, children_2, xs, value_9, children_4, xs_1, children_6, xs_2, children_8, xs_3, children_10, xs_4, children_12, xs_5, children_14, xs_6, children_16, xs_7;
+    const xs_8 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [reactElement("h1", createObj(singleton(["children", ["Foire Agricole aux Questions"]]))), reactElement("p", createObj(singleton(["children", ["2042… Sale temps pour les subventions à l’agriculture qui ont pratiquement disparu. Pour mettre du fuel dans les tracteur, les fermiers ont inventé une compétition télévisée. Mélange improbable de Monster Truck, catch mexicain et foire agricole, l’Ultimate Farming Championship (UFC pour les intimes), ce nouveau sport a rapidement trouvé sa place dans un paysage audiovisuel tout aussi dévasté."]]))), reactElement("p", createObj(singleton(["children", ["En 2043, pour fêter cette première saison de l\u0027UFC, les producteurs ont organisé cette grande Foire Agricole aux Questions !"]]))), reactElement("p", createObj(singleton(["children", ["Vous trouverez ci dessous :"]]))), (children = ofArray([reactElement("li", createObj(singleton(["children", ["Des rappels des règles et des points de précisions"]]))), reactElement("li", createObj(singleton(["children", ["Des précisions sur les Crazy Bonus"]]))), reactElement("li", createObj(singleton(["children", ["Vos questions (la Faq sera mise à jour régulièrement)"]])))]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), reactElement("p", createObj(singleton(["children", ["mais d’abord quelques liens utiles"]]))), (children_18 = ofArray([(children_2 = ofArray([(xs = ofArray([mkAttr("children", "VIDEO RÈGLES EN 6\u002742\""), (value_9 = pageLink(new Lang(0), new Page(4)), mkAttr("href", value_9))]), reactElement("a", createObj(xs))), " (Nouvelle Version 2020 !)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])))), (children_4 = singleton((xs_1 = ofArray([mkAttr("children", "RÈGLES OFFICIELLES en pdf"), mkAttr("href", "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/FR-CrazyFarmers2k20RULES_v5.2.pdf")]), reactElement("a", createObj(xs_1)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_4))])))), (children_6 = singleton((xs_2 = ofArray([mkAttr("children", "LES VARIANTES"), mkAttr("href", "#variantes")]), reactElement("a", createObj(xs_2)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_6))])))), (children_8 = singleton((xs_3 = ofArray([mkAttr("children", "LA LISTE DES BOUTIQUES"), mkAttr("href", "#boutiques")]), reactElement("a", createObj(xs_3)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_8))])))), (children_10 = singleton((xs_4 = ofArray([mkAttr("children", "LES INSTRUCTIONS DE MONTAGE"), mkAttr("href", "#assembly")]), reactElement("a", createObj(xs_4)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_10))])))), (children_12 = ofArray([(xs_5 = ofArray([mkAttr("children", "LA PAGE FACEBOOK DES AUTEURS"), mkAttr("href", "https://www.facebook.com/CrazyFarmersLeJeu")]), reactElement("a", createObj(xs_5))), " (sur laquelle vous pouvez nous envoyer vos questions, remarques, photos rigolotes… en MP ou directement sur la page)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_12))])))), (children_14 = ofArray([(xs_6 = ofArray([mkAttr("children", "LA PAGE FACEBOOK DE THE FREAKY 42"), mkAttr("href", "https://www.facebook.com/TheFreaky42")]), reactElement("a", createObj(xs_6))), " (pour ne rien rater des futurs projets)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_14))])))), (children_16 = ofArray([(xs_7 = ofArray([mkAttr("children", "CRAZY FARMERS SUR BOARDGAMEARENA"), mkAttr("href", "https://boardgamearena.com/gamepanel?game=crazyfarmers")]), reactElement("a", createObj(xs_7))), " pour jouer en ligne (cherchez iquentin et thinkb4coding pour nous défier personnellement !)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_16))]))))]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_18))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
     return reactElement("div", createObj(xs_8));
 })();
 
 export const introEn = (() => {
-    let elems, children, children_18, children_2, xs, children_4, xs_1, children_6, xs_2, children_8, xs_3, children_10, xs_4, children_12, xs_5, children_14, xs_6, children_16, xs_7;
-    const xs_8 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [reactElement("p", createObj(singleton(["children", ["2042… Bad time for agricultural subsidies... To fuel up their tractors, farmers invented a new trash TV competition. Improbable mix of Monster Truck, mexican wrestling and agricultural fair, the Ultimate Farming Championship (UFC for connoisseurs). This new sport quickly found its place in this devastated  audiovisual landscape."]]))), reactElement("p", createObj(singleton(["children", ["In 2043, to celebrate the first UFC season, the productors have organised this Faire of the Agricultural Questions!"]]))), reactElement("p", createObj(singleton(["children", ["You\u0027ll find thereafter :"]]))), (children = ofArray([reactElement("li", createObj(singleton(["children", ["Rules reminders and clarifications"]]))), reactElement("li", createObj(singleton(["children", ["Precisions about Crazy Bonus"]]))), reactElement("li", createObj(singleton(["children", ["Your questions (this Faq will be updated on a regular basis)"]])))]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), reactElement("p", createObj(singleton(["children", ["First some useful links:"]]))), (children_18 = ofArray([(children_2 = ofArray([(xs = ofArray([mkAttr("children", "VIDEO RULES IN 6\u002742\""), mkAttr("href", "https://youtu.be/TEV-ssCFjtg")]), reactElement("a", createObj(xs))), " (New version 2020! In french but you can activate subtitles)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])))), (children_4 = singleton((xs_1 = ofArray([mkAttr("children", "OFFICIAL RULES in pdf"), mkAttr("href", "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/EN-CrazyFarmers2k20RULES_v3.2.pdf")]), reactElement("a", createObj(xs_1)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_4))])))), (children_6 = singleton((xs_2 = ofArray([mkAttr("children", "VARIANTES"), mkAttr("href", "#en/variants")]), reactElement("a", createObj(xs_2)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_6))])))), (children_8 = singleton((xs_3 = ofArray([mkAttr("children", "GAME STORES"), mkAttr("href", "#en/gamestores")]), reactElement("a", createObj(xs_3)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_8))])))), (children_10 = singleton((xs_4 = ofArray([mkAttr("children", "ASSEMBLY INSTRUCTIONS"), mkAttr("href", "#en/assembly")]), reactElement("a", createObj(xs_4)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_10))])))), (children_12 = ofArray([(xs_5 = ofArray([mkAttr("children", "AUTHORS\u0027 FACEBOOK PAGE"), mkAttr("href", "https://www.facebook.com/CrazyFarmersLeJeu")]), reactElement("a", createObj(xs_5))), " (where you can send your questions, remarks, crazy pictures… PM or directly on the page)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_12))])))), (children_14 = ofArray([(xs_6 = ofArray([mkAttr("children", "THE FREAKY 42\u0027S FACEBOOK PAGE"), mkAttr("href", "https://www.facebook.com/TheFreaky42")]), reactElement("a", createObj(xs_6))), " (don\u0027t miss future projects)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_14))])))), (children_16 = ofArray([(xs_7 = ofArray([mkAttr("children", "CRAZY FARMERS ON BOARDGAMEARENA"), mkAttr("href", "https://boardgamearena.com/gamepanel?game=crazyfarmers")]), reactElement("a", createObj(xs_7))), " to play online (look for iquentin and thinkb4coding to play with us!)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_16))]))))]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_18))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    let elems, children, children_18, children_2, xs, value_9, children_4, xs_1, children_6, xs_2, children_8, xs_3, children_10, xs_4, children_12, xs_5, children_14, xs_6, children_16, xs_7;
+    const xs_8 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [reactElement("h1", createObj(singleton(["children", ["Fair of the Agricultural Questions"]]))), reactElement("p", createObj(singleton(["children", ["2042… Bad time for agricultural subsidies... To fuel up their tractors, farmers invented a new trash TV competition. Improbable mix of Monster Truck, mexican wrestling and agricultural fair, the Ultimate Farming Championship (UFC for connoisseurs). This new sport quickly found its place in this devastated  audiovisual landscape."]]))), reactElement("p", createObj(singleton(["children", ["In 2043, to celebrate the first UFC season, the productors have organised this Faire of the Agricultural Questions!"]]))), reactElement("p", createObj(singleton(["children", ["You\u0027ll find thereafter :"]]))), (children = ofArray([reactElement("li", createObj(singleton(["children", ["Rules reminders and clarifications"]]))), reactElement("li", createObj(singleton(["children", ["Precisions about Crazy Bonus"]]))), reactElement("li", createObj(singleton(["children", ["Your questions (this Faq will be updated on a regular basis)"]])))]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), reactElement("p", createObj(singleton(["children", ["First some useful links:"]]))), (children_18 = ofArray([(children_2 = ofArray([(xs = ofArray([mkAttr("children", "VIDEO RULES IN 6\u002742\""), (value_9 = pageLink(new Lang(1), new Page(4)), mkAttr("href", value_9))]), reactElement("a", createObj(xs))), " (New version 2020! In french but you can activate subtitles)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])))), (children_4 = singleton((xs_1 = ofArray([mkAttr("children", "OFFICIAL RULES in pdf"), mkAttr("href", "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/EN-CrazyFarmers2k20RULES_v3.2.pdf")]), reactElement("a", createObj(xs_1)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_4))])))), (children_6 = singleton((xs_2 = ofArray([mkAttr("children", "VARIANTES"), mkAttr("href", "#en/variants")]), reactElement("a", createObj(xs_2)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_6))])))), (children_8 = singleton((xs_3 = ofArray([mkAttr("children", "GAME STORES"), mkAttr("href", "#en/gamestores")]), reactElement("a", createObj(xs_3)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_8))])))), (children_10 = singleton((xs_4 = ofArray([mkAttr("children", "ASSEMBLY INSTRUCTIONS"), mkAttr("href", "#en/assembly")]), reactElement("a", createObj(xs_4)))), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_10))])))), (children_12 = ofArray([(xs_5 = ofArray([mkAttr("children", "AUTHORS\u0027 FACEBOOK PAGE"), mkAttr("href", "https://www.facebook.com/CrazyFarmersLeJeu")]), reactElement("a", createObj(xs_5))), " (where you can send your questions, remarks, crazy pictures… PM or directly on the page)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_12))])))), (children_14 = ofArray([(xs_6 = ofArray([mkAttr("children", "THE FREAKY 42\u0027S FACEBOOK PAGE"), mkAttr("href", "https://www.facebook.com/TheFreaky42")]), reactElement("a", createObj(xs_6))), " (don\u0027t miss future projects)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_14))])))), (children_16 = ofArray([(xs_7 = ofArray([mkAttr("children", "CRAZY FARMERS ON BOARDGAMEARENA"), mkAttr("href", "https://boardgamearena.com/gamepanel?game=crazyfarmers")]), reactElement("a", createObj(xs_7))), " to play online (look for iquentin and thinkb4coding to play with us!)"]), reactElement("li", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_16))]))))]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_18))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
     return reactElement("div", createObj(xs_8));
 })();
 
@@ -223,13 +417,13 @@ export const variantesEn = (() => {
 
 export const boutiques = (() => {
     let elems, xs, children;
-    const xs_1 = singleton((elems = [(xs = ofArray([mkAttr("children", "Les boutiques"), mkAttr("id", "boutiques")]), reactElement("h1", createObj(xs))), reactElement("p", createObj(singleton(["children", ["Les boutiques ci-dessous nous ont fait confiance en participant comme vous à la campagne, vous avez la possibilité de voir avec eux s’ils sont ok pour vous réserver un exemplaire avec l’ensemble des bonus débloqués pendant la campagne :"]]))), (children = ofArray([boutique("BCD Jeux", "https://www.facebook.com/BCDJeux/"), boutique("Le Troll à 2 Têtes", "https://www.facebook.com/Trolla2Tetes/"), boutique("Esprit Jeu", "https://www.facebook.com/espritjeu/"), boutique("Thylgames", "https://www.facebook.com/Thylgames-510835646046348/"), boutique("Troll2jeux", "https://www.facebook.com/Troll2jeux/"), boutique("Cinegoodies", "https://www.facebook.com/cinegoodiesleblog/"), boutique("Le Gobelin", "https://www.facebook.com/LeGobelin.fr/")]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems)))));
+    const xs_1 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [(xs = ofArray([mkAttr("children", "Les boutiques"), mkAttr("id", "boutiques")]), reactElement("h1", createObj(xs))), reactElement("p", createObj(singleton(["children", ["Les boutiques ci-dessous nous ont fait confiance en participant comme vous à la campagne, vous avez la possibilité de voir avec eux s’ils sont ok pour vous réserver un exemplaire avec l’ensemble des bonus débloqués pendant la campagne :"]]))), (children = ofArray([boutique("BCD Jeux", "https://www.facebook.com/BCDJeux/"), boutique("Le Troll à 2 Têtes", "https://www.facebook.com/Trolla2Tetes/"), boutique("Esprit Jeu", "https://www.facebook.com/espritjeu/"), boutique("Thylgames", "https://www.facebook.com/Thylgames-510835646046348/"), boutique("Troll2jeux", "https://www.facebook.com/Troll2jeux/"), boutique("Cinegoodies", "https://www.facebook.com/cinegoodiesleblog/"), boutique("Le Gobelin", "https://www.facebook.com/LeGobelin.fr/")]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
     return reactElement("div", createObj(xs_1));
 })();
 
 export const boutiquesEn = (() => {
     let elems, xs, children;
-    const xs_1 = singleton((elems = [(xs = ofArray([mkAttr("children", "Game Stores"), mkAttr("id", "en/gamestores")]), reactElement("h1", createObj(xs))), reactElement("p", createObj(singleton(["children", ["The following game stores trusted us by pledging like you during the Kickstarter campaign. You can contact them to check whether they can send you a box with all the bonus unlocked during the KS:"]]))), (children = ofArray([boutique("BCD Jeux", "https://www.facebook.com/BCDJeux/"), boutique("Le Troll à 2 Têtes", "https://www.facebook.com/Trolla2Tetes/"), boutique("Esprit Jeu", "https://www.facebook.com/espritjeu/"), boutique("Thylgames", "https://www.facebook.com/Thylgames-510835646046348/"), boutique("Troll2jeux", "https://www.facebook.com/Troll2jeux/"), boutique("Cinegoodies", "https://www.facebook.com/cinegoodiesleblog/"), boutique("Le Gobelin", "https://www.facebook.com/LeGobelin.fr/")]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems)))));
+    const xs_1 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [(xs = ofArray([mkAttr("children", "Game Stores"), mkAttr("id", "en/gamestores")]), reactElement("h1", createObj(xs))), reactElement("p", createObj(singleton(["children", ["The following game stores trusted us by pledging like you during the Kickstarter campaign. You can contact them to check whether they can send you a box with all the bonus unlocked during the KS:"]]))), (children = ofArray([boutique("BCD Jeux", "https://www.facebook.com/BCDJeux/"), boutique("Le Troll à 2 Têtes", "https://www.facebook.com/Trolla2Tetes/"), boutique("Esprit Jeu", "https://www.facebook.com/espritjeu/"), boutique("Thylgames", "https://www.facebook.com/Thylgames-510835646046348/"), boutique("Troll2jeux", "https://www.facebook.com/Troll2jeux/"), boutique("Cinegoodies", "https://www.facebook.com/cinegoodiesleblog/"), boutique("Le Gobelin", "https://www.facebook.com/LeGobelin.fr/")]), reactElement("ul", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))]))))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
     return reactElement("div", createObj(xs_1));
 })();
 
@@ -245,42 +439,38 @@ export const montageEn = (() => {
     return reactElement("div", createObj(xs_21));
 })();
 
-export const rootFr = (() => {
-    let xs, elems;
-    const children = ofArray([reactElement("h1", createObj(singleton(["children", ["Foire Agricole aux Questions"]]))), (xs = ofArray([mkAttr("className", "content"), (elems = [intro, section(field), section(fence), section(move), section(powerless), section(concepts), section(rare), section(bonus), section(crazyBonus), section(cow), variantes, boutiques, montageFr], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]), reactElement("div", createObj(xs)))]);
-    return reactElement("main", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+export function prop_frameborder(value) {
+    return mkAttr("frameborder", value);
+}
+
+export function prop_allow(value) {
+    return mkAttr("allow", value);
+}
+
+export const prop_allowfullscreen = mkAttr("allowfullscreen", "");
+
+export function youtube(url) {
+    let elems_1, xs_1, elems, xs;
+    const xs_2 = ofArray([mkAttr("className", "video"), (elems_1 = [(xs_1 = ofArray([mkAttr("className", "youtube"), (elems = [(xs = ofArray([mkAttr("src", url), prop_frameborder(0), prop_allow("accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"), prop_allowfullscreen]), reactElement("iframe", createObj(xs)))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]), reactElement("div", createObj(xs_1)))], mkAttr("children", reactApi.Children.toArray(Array.from(elems_1))))]);
+    return reactElement("div", createObj(xs_2));
+}
+
+export const videos = (() => {
+    let elems, xs, xs_1, xs_2, xs_3, xs_4, xs_5, children;
+    const xs_6 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [(xs = singleton(mkAttr("children", "Vidéos")), reactElement("h1", createObj(xs))), (xs_1 = singleton(mkAttr("children", "Trailer")), reactElement("h2", createObj(xs_1))), reactElement("p", createObj(singleton(["children", [""]]))), youtube("https://www.youtube.com/embed/P0_UYCBJytw"), (xs_2 = singleton(mkAttr("children", "Règles de base")), reactElement("h2", createObj(xs_2))), reactElement("p", createObj(singleton(["children", ["Vous n\u0027aimez pas lire les règles, ou vous voulez juste vous assurer que vous avec bien compris ?"]]))), reactElement("p", createObj(singleton(["children", ["Voici toutes les règles de base en 6\u002742\""]]))), youtube("https://www.youtube.com/embed/TEV-ssCFjtg"), (xs_3 = singleton(mkAttr("children", "Bonus de base")), reactElement("h2", createObj(xs_3))), reactElement("p", createObj(singleton(["children", ["Dans cette vidéo on vous dit tout sur les bonus de base."]]))), youtube("https://www.youtube.com/embed/ytZSqPop-h0"), (xs_4 = singleton(mkAttr("children", "Jachère")), reactElement("h2", createObj(xs_4))), reactElement("p", createObj(singleton(["children", ["Votre champ est coupé en plusieurs morceaux façon puzzle ? Pas de panique, c\u0027est une jachère."]]))), youtube("https://www.youtube.com/embed/gh9WXtQ9-Dk"), (xs_5 = singleton(mkAttr("children", "Mode solo")), reactElement("h2", createObj(xs_5))), (children = ofArray(["Aperçu du mode solo contre la vache folle. ", reactElement("i", createObj(singleton(["children", ["(Matériel Proto, règles finales)"]])))]), reactElement("p", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), youtube("https://www.youtube.com/embed/kQF0SveGmLo")], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObj(xs_6));
 })();
 
-export const rootEn = (() => {
-    let xs, elems;
-    const children = ofArray([reactElement("h1", createObj(singleton(["children", ["Fair of the Agricultural Questions"]]))), (xs = ofArray([mkAttr("className", "content"), (elems = [introEn, section(fieldEn), section(fenceEn), section(moveEn), section(powerlessEn), section(conceptsEn), section(rareEn), section(bonusEn), section(crazyBonusEn), section(cowEn), variantesEn, boutiquesEn, montageEn], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]), reactElement("div", createObj(xs)))]);
-    return reactElement("main", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+export const videosEn = (() => {
+    let elems, xs, xs_1, xs_2, children, xs_3, children_2, xs_4, children_4, xs_5, children_6;
+    const xs_6 = ofArray([mkAttr("className", join(" ", ["intro"])), (elems = [(xs = singleton(mkAttr("children", "Videos")), reactElement("h1", createObj(xs))), (xs_1 = singleton(mkAttr("children", "Trailer")), reactElement("h2", createObj(xs_1))), youtube("https://www.youtube.com/embed/rKIPQbl7Ojk"), (xs_2 = singleton(mkAttr("children", "Basic Rules")), reactElement("h2", createObj(xs_2))), reactElement("p", createObj(singleton(["children", ["You don\u0027t like to read the rules, or you\u0027d just like to check you got it right?"]]))), (children = ofArray(["Learn all the basic rules in 6\u002742\". ", reactElement("i", createObj(singleton(["children", ["(Fr / Activate subtitles)"]])))]), reactElement("p", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), youtube("https://www.youtube.com/embed/TEV-ssCFjtg"), (xs_3 = singleton(mkAttr("children", "Basic bonus cards")), reactElement("h2", createObj(xs_3))), (children_2 = ofArray(["Everything you need to know about basic bonus cards. ", reactElement("i", createObj(singleton(["children", ["(Fr / Activate subtitles)"]])))]), reactElement("p", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_2))])))), youtube("https://www.youtube.com/embed/ytZSqPop-h0"), (xs_4 = singleton(mkAttr("children", "Fallow land")), reactElement("h2", createObj(xs_4))), (children_4 = ofArray(["Your field is shattered in several pieces, puzzle style? Don\u0027t panic, it\u0027s just a fallow land. ", reactElement("i", createObj(singleton(["children", ["(Fr / Activate subtitles)"]])))]), reactElement("p", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_4))])))), youtube("https://www.youtube.com/embed/gh9WXtQ9-Dk"), (xs_5 = singleton(mkAttr("children", "Solo mode")), reactElement("h2", createObj(xs_5))), (children_6 = ofArray(["Overview of the solo mode against the mad cow. ", reactElement("i", createObj(singleton(["children", ["(En / Prototype tokens, final rules)"]])))]), reactElement("p", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children_6))])))), youtube("https://www.youtube.com/embed/S-CRZTObWFs")], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))]);
+    return reactElement("div", createObj(xs_6));
 })();
 
-export class Lang extends Union {
-    constructor(tag, ...fields) {
-        super();
-        this.tag = (tag | 0);
-        this.fields = fields;
-    }
-    cases() {
-        return ["Fr", "En"];
-    }
-}
-
-export function Lang$reflection() {
-    return union_type("Faq.Lang", [], Lang, () => [[], []]);
-}
-
-export class State extends Record {
-    constructor(Lang) {
-        super();
-        this.Lang = Lang;
-    }
-}
-
-export function State$reflection() {
-    return record_type("Faq.State", [], State, () => [["Lang", Lang$reflection()]]);
+export function root(content) {
+    let xs;
+    const children = singleton((xs = ofArray([mkAttr("className", "content"), mkAttr("children", reactApi.Children.toArray(Array.from(content)))]), reactElement("div", createObj(xs))));
+    return reactElement("main", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
 }
 
 export class Msg extends Union {
@@ -298,34 +488,44 @@ export function Msg$reflection() {
     return union_type("Faq.Msg", [], Msg, () => [[["Item", list_type(string_type)]]]);
 }
 
-export function parseUrlLang(url) {
-    if (url.tail != null) {
-        if (url.head === "en") {
-            return new Lang(1);
-        }
-        else {
-            return void 0;
-        }
-    }
-    else {
-        return new Lang(0);
+export class State extends Record {
+    constructor(Lang, Page) {
+        super();
+        this.Lang = Lang;
+        this.Page = Page;
     }
 }
 
+export function State$reflection() {
+    return record_type("Faq.State", [], State, () => [["Lang", Lang$reflection()], ["Page", Page$reflection()]]);
+}
+
 export function init() {
-    let option, url;
-    return new State((option = (url = RouterModule_urlSegments(window.location.hash, 1), (parseUrlLang(url))), (defaultArg(option, new Lang(0)))));
+    const patternInput = parsePage(RouterModule_urlSegments(window.location.hash, 1));
+    const page = patternInput[1];
+    const lang = patternInput[0];
+    return new State((defaultArg(lang, new Lang(0))), (defaultArg(page, new Page(0))));
 }
 
 export function update(_arg1, state) {
     const segments = _arg1.fields[0];
-    const matchValue = parseUrlLang(segments);
-    if (matchValue == null) {
-        return state;
+    const patternInput = parsePage(segments);
+    const page = patternInput[1];
+    const lang = patternInput[0];
+    let newLang;
+    if (lang == null) {
+        newLang = state;
     }
     else {
-        const lang = matchValue;
-        return new State(lang);
+        const lang_1 = lang;
+        newLang = (new State(lang_1, state.Page));
+    }
+    if (page == null) {
+        return newLang;
+    }
+    else {
+        const page_1 = page;
+        return new State(newLang.Lang, page_1);
     }
 }
 
@@ -339,20 +539,33 @@ export const enIcon = (() => {
     return reactElement("img", createObj(xs));
 })();
 
+export function menuItem(state, text, page) {
+    let xs, value;
+    const children = singleton((xs = ofArray([(value = pageLink(state.Lang, page), mkAttr("href", value)), mkAttr("children", text)]), reactElement("a", createObj(xs))));
+    return reactElement("div", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])));
+}
+
 export function render(state, dispatch) {
-    let elements;
+    let elements, xs_6, elems_5, xs, children, xs_5, elems_4;
     const props_1 = ofArray([["onUrlChanged", (arg) => {
         dispatch((new Msg(0, arg)));
-    }], (elements = ofSeq(delay(() => {
-        let children, xs_2, elems_2;
-        return append(singleton_1((children = singleton((xs_2 = ofArray([mkAttr("className", "lang"), (elems_2 = ofSeq(delay(() => {
-            let xs_1, value_2;
-            return (state.Lang.tag === 1) ? append(singleton_1((xs_1 = ofArray([(value_2 = RouterModule_encodeParts(singleton(""), 1), mkAttr("href", value_2)), mkAttr("children", reactApi.Children.toArray([frIcon]))]), reactElement("a", createObj(xs_1)))), delay(() => singleton_1(enIcon))) : append(singleton_1(frIcon), delay(() => {
-                let xs, value_1;
-                return singleton_1((xs = ofArray([(value_1 = RouterModule_encodeParts(singleton("en"), 1), mkAttr("href", value_1)), mkAttr("children", reactApi.Children.toArray([enIcon]))]), reactElement("a", createObj(xs))));
-            }));
-        })), mkAttr("children", reactApi.Children.toArray(Array.from(elems_2))))]), reactElement("div", createObj(xs_2)))), reactElement("header", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))]))))), delay(() => ((state.Lang.tag === 1) ? singleton_1(rootEn) : singleton_1(rootFr))));
-    })), ["application", react.createElement(react.Fragment, {}, ...elements)])]);
+    }], (elements = ofArray([(xs_6 = ofArray([mkAttr("className", "closed"), (elems_5 = [(xs = ofArray([mkAttr("className", "bars"), mkAttr("onClick", (e) => {
+        const header = document.getElementsByTagName("header")[0];
+        const value_2 = header.classList.toggle("closed");
+        void value_2;
+    })]), reactElement("div", createObj(xs))), (children = ofSeq(delay(() => {
+        let xs_2, elems_1, xs_1, elems;
+        return (state.Lang.tag === 1) ? singleton_1((xs_2 = singleton((elems_1 = [menuItem(state, "FAQ", new Page(0)), menuItem(state, "Videos", new Page(4)), menuItem(state, "Variants", new Page(3)), menuItem(state, "Game Stores", new Page(2)), menuItem(state, "Assembly", new Page(1))], mkAttr("children", reactApi.Children.toArray(Array.from(elems_1))))), reactElement("nav", createObj(xs_2)))) : singleton_1((xs_1 = singleton((elems = [menuItem(state, "FAQ", new Page(0)), menuItem(state, "Vidéos", new Page(4)), menuItem(state, "Variantes", new Page(3)), menuItem(state, "Boutiques", new Page(2)), menuItem(state, "Montage", new Page(1))], mkAttr("children", reactApi.Children.toArray(Array.from(elems))))), reactElement("nav", createObj(xs_1))));
+    })), reactElement("div", createObj(singleton(["children", reactApi.Children.toArray(Array.from(children))])))), (xs_5 = ofArray([mkAttr("className", "lang"), (elems_4 = ofSeq(delay(() => {
+        let xs_4, value_5;
+        return (state.Lang.tag === 1) ? append(singleton_1((xs_4 = ofArray([(value_5 = pageLink(new Lang(0), state.Page), mkAttr("href", value_5)), mkAttr("children", reactApi.Children.toArray([frIcon]))]), reactElement("a", createObj(xs_4)))), delay(() => singleton_1(enIcon))) : append(singleton_1(frIcon), delay(() => {
+            let xs_3, value_4;
+            return singleton_1((xs_3 = ofArray([(value_4 = pageLink(new Lang(1), state.Page), mkAttr("href", value_4)), mkAttr("children", reactApi.Children.toArray([enIcon]))]), reactElement("a", createObj(xs_3))));
+        }));
+    })), mkAttr("children", reactApi.Children.toArray(Array.from(elems_4))))]), reactElement("div", createObj(xs_5)))], mkAttr("children", reactApi.Children.toArray(Array.from(elems_5))))]), reactElement("header", createObj(xs_6))), root(ofSeq(delay(() => {
+        const matchValue_2 = [state.Lang, state.Page];
+        return (matchValue_2[0].tag === 1) ? ((matchValue_2[1].tag === 4) ? singleton_1(videosEn) : ((matchValue_2[1].tag === 3) ? singleton_1(variantesEn) : ((matchValue_2[1].tag === 2) ? singleton_1(boutiquesEn) : ((matchValue_2[1].tag === 1) ? singleton_1(montageEn) : append(singleton_1(introEn), delay(() => append(singleton_1(section(fieldEn)), delay(() => append(singleton_1(section(fenceEn)), delay(() => append(singleton_1(section(moveEn)), delay(() => append(singleton_1(section(powerlessEn)), delay(() => append(singleton_1(section(conceptsEn)), delay(() => append(singleton_1(section(rareEn)), delay(() => append(singleton_1(section(bonusEn)), delay(() => append(singleton_1(section(crazyBonusEn)), delay(() => singleton_1(section(cowEn)))))))))))))))))))))))) : ((matchValue_2[1].tag === 4) ? singleton_1(videos) : ((matchValue_2[1].tag === 3) ? singleton_1(variantes) : ((matchValue_2[1].tag === 2) ? singleton_1(boutiques) : ((matchValue_2[1].tag === 1) ? singleton_1(montageFr) : append(singleton_1(intro), delay(() => append(singleton_1(section(field)), delay(() => append(singleton_1(section(fence)), delay(() => append(singleton_1(section(move)), delay(() => append(singleton_1(section(powerless)), delay(() => append(singleton_1(section(concepts)), delay(() => append(singleton_1(section(rare)), delay(() => append(singleton_1(section(bonus)), delay(() => append(singleton_1(section(crazyBonus)), delay(() => singleton_1(section(cow))))))))))))))))))))))));
+    })))]), ["application", react.createElement(react.Fragment, {}, ...elements)])]);
     return RouterModule_router(createObj(props_1));
 }
 

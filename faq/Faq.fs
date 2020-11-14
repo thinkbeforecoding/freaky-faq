@@ -6,6 +6,42 @@ open Browser.Dom
 open Elmish
 open Elmish.React
 
+type Lang = Fr | En
+
+type Page =
+  | Faq
+  | Assembly
+  | GameStores
+  | Variants
+  | Videos
+
+let parsePage url =
+  match url with
+  | [] -> Some Fr, Some Faq
+  | ["en"] -> Some En, Some Faq
+  | ["assembly"] -> Some Fr, Some Assembly
+  | ["en";"assembly"] -> Some En, Some Assembly
+  | ["boutiques"] -> Some Fr, Some GameStores
+  | ["videos"] -> Some Fr, Some Videos
+  | [ "en"; "gamestores"] -> Some En, Some GameStores
+  | [ "variantes"] -> Some Fr, Some Variants
+  | [ "en"; "variants"] -> Some En, Some Variants
+  | [ "en"; "videos"] -> Some En, Some Videos
+  | "en":: _ -> Some En, None
+  | _ -> None, None
+
+let pageLink lang page =
+  match lang, page with
+  | Fr, Faq -> Router.format("")
+  | Fr, Assembly -> Router.format("assembly")
+  | Fr, Variants -> Router.format("variantes")
+  | Fr, GameStores -> Router.format("boutiques")
+  | Fr, Videos -> Router.format("videos")
+  | En, Faq -> Router.format("en")
+  | En, Assembly -> Router.format("en","assembly")
+  | En, Variants -> Router.format("en","variants")
+  | En, GameStores -> Router.format("en", "gamestores")
+  | En, Videos -> Router.format("en", "videos")
 
 type Question =
     { Q: ReactElement list
@@ -32,11 +68,11 @@ let section = React.functionComponent(fun (props: Section) ->
         ]
     ])
 
-
 let intro = 
     Html.div [
         prop.classes ["intro"]
         prop.children [
+            Html.h1 "Foire Agricole aux Questions"
             Html.p "2042… Sale temps pour les subventions à l’agriculture qui ont pratiquement disparu. Pour mettre du fuel dans les tracteur, les fermiers ont inventé une compétition télévisée. Mélange improbable de Monster Truck, catch mexicain et foire agricole, l’Ultimate Farming Championship (UFC pour les intimes), ce nouveau sport a rapidement trouvé sa place dans un paysage audiovisuel tout aussi dévasté."
             Html.p "En 2043, pour fêter cette première saison de l'UFC, les producteurs ont organisé cette grande Foire Agricole aux Questions\xa0!"
             Html.p "Vous trouverez ci dessous\xa0:"
@@ -49,7 +85,7 @@ let intro =
             ]
             Html.p "mais d’abord quelques liens utiles"
             Html.ul [
-                      Html.li [ Html.a [ prop.text "VIDEO RÈGLES EN 6'42\""; prop.href "https://youtu.be/TEV-ssCFjtg" ]
+                      Html.li [ Html.a [ prop.text "VIDEO RÈGLES EN 6'42\""; prop.href (pageLink Fr Videos) ]
                                 Html.text " (Nouvelle Version 2020\xa0!)"  ]
                       Html.li [ Html.a [ prop.text "RÈGLES OFFICIELLES en pdf"; prop.href "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/FR-CrazyFarmers2k20RULES_v5.2.pdf"] ]
                       Html.li [ Html.a [ prop.text "LES VARIANTES"; prop.href "#variantes"] ]
@@ -70,6 +106,7 @@ let introEn =
     Html.div [
         prop.classes ["intro"]
         prop.children [
+            Html.h1 "Fair of the Agricultural Questions"
             Html.p "2042… Bad time for agricultural subsidies... To fuel up their tractors, farmers invented a new trash TV competition. Improbable mix of Monster Truck, mexican wrestling and agricultural fair, the Ultimate Farming Championship (UFC for connoisseurs). This new sport quickly found its place in this devastated  audiovisual landscape."
             Html.p "In 2043, to celebrate the first UFC season, the productors have organised this Faire of the Agricultural Questions!"
             Html.p "You'll find thereafter\xa0:"
@@ -82,7 +119,7 @@ let introEn =
             ]
             Html.p "First some useful links:"
             Html.ul [
-                      Html.li [ Html.a [ prop.text "VIDEO RULES IN 6'42\""; prop.href "https://youtu.be/TEV-ssCFjtg" ]
+                      Html.li [ Html.a [ prop.text "VIDEO RULES IN 6'42\""; prop.href (pageLink En Videos) ]
                                 Html.text " (New version 2020! In french but you can activate subtitles)"  ]
                       Html.li [ Html.a [ prop.text "OFFICIAL RULES in pdf"; prop.href "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/EN-CrazyFarmers2k20RULES_v3.2.pdf"] ]
                       Html.li [ Html.a [ prop.text "VARIANTES"; prop.href "#en/variants"] ]
@@ -573,6 +610,7 @@ let variantesEn =
 
 let boutiques =
   Html.div [
+    prop.classes ["intro"]
     prop.children [
       Html.h1 [ prop.text "Les boutiques"; prop.id "boutiques" ]
       Html.p "Les boutiques ci-dessous nous ont fait confiance en participant comme vous à la campagne, vous avez la possibilité de voir avec eux s’ils sont ok pour vous réserver un exemplaire avec l’ensemble des bonus débloqués pendant la campagne\xa0:"
@@ -590,6 +628,7 @@ let boutiques =
 
 let boutiquesEn =
   Html.div [
+    prop.classes ["intro"]
     prop.children [
       Html.h1 [ prop.text "Game Stores"; prop.id "en/gamestores" ]
       Html.p "The following game stores trusted us by pledging like you during the Kickstarter campaign. You can contact them to check whether they can send you a box with all the bonus unlocked during the KS:"
@@ -738,99 +777,218 @@ let montageEn =
     
     
   ]
-let rootFr = 
+module prop =
+  let frameborder (value: int) =
+        prop.custom("frameborder", value)
+  let allow (value: string) =
+        prop.custom("allow", value)
+  let allowfullscreen =
+      prop.custom("allowfullscreen","")
+
+let youtube url =
+  Html.div [
+      prop.className "video"
+      prop.children [
+        Html.div [
+          prop.className "youtube"
+          prop.children [
+            Html.iframe [
+              // prop.width 560.
+              // prop.height 315.
+              prop.src url
+              prop.frameborder 0
+              prop.allow "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              prop.allowfullscreen ] ] ] ] ]
+
+let videos =
+  Html.div [
+    prop.classes ["intro"]
+    prop.children [
+      Html.h1 [ prop.text "Vidéos"]
+
+      Html.h2 [ prop.text "Trailer"]
+      Html.p ""
+      youtube "https://www.youtube.com/embed/P0_UYCBJytw"
+
+      Html.h2 [ prop.text "Règles de base"]
+      Html.p "Vous n'aimez pas lire les règles, ou vous voulez juste vous assurer que vous avec bien compris\xa0?" 
+      Html.p "Voici toutes les règles de base en 6'42\""
+      youtube "https://www.youtube.com/embed/TEV-ssCFjtg"
+
+
+      Html.h2 [ prop.text "Bonus de base"]
+      Html.p "Dans cette vidéo on vous dit tout sur les bonus de base."
+      youtube "https://www.youtube.com/embed/ytZSqPop-h0"
+
+      Html.h2 [ prop.text "Jachère"]
+      Html.p "Votre champ est coupé en plusieurs morceaux façon puzzle\xa0? Pas de panique, c'est une jachère."
+      youtube "https://www.youtube.com/embed/gh9WXtQ9-Dk"
+
+      Html.h2 [ prop.text "Mode solo"]
+      Html.p [ Html.text "Aperçu du mode solo contre la vache folle. "
+               Html.i "(Matériel Proto, règles finales)" ]
+      youtube "https://www.youtube.com/embed/kQF0SveGmLo"
+    ]
+  ]
+
+let videosEn =
+  Html.div [
+    prop.classes ["intro"]
+    prop.children [
+      Html.h1 [ prop.text "Videos" ]
+      Html.h2 [ prop.text "Trailer"]
+      youtube "https://www.youtube.com/embed/rKIPQbl7Ojk"
+      Html.h2 [ prop.text "Basic Rules"]
+      Html.p "You don't like to read the rules, or you'd just like to check you got it right?" 
+      Html.p [ Html.text "Learn all the basic rules in 6'42\". "
+               Html.i "(Fr / Activate subtitles)" ]
+      youtube "https://www.youtube.com/embed/TEV-ssCFjtg"
+
+
+      Html.h2 [ prop.text "Basic bonus cards"]
+      Html.p [ Html.text "Everything you need to know about basic bonus cards. "
+               Html.i "(Fr / Activate subtitles)" ]
+      youtube "https://www.youtube.com/embed/ytZSqPop-h0"
+
+      Html.h2 [ prop.text "Fallow land"]
+      Html.p [ Html.text "Your field is shattered in several pieces, puzzle style? Don't panic, it's just a fallow land. "
+               Html.i "(Fr / Activate subtitles)" ]
+      youtube "https://www.youtube.com/embed/gh9WXtQ9-Dk"
+
+      Html.h2 [ prop.text "Solo mode"]
+      Html.p [ Html.text "Overview of the solo mode against the mad cow. "
+               Html.i "(En / Prototype tokens, final rules)" ]
+      youtube "https://www.youtube.com/embed/S-CRZTObWFs"
+    ]
+  ]
+let root (content: ReactElement list) = 
     Html.main [
-      Html.h1 "Foire Agricole aux Questions"
       Html.div [
           prop.className "content"
-          prop.children [
-              intro
-              section field
-              section fence
-              section move
-              section powerless
-              section concepts
-              section rare
-              section bonus
-              section crazyBonus
-              section cow
-              variantes
-              boutiques
-              montageFr
-              ]
+          prop.children content
       ]
     ]
 
-let rootEn = 
-    Html.main [
-      Html.h1 "Fair of the Agricultural Questions"
-      Html.div [
-          prop.className "content"
-          prop.children [
-              introEn
-              section fieldEn
-              section fenceEn
-              section moveEn
-              section powerlessEn
-              section conceptsEn
-              section rareEn
-              section bonusEn
-              section crazyBonusEn
-              section cowEn
-              variantesEn
-              boutiquesEn
-              montageEn
-              ]
-      ]
-    ]
-type Lang = Fr | En
 
-type State = { Lang : Lang }
 type Msg = UrlChanged of string list
 
-let parseUrlLang url  =
-  match url with
-  | [] -> Some Fr
-  | "en" :: _ -> Some En
-  | _ -> None
+
+type State = { Lang : Lang; Page : Page }
+
 
 
 let init() = 
-  { Lang = 
-      Router.currentUrl()
-      |> parseUrlLang
-      |> Option.defaultValue Fr  }
+  let lang, page = parsePage (Router.currentUrl())
+  { Lang =  lang |> Option.defaultValue Fr
+    Page = page |> Option.defaultValue Faq  }
 
 let update (UrlChanged segments) state =
-  match parseUrlLang segments with
-  | Some lang -> { state with Lang = lang }
-  | None -> state
+  let lang, page = parsePage segments
+  let newLang =
+    match lang with
+    | Some lang -> { state with Lang = lang }
+    | None -> state
+
+  match page with
+  | Some page -> { newLang with Page = page }
+  | None -> newLang
+  
 
 let frIcon = Html.img [ prop.src "./img/fr.png" ]
 let enIcon = Html.img [ prop.src "./img/en.png"]
 
+
+let menuItem state (text: string) page =
+  Html.div [
+    Html.a [ 
+      prop.href (pageLink state.Lang page)
+      prop.text text
+    ]
+  ]
 let render state dispatch =
   React.router [
         router.onUrlChanged (UrlChanged >> dispatch)
         router.children [
            Html.header [
-             Html.div [
-                prop.className "lang"
-                prop.children [
-                   match state.Lang with
-                   | Fr -> 
-                     frIcon
-                     Html.a [ prop.href (Router.format("en")); prop.children [ enIcon ] ]
-                   | En ->
-                     Html.a [ prop.href (Router.format("")); prop.children [frIcon]]
-                     enIcon
-                ]
-             ]
+             prop.className "closed"
+             prop.children [
+               Html.div [
+                  prop.className "bars"
+                  prop.onClick (fun e ->
+                    let header= 
+                      (document.getElementsByTagName "header").[0]
+                    header.classList.toggle("closed") |> ignore
+                  
+                  )
+                 ]
+               Html.div [
+                 match state.Lang with
+                 | Fr ->
+                   Html.nav [ prop.children [
+                     menuItem state "FAQ" Faq
+                     menuItem state "Vidéos" Videos
+                     menuItem state "Variantes" Variants
+                     menuItem state "Boutiques" GameStores
+                     menuItem state "Montage" Assembly
+                   ]]
+                 | En ->
+                    Html.nav [ prop.children [
+                     menuItem state "FAQ" Faq
+                     menuItem state "Videos" Videos
+                     menuItem state "Variants" Variants
+                     menuItem state "Game Stores" GameStores
+                     menuItem state "Assembly" Assembly
+                   ]]
+               ]
+               Html.div [
+                  prop.className "lang"
+                  prop.children [
+                     match state.Lang with
+                     | Fr -> 
+                       frIcon
+                       Html.a [ prop.href (pageLink En state.Page); prop.children [ enIcon ] ]
+                     | En ->
+                       Html.a [ prop.href (pageLink Fr state.Page); prop.children [frIcon]]
+                       enIcon
+                  ]
+               ]
             ]
+           ]
 
-           match state.Lang with
-           | Fr -> rootFr
-           | En -> rootEn
+
+           root [
+             match state.Lang, state.Page with
+             | Fr, Faq ->
+                  intro
+                  section field
+                  section fence
+                  section move
+                  section powerless
+                  section concepts
+                  section rare
+                  section bonus
+                  section crazyBonus
+                  section cow
+             | Fr, Videos -> videos
+             | Fr, Variants -> variantes
+             | Fr, GameStores -> boutiques
+             | Fr, Assembly -> montageFr
+             | En, Faq ->
+                  introEn
+                  section fieldEn
+                  section fenceEn
+                  section moveEn
+                  section powerlessEn
+                  section conceptsEn
+                  section rareEn
+                  section bonusEn
+                  section crazyBonusEn
+                  section cowEn
+             | En, Videos -> videosEn
+             | En, Variants -> variantesEn
+             | En, GameStores -> boutiquesEn
+             | En, Assembly -> montageEn
+          ]
         ]
     ]
  

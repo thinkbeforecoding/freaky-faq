@@ -12,7 +12,7 @@
 
 body {
     background-image: url(./img/background.png);
-    background-size: contain;
+    background-size: 100%;
     background-color: #D7EEAA;
     background-repeat: no-repeat;
 
@@ -22,6 +22,8 @@ body {
     font-size: 12pt;
 }
 
+
+
 h1 {
     font-family: BrushCrush;
     color: #E84737;
@@ -29,6 +31,7 @@ h1 {
     text-shadow: 0.05em 0.05em rgba(0,0,0, 0.9);
     width: 70%;
 }
+
 h1::first-letter {
     font-size: 120%;
 }
@@ -49,35 +52,121 @@ div {
 }
 
 .frame {
-    background-image: url(./img/crazyfarmers.png);
     width: 100%;
-    min-height: 100%;
     margin-left: auto;
     margin-right: 0;
-    background-size: 40%;
-    background-position-x: right;
-    background-position-y: top;
-    background-repeat: no-repeat;
     /* display: flex;
     flex-flow: row-reverse; */
 }
 
 main
 {
-    /* flex: 1 1 auto; */
+    background-image: url(./img/crazyfarmers.png);
+    min-height: 100%;
+    background-size: 40%;
+    background-position-x: right;
+    background-position-y: top;
+    background-repeat: no-repeat;
+
     padding-top: 2em;
     padding-left: 2em;
     padding-right: 2em;
 }
 
-header
-{
-    float: right;
-    padding-top: 30%;
+
+@media screen and (min-width: 520px) {
+    .bars { display: none; }
+    header
+    {
+        float: right;
+        margin-top: 30%;
+        top: 0;
+        position: sticky;
+    }
+
+    nav {
+        display: flex;
+        flex-flow: column;
+    }
+
+    .lang {
+        display: flex;
+        flex-flow: column;
+    }
+    .lang img {
+        width: 5em;
+    }
+
+    .intro {
+        padding-right: 25%;
+    }
+    
 }
 
-.intro {
-    padding-right: 25%;
+
+@media screen and (max-width: 520px) {
+    .bars {
+        background-image: url("data:image/svg+xml;utf8,<svg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='bars' class='svg-inline--fa fa-bars fa-w-14' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'><path fill='currentColor' d='M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z'></path></svg>");
+        margin: 0.5em;
+        width: 1em;
+        height: 1em;
+        flex: 0 0 auto;
+        cursor: pointer;
+    }
+
+    header
+    {
+        position: sticky;
+        top: 0;
+        display: flex;
+        flex-flow: row; 
+        width: 100%;
+        background-color: #ECF1A2;
+        border-bottom: 1px solid #D7EEAA;
+        justify-content: stretch;
+        padding-bottom: 0.5em;
+    }
+
+    header.closed {
+        background-color: transparent;
+        border-bottom: none;
+        position: fixed;
+    }
+    
+    header > div {
+        flex: 1 1 auto
+    }
+
+    nav {
+        display: flex;
+        flex-flow: column;
+        margin-left: 1em;
+    }
+    header.closed nav {
+        display: none;
+    }
+
+
+    .lang {
+        display: flex;
+        flex: 0 0 3em;
+        flex-flow: column;
+        justify-self: flex-end;
+        align-self: center;
+    }
+
+    header.closed .lang {
+        display: none;
+    }
+
+    .lang img {
+        width: 2em;
+    }
+
+    .intro {
+        padding-right: 0%;
+    }
+    
 }
 
 h3 {
@@ -118,13 +207,7 @@ a, a:visited {
 
 
 
-.lang {
-    display: flex;
-    flex-flow: column;
-}
-.lang img {
-    width: 5em;
-}
+
 
 figure div {
     display: inline-block;
@@ -135,3 +218,20 @@ img.madcow {
     margin-left: 1.5em;
     margin-right: 1.5em;
 }
+
+
+.video .youtube {
+    flex: 0 1 auto;
+    position: relative;
+    padding-bottom: 56.25%;
+    width: 100%;
+    height: 0;
+}
+
+.video .youtube iframe {
+    position: absolute;
+    width:  100%;
+    height: 100%;
+    left: 0; top: 0;
+}
+
