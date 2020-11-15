@@ -73,6 +73,16 @@ let section = React.functionComponent(fun (props: Section) ->
         ]
     ])
 
+let figures (size: int) srcs =
+  Html.figure [
+    for src in srcs do
+      Html.div [
+        Html.img [ prop.src src; prop.style [ style.width (length.em size) ]]
+
+      ]
+
+  ]
+
 let intro = 
     Html.div [
         prop.classes ["intro"]
@@ -213,7 +223,7 @@ let move =
           { Q = [ Html.text "Si on joue contre moi 2 bonus Ornière, j’ai 0 déplacement\xa0?"]
             A = [ Html.text "Oui, 3 - 4 = -1, mais je ne peux pas faire -1 alors je ne bouge pas. Et si je joue une Nitro+2 pour m’en sortir quand même\xa0? → Je fais 3 - 4 + 2 = 1 déplacement."]}
           { Q = [ Html.text "Je peux aller sur le même croisement qu’un autre tracteur\xa0?" ]
-            A = [ Html.text "Non. Jamais 2 tracteurs au même endroit."] }
+            A = [ Html.text "Non. Jamais 2 tracteurs au même endroit. Un croisement où se trouve un tracteur est occupé, et infranchissable pour tous les autres tracteurs. Avec ou sans clôture. Même en co-op. "] }
           { Q = [ Html.text "Si on repart en arrière juste après avoir annexé, dans le même tour, ça annule l’annexion\xa0?"]
             A = [ Html.text "Non. L'annexion est acquise au moment même où le tracteur revient au contact de son champ."] }
       ]
@@ -236,7 +246,7 @@ let moveEn =
           { Q = [ Html.text "When someone plays 2 Rut bonus against me, do I have 0 moves?"]
             A = [ Html.text "Yes, 3 - 4 = -1, but I cannot do -1 move so I don't move. And if I play Nitro+2 bonus to move nonetheless? → I do 3 - 4 + 2 = 1 move."]}
           { Q = [ Html.text "Can I go on the same crossroad as another tractor?" ]
-            A = [ Html.text "No. Never 2 tractors in the same place."] }
+            A = [ Html.text "No. Never 2 tractors in the same place. A crossroad with a tractor is occupied, and impassable by any other tractor. With or without fence. Even is co-op mode."] }
           { Q = [ Html.text "When I go back on the same path just after an annexation, in the same turn, does it cancel the annexation?"]
             A = [ Html.text "No. Annexation is acquired at the very moment when the tractor is in contact with the field."] }
       ]
@@ -397,6 +407,41 @@ let stadiumEventEn =
         A = [Html.text "Oui, n'importe où et même sur le bord. Il est même permis d'enfermer un adversaire, c'est que pour un tour\xa0!" ]}
     ]
   }
+
+let groupStagesFr =
+  { Title = "Scènes de groupes"
+    Qs =
+      [ { Q = [Html.text "Quand un tracteur passe à coté d'une scène de concert, le joueur prend un bonus. Mais que se passe-t-il si il continue son déplacement le long de la scène\xa0?"]
+          A = [Html.text "Les scènes de groupes rendent les fermiers complêtement dingues. "
+               Html.text "Et comme le son est à bloque, elles font effet à un chemin de distance (toutes les cases marquées d'une étoile sur le schéma). "
+               Html.text "A chaque déplacement sur un de ces croisements, le joueur tire une carte bonus, et doit la jouer immédiatement ou la défausser si elle ne peut faire effet tout de suite. "
+               Html.text "Ca fait un gros paquet de bonus, alors n'attendez pas que les autres y aillent avant vous\xa0!"
+               Html.figure [
+                 Html.div [
+                  Html.img [ prop.src "img/group.jpg"; prop.style [ style.width (length.em 20) ] ]
+                 ]
+
+               ]
+          ] }
+      ]
+  }
+let groupStagesEn =
+  { Title = "Group stages"
+    Qs =
+      [ { Q = [Html.text "When a tractor gets close to a stage, the player takes a bonus card. But what happens if they move along the stage?"]
+          A = [Html.text "Group stages drive farmers completely crazy. "
+               Html.text "And since the volume is pushed to the max, they take effect one path away (crossroads marked with a star on the schema). "
+               Html.text "For each move on one of these crossroads, the player draws a bonus card and must play it immediately or discard it if not applicable instantly. "
+               Html.text "That's a big load of bonus, so be sure the others won't benefit before you do!"
+               Html.figure [
+                 Html.div [
+                  Html.img [ prop.src "img/group.jpg"; prop.style [ style.width (length.em 20) ] ]
+                 ]
+
+               ]
+          ] }
+      ]
+  }
 let cow =
     { Title = "Mode Vache folle"
       Qs = [
@@ -463,6 +508,11 @@ let cow =
             A = [ Html.text "Non, elle est soumise à la même contrainte que celle des joueurs. Par contre, si elle ne parvient pas à joueur son Pot de Vin, elle perd la carte."] }
           { Q = [ Html.text "La Vache folle prend l’Hélicoptère, a-t-elle le droit de couper ma clôture juste après\xa0?"]
             A = [ Html.text "Oui, c’est une vache."] }
+          { Q = [ Html.text "En coop on peut fermer une grande clôture à plusieurs. A-t-on le droit d'aller sur les deux dernières clôtures de ses alliés ? Est-ce que toutes les clôtures de l'allier disparaissent y compris celles qui partent des parcelles nouvellement annexées ?" ]
+            A = [ Html.text "Oui, tu peux fermer sur les 2 dernières clôtures d'un allié, mais pas sur son tracteur. Il faut enlever toute les clôtures qui longent une parcelle du champ principal."
+                  figures 10 ["img/coop-1.jpg"; "img/coop-2.jpg"; "img/coop-3.jpg"] ]
+            
+             }
       ] }
 
 let cowEn =
@@ -530,6 +580,9 @@ let cowEn =
             A = [ Html.text "No, the cow is limited to the same constraints as players. Moreover, if it cannot play a Bribe, the card is discarded."] }
           { Q = [ Html.text "The Mad Cow uses an Helicopter. Can it cut my fence just after?"]
             A = [ Html.text "Yes, it's a cow."] }
+          { Q = [ Html.text "In coop mode, you can close a fence with multiple players. Is it possible to connect to the last two fences of a partner? Do the partner fence disapear?" ]
+            A = [ Html.text "Yes, you can close on the last two fences of a partner, but not on their tractor. You have to remove any fence along plots of the main field."
+                  figures 10 ["img/coop-1.jpg"; "img/coop-2.jpg"; "img/coop-3.jpg"] ] }
       ] } 
 
 let boutique name link =
@@ -1117,6 +1170,7 @@ let render state dispatch =
                   section rare
                   section bonus
                   section crazyBonus
+                  section groupStagesFr
                   section cow
              | Fr, Videos -> videos
              | Fr, Variants -> variantes
@@ -1133,6 +1187,7 @@ let render state dispatch =
                   section rareEn
                   section bonusEn
                   section crazyBonusEn
+                  section groupStagesEn
                   section cowEn
              | En, Videos -> videosEn
              | En, Variants -> variantesEn
