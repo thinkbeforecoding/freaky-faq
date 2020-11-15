@@ -244,3 +244,17 @@ img.madcow {
     left: 0; top: 0;
 }
 
+button {
+    border: solid 1px #D7EEAA;
+    border-radius: 0.2em ;
+    background-color: #ECF1A2;
+    cursor: pointer;
+}
+
+.date {
+    font-style: italic;
+    color: #808080;
+    margin-top: 1em;
+    margin-bottom: -1.3em;
+}
+

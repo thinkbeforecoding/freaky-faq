@@ -5,6 +5,7 @@ open Feliz.Router
 open Browser.Dom
 open Elmish
 open Elmish.React
+open System
 
 type Lang = Fr | En
 
@@ -50,7 +51,8 @@ let pageLink lang page =
 
 type Question =
     { Q: ReactElement list
-      A: ReactElement list }
+      A: ReactElement list
+      Date: DateTime }
 
 let question = React.functionComponent(fun (props: Question) ->
     Html.div [
@@ -65,13 +67,37 @@ type Section =
     { Title: string
       Qs: Question list }
 
-let section = React.functionComponent(fun (props: Section) ->
-    Html.div [
-        Html.h2 props.Title
-        Html.div [
-            prop.children [ for q in props.Qs -> question q ]
-        ]
-    ])
+
+let sections =
+   React.functionComponent(fun (props: {| sections:  Section list; lang: Lang |}) ->
+     let (sorted, setSorted) = React.useState(false)
+     Html.div [
+      Html.button [ prop.text (match props.lang, sorted with
+                               | Fr, false -> "Voir les plus récentes"
+                               | Fr, true -> "Grouper par thème"
+                               | En, false -> "Most recent first"
+                               | En, true -> "Group by theme") 
+                    prop.onClick (fun _ -> setSorted(not sorted)) ]
+      if sorted then
+        let qs =
+          props.sections
+          |> Seq.collect (fun s -> s.Qs)
+          |> Seq.sortByDescending ( fun qa -> qa.Date )
+          
+
+        for q in qs do
+           Html.div [ prop.text (q.Date.ToShortDateString()); prop.className "date" ]
+           question q
+        
+      else
+        for section in props.sections do
+          Html.div [
+                  Html.h2 section.Title
+                  Html.div [
+                    prop.children [ for q in section.Qs -> question q ]
+                  ]
+          ] 
+    ]) 
 
 let figures (size: int) srcs =
   Html.figure [
@@ -158,9 +184,11 @@ let field =
       Qs = [ { Q = [ Html.text "Peut-on reprendre des parcelles appartenant à un adversaire\xa0?"]
                A = [ Html.text "Oui, c’est même fortement conseillé. On peut tout à fait tirer une clôture " 
                      Html.u "à travers un champ adverse"
-                     Html.text " et prendre ou reprendre des parcelles."]}
+                     Html.text " et prendre ou reprendre des parcelles."]
+               Date = DateTime(2020,10,31)}
              { Q = [ Html.text "La parcelle initiale a-t-elle une importance particulière\xa0? "]
-               A = [ Html.text "Non, aucune."] }
+               A = [ Html.text "Non, aucune."]
+               Date = DateTime(2020,10,31) }
       ]
     }
 
@@ -169,9 +197,11 @@ let fieldEn =
       Qs = [ { Q = [ Html.text "Can I take back plots from an opponent?"]
                A = [ Html.text "Yes, it's even highly advised. You can pull a fence " 
                      Html.u "through an opponent's field"
-                     Html.text " and take or take back plots."]}
+                     Html.text " and take or take back plots."]
+               Date = DateTime(2020,10,31)}
              { Q = [ Html.text "Does the initial plot have anything special? "]
-               A = [ Html.text "No, nothing special."] }
+               A = [ Html.text "No, nothing special."]
+               Date = DateTime(2020,10,31) }
       ]
     }
 
@@ -179,76 +209,104 @@ let fence =
     { Title = "Clôture"
       Qs = [
         { Q = [ Html.text "Comment ça pas de clôtures sur les bords de mon champ\xa0?" ]
-          A = [ Html.text "Effectivement, les clôtures sont inutiles sur les bords (et à l’intérieur) de votre champ (sauf dans sa jachère bien sûr\xa0!). D’ailleurs, dès que vous faites une annexion, la clôture devient le bord et donc elle disparaît."] }
+          A = [ Html.text "Effectivement, les clôtures sont inutiles sur les bords (et à l’intérieur) de votre champ (sauf dans sa jachère bien sûr\xa0!). D’ailleurs, dès que vous faites une annexion, la clôture devient le bord et donc elle disparaît."]
+          Date = DateTime(2020,10,31) }
         { Q = [ Html.text "Que faire si on arrive à court de barrières pour sa clôture\xa0?" ]
-          A = [ Html.text "Il y a officiellement 24 barrières de clôtures maximum (20 à 3 ou 4 joueurs). Au-delà, on ne peut plus continuer sa clôture. Il faut revenir en arrière et trouver un chemin plus court. Mais rien ne vous empêche, si vous le décidez en début de partie, de jouer avec un nombre (virtuellement) infini de barrières, comme sur BoardGameArena."] }
+          A = [ Html.text "Il y a officiellement 24 barrières de clôtures maximum (20 à 3 ou 4 joueurs). Au-delà, on ne peut plus continuer sa clôture. Il faut revenir en arrière et trouver un chemin plus court. Mais rien ne vous empêche, si vous le décidez en début de partie, de jouer avec un nombre (virtuellement) infini de barrières, comme sur BoardGameArena."]
+          Date = DateTime(2020,10,31) }
         { Q = [ Html.text "Si ma clôture ne fait que 1 ou 2 de barrières de long, est-ce que sa base est protégée quand même\xa0?" ]
-          A = [ Html.text "Oui, la protection de clôture (2 clôtures sur 3 croisements) s’applique y compris sur la base (le croisement d’où part la clôture) si celle-ci est comprise dedans, ce qui est forcément le cas pour une clôture de longueur 1 ou 2." ] }
+          A = [ Html.text "Oui, la protection de clôture (2 clôtures sur 3 croisements) s’applique y compris sur la base (le croisement d’où part la clôture) si celle-ci est comprise dedans, ce qui est forcément le cas pour une clôture de longueur 1 ou 2." ]
+          Date = DateTime(2020,10,31) }
         { Q = [ Html.text "Et si je tire une clôture qui fait le tour de mon propre champ et finit par se toucher elle-même avant de rentrer dans mon champ\xa0?"]
-          A = [ Html.text "C’est comme une boucle simple, la partie de la clôture qui fait boucle est retirée. Il n’y a pas d’annexion."]}
+          A = [ Html.text "C’est comme une boucle simple, la partie de la clôture qui fait boucle est retirée. Il n’y a pas d’annexion."]
+          Date = DateTime(2020,10,31)}
         { Q = [ Html.text "Au secours\xa0! L'adversaire m'a pris la parcelle d'où partait ma clôture\xa0! Je me retrouve avec une clôture attachée à rien\xa0!" ]
-          A = [ Html.text "Oui, c'est dommage. Votre clôture disparaît, comme si elle avait été coupée, et ce même si vous aviez joué une Surcharge."] }
+          A = [ Html.text "Oui, c'est dommage. Votre clôture disparaît, comme si elle avait été coupée, et ce même si vous aviez joué une Surcharge."]
+          Date = DateTime(2020,10,31) }
       ] }
 
 let fenceEn =
     { Title = "Fence"
       Qs = [
         { Q = [ Html.text "No fence on the border of my field?" ]
-          A = [ Html.text "Exactly, fences are useless on the border (as well as inside) your field (except for fallow lands of course!). Besides, as soon as you take over plots, the fence becomes the border and is therefore removed."] }
+          A = [ Html.text "Exactly, fences are useless on the border (as well as inside) your field (except for fallow lands of course!). Besides, as soon as you take over plots, the fence becomes the border and is therefore removed."] 
+          Date = DateTime(2020,10,31)}
         { Q = [ Html.text "What should I do when I have no fence left?" ]
-          A = [ Html.text "There are officially 24 fences max (20 for 3 or 4 players). Beyond that, you cannot pull more fences. You have to go back and find a shorter path. But you can, if you wish and decide before starting the game, play with a (virtually) infinite number of fences, like on BoardGameArena."] }
+          A = [ Html.text "There are officially 24 fences max (20 for 3 or 4 players). Beyond that, you cannot pull more fences. You have to go back and find a shorter path. But you can, if you wish and decide before starting the game, play with a (virtually) infinite number of fences, like on BoardGameArena."] 
+          Date = DateTime(2020,10,31)}
         { Q = [ Html.text "When I have only 1 or 2 fences behind me, is the starting point protected?" ]
-          A = [ Html.text "Yes, Fence protection (2 fences on 3 crossroads) also protects the starting point if included, which is always the case when you have 1 or 2 fences." ] }
+          A = [ Html.text "Yes, Fence protection (2 fences on 3 crossroads) also protects the starting point if included, which is always the case when you have 1 or 2 fences." ] 
+          Date = DateTime(2020,10,31)}
         { Q = [ Html.text "What if I pull a fence all around my field and connect it back to itself before going back to my field?"]
-          A = [ Html.text "It's like for a simple loop, the part that makes a loop is removed. There is no annexation."]}
+          A = [ Html.text "It's like for a simple loop, the part that makes a loop is removed. There is no annexation."]
+          Date = DateTime(2020,10,31)}
         { Q = [ Html.text "Help! An opponent took the plot where my fence was connected! My fence is now dangling!" ]
-          A = [ Html.text "Yes, that's sad. Your fence is removed, as if it had been cut, even if you had played High Voltage."] }
+          A = [ Html.text "Yes, that's sad. Your fence is removed, as if it had been cut, even if you had played High Voltage."] 
+          Date = DateTime(2020,10,31)}
       ] }
 
 let move =
     { Title = "Déplacement"
       Qs = [
           { Q = [ Html.text "Cas pratique de déplacement\xa0: Que se passe-t-il si j’utilise, à mon tour de jeu, un bonus Nitro+2 et une accélération de clôture de 1 pour rentrer chez moi (à une distance de 4)\xa0? Puis-je effectuer encore 2 déplacements une fois rentré\xa0?"]
-            A = [ Html.text "Premièrement, la limite de 5 s'applique, donc le Nitro+2 ne vaut que +1. Par contre, les 5 déplacements cumulés (3 de base + 1 accélération + 1 de Nitro) sont à utiliser. Donc même une fois rentré après 4 déplacements, il reste encore 1 déplacement à faire."] }
+            A = [ Html.text "Premièrement, la limite de 5 s'applique, donc le Nitro+2 ne vaut que +1. Par contre, les 5 déplacements cumulés (3 de base + 1 accélération + 1 de Nitro) sont à utiliser. Donc même une fois rentré après 4 déplacements, il reste encore 1 déplacement à faire."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Et si je n’ai pas envie de faire mes 3 déplacements\xa0?"]
-            A = [ Html.text "Les déplacements de base et d’accélération sont obligatoires\xa0! Par contre on peut revenir en arrière. Donc, si l’on a par exemple 5 déplacements on peut virtuellement en faire 1 ou 3, mais pas 2 ou 4."]}
+            A = [ Html.text "Les déplacements de base et d’accélération sont obligatoires\xa0! Par contre on peut revenir en arrière. Donc, si l’on a par exemple 5 déplacements on peut virtuellement en faire 1 ou 3, mais pas 2 ou 4."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Puis-je me déplacer à l’intérieur (ou sur le bord) de mon champ\xa0?"]
-            A = [ Html.text "Oui, c’est juste qu’on ne tire pas de clôture dans son champ, uniquement quand on en sort."]}
+            A = [ Html.text "Oui, c’est juste qu’on ne tire pas de clôture dans son champ, uniquement quand on en sort."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Que se passe-t-il si l’on répète indéfiniment les mêmes déplacements en boucle et que personne ne veut céder\xa0?"]
-            A = [ Html.text "À l’image des Échecs, si une position est répétée 3 fois, la partie se termine sur une égalité. Nous appellerons cela la règle du nul par répétition de positions."] }
+            A = [ Html.text "À l’image des Échecs, si une position est répétée 3 fois, la partie se termine sur une égalité. Nous appellerons cela la règle du nul par répétition de positions."] 
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Les déplacements sont obligatoires, d’accord. Mais alors que faire quand aucun déplacement n’est possible\xa0?" ]
-            A = [ Html.text "Effectivement, il est possible qu’aucun déplacement ne soit possible. Si vous êtes complètement bloqué par\xa0: une botte de foin, une partie de clôture protégée, un tracteur adverse… alors vos déplacements sont perdus et vous restez sur place." ]}
+            A = [ Html.text "Effectivement, il est possible qu’aucun déplacement ne soit possible. Si vous êtes complètement bloqué par\xa0: une botte de foin, une partie de clôture protégée, un tracteur adverse… alors vos déplacements sont perdus et vous restez sur place." ]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Si j’en suis déjà à 4 déplacements, est-ce que j’ai le droit de prendre un Nitro+2, quitte à n’avoir qu’un déplacement en plus\xa0?"]
-            A = [ Html.text "Oui, 4+2 = 6, mais 5 max donc 1 déplacement perdu."] }
+            A = [ Html.text "Oui, 4+2 = 6, mais 5 max donc 1 déplacement perdu."] 
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Si on joue contre moi 2 bonus Ornière, j’ai 0 déplacement\xa0?"]
-            A = [ Html.text "Oui, 3 - 4 = -1, mais je ne peux pas faire -1 alors je ne bouge pas. Et si je joue une Nitro+2 pour m’en sortir quand même\xa0? → Je fais 3 - 4 + 2 = 1 déplacement."]}
+            A = [ Html.text "Oui, 3 - 4 = -1, mais je ne peux pas faire -1 alors je ne bouge pas. Et si je joue une Nitro+2 pour m’en sortir quand même\xa0? → Je fais 3 - 4 + 2 = 1 déplacement."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Je peux aller sur le même croisement qu’un autre tracteur\xa0?" ]
-            A = [ Html.text "Non. Jamais 2 tracteurs au même endroit. Un croisement où se trouve un tracteur est occupé, et infranchissable pour tous les autres tracteurs. Avec ou sans clôture. Même en co-op. "] }
+            A = [ Html.text "Non. Jamais 2 tracteurs au même endroit. Un croisement où se trouve un tracteur est occupé, et infranchissable pour tous les autres tracteurs. Avec ou sans clôture. Même en co-op. "] 
+            Date = DateTime(2020,11,15)}
           { Q = [ Html.text "Si on repart en arrière juste après avoir annexé, dans le même tour, ça annule l’annexion\xa0?"]
-            A = [ Html.text "Non. L'annexion est acquise au moment même où le tracteur revient au contact de son champ."] }
+            A = [ Html.text "Non. L'annexion est acquise au moment même où le tracteur revient au contact de son champ."] 
+            Date = DateTime(2020,10,31) }
       ]
     }
 let moveEn =
     { Title = "Moves"
       Qs = [
           { Q = [ Html.text "Practical case: What happens if I use, during my turn, A Nitro+2 bonus and a fence acceleration to go back in my field (with a distance of 4)? Can I make 2 more moves once back home?"]
-            A = [ Html.text "First, the limit of 5 moves applies, so the Nitro+2 is worth only +1. However, the 5 moves (3 basic moves + 1 acceleration + 1 for the Nitro) have to be done. So after 4 moves to go back in the field, there is 1 move left to be done."] }
+            A = [ Html.text "First, the limit of 5 moves applies, so the Nitro+2 is worth only +1. However, the 5 moves (3 basic moves + 1 acceleration + 1 for the Nitro) have to be done. So after 4 moves to go back in the field, there is 1 move left to be done."] 
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "And what if I don't want to make my 3 moves?"]
-            A = [ Html.text "All moves are mandatory! However you can go back. Si, if you have for instance 5 moves, you can virtually make 1 or 3 moves, but not 2 or 4."]}
+            A = [ Html.text "All moves are mandatory! However you can go back. Si, if you have for instance 5 moves, you can virtually make 1 or 3 moves, but not 2 or 4."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Can I move inside (or on the border of) my field?"]
-            A = [ Html.text "Yes, you just don't pull fences. Place fences only when you get out."]}
+            A = [ Html.text "Yes, you just don't pull fences. Place fences only when you get out."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "What if we repeat endlessly the same moves and nobody wants to concede?"]
-            A = [ Html.text "Like in chess, when a position is repeated 3 times, the game ends in a tie. This rule is called tie by repetition."] }
+            A = [ Html.text "Like in chess, when a position is repeated 3 times, the game ends in a tie. This rule is called tie by repetition."] 
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Ok, moves are mandatory. But what if no move is possible?" ]
-            A = [ Html.text "Right, it can happen that no move is possible. When you're blocked by: a hay bale, a protected fence, an opponent's tractor… Then your moves are lost and you stay where you are." ]}
+            A = [ Html.text "Right, it can happen that no move is possible. When you're blocked by: a hay bale, a protected fence, an opponent's tractor… Then your moves are lost and you stay where you are." ]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "When I already used 4 moves, can I play a Nitro+2 bonus, even if it gives only one extra move?"]
-            A = [ Html.text "Yes, 4+2 = 6, but 5 max so 1 move is lost."] }
+            A = [ Html.text "Yes, 4+2 = 6, but 5 max so 1 move is lost."] 
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "When someone plays 2 Rut bonus against me, do I have 0 moves?"]
-            A = [ Html.text "Yes, 3 - 4 = -1, but I cannot do -1 move so I don't move. And if I play Nitro+2 bonus to move nonetheless? → I do 3 - 4 + 2 = 1 move."]}
+            A = [ Html.text "Yes, 3 - 4 = -1, but I cannot do -1 move so I don't move. And if I play Nitro+2 bonus to move nonetheless? → I do 3 - 4 + 2 = 1 move."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Can I go on the same crossroad as another tractor?" ]
-            A = [ Html.text "No. Never 2 tractors in the same place. A crossroad with a tractor is occupied, and impassable by any other tractor. With or without fence. Even is co-op mode."] }
+            A = [ Html.text "No. Never 2 tractors in the same place. A crossroad with a tractor is occupied, and impassable by any other tractor. With or without fence. Even is co-op mode."]
+            Date = DateTime(2020,11,15) }
           { Q = [ Html.text "When I go back on the same path just after an annexation, in the same turn, does it cancel the annexation?"]
-            A = [ Html.text "No. Annexation is acquired at the very moment when the tractor is in contact with the field."] }
+            A = [ Html.text "No. Annexation is acquired at the very moment when the tractor is in contact with the field."] 
+            Date = DateTime(2020,10,31)}
       ]
     }
 
@@ -258,11 +316,13 @@ let powerless =
           { Q = [ Html.text "Comment rentrer chez moi après une coupure si l’adversaire me barre la route avec sa clôture\xa0?"]
             A = [ Html.text "Lorsqu’on est hors tension, on ne peut plus couper les clôtures adverses, mais on a le droit de passer dessus ou même de s’y arrêter, sauf sur les 2 clôtures protégées derrière le tracteur adverse. On peut aussi rentrer chez soi directement en utilisant un Hélicoptère."
                   Html.br []
-                  Html.text "Remarque\xa0: dès qu’on rentre chez soi, on a de nouveau le droit de couper les adversaires, ainsi, si l’on rentre chez soi sur un croisement occupé par une clôture adverse, cette dernière est coupée immédiatement."] }
+                  Html.text "Remarque\xa0: dès qu’on rentre chez soi, on a de nouveau le droit de couper les adversaires, ainsi, si l’on rentre chez soi sur un croisement occupé par une clôture adverse, cette dernière est coupée immédiatement."] 
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Que se passe-t-il si le jeu se termine juste quand je viens de me faire couper ma clôture\xa0?"]
             A = [ Html.text "Très bonne question\xa0! Lorsqu’on vient de se faire couper, on est généralement déconnecté de son champ. Du coup, on est momentanément sans champ principal (voir Jachère). Or le score est à tout moment la taille du champ principal, c’est-à-dire ici\xa0: "
                   Html.strong "ZÉRO"
-                  Html.text "\xa0! Attention, c’est un moyen pour le joueur qui est mené de gagner sur un coup de Tra(cteur)falgar."] }
+                  Html.text "\xa0! Attention, c’est un moyen pour le joueur qui est mené de gagner sur un coup de Tra(cteur)falgar."]
+            Date = DateTime(2020,10,31) }
       ] }
 let powerlessEn =
     { Title = "Powerless"
@@ -270,39 +330,47 @@ let powerlessEn =
           { Q = [ Html.text "How can I go back in my field when the opponent's fence is on the way?"]
             A = [ Html.text "When powerless, you cannot cut opponents' fences, but you can cross or stay on them, except for the last 2 protected fences behind the opponent's tractors. You can also go back instantly using an Helicopter."
                   Html.br []
-                  Html.text "Remark: as soon as you reach your field, you can cut opponents' fence again, hence, when you reconnect to your field at a crossroad occupied by an opponent's fence, it's cut instantly."] }
+                  Html.text "Remark: as soon as you reach your field, you can cut opponents' fence again, hence, when you reconnect to your field at a crossroad occupied by an opponent's fence, it's cut instantly."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "What happens when the game ends just after my fence has been cut?"]
             A = [ Html.text "Excellent question! When your fence is cut, you're most often disconnected from your field. So, you're momentarily without a main field (see Fallow land). Now, the score is at all time equal to the size of the main field, which means: "
                   Html.strong "ZERO"
-                  Html.text "! Be careful, this is a way for a player that has a lower score to win on a nasty trick."] }
+                  Html.text "! Be careful, this is a way for a player that has a lower score to win on a nasty trick."]
+            Date = DateTime(2020,10,31)}
       ] }
 let concepts =
     { Title = "Concepts"
       Qs = [
           { Q = [ Html.text "La pile de parcelles commune pour 2 joueurs, comment ça marche\xa0?"]
-            A = [ Html.text "À 2 joueurs, on partage la même pile de parcelles (réversibles). Il y a donc un système de vases communicants\xa0: les cases vides annexées rapprochent les 2 joueurs de la fin de la partie."] }
+            A = [ Html.text "À 2 joueurs, on partage la même pile de parcelles (réversibles). Il y a donc un système de vases communicants\xa0: les cases vides annexées rapprochent les 2 joueurs de la fin de la partie."]
+            Date = DateTime(2020,10,31) }
       ] }
 let conceptsEn =
     { Title = "Concepts"
       Qs = [
           { Q = [ Html.text "The common plot stack for 2 players, How does it work?"]
-            A = [ Html.text "In a 2 players game, you share a single stack of (reversible) plots. There is a communicating vessels mechanism: annexing empty plots leads BOTH players nearer the end of the game."] }
+            A = [ Html.text "In a 2 players game, you share a single stack of (reversible) plots. There is a communicating vessels mechanism: annexing empty plots leads BOTH players nearer the end of the game."]
+            Date = DateTime(2020,10,31) }
       ] }
 let rare =
     { Title = "Cas rares"
       Qs = [
           { Q = [ Html.text "Que se passe-t-il\xa0? Je suis DANS une partie en jachère de mon champ avec une clôture qui part de mon champ principal."]
-            A = [ Html.text "Ah\xa0! Voilà un cas intéressant. Effectivement, la jachère vous appartient toujours, mais elle ne sert à rien tant que vous n’avez pas réussi à reprendre les cases qui font la jonction. Elle est inactive et se comporte pour vous comme une case vide ( = “en friche”). Vous pouvez donc passer sur le bord ou à travers si cela vous chante. C’est d’ailleurs le seul cas où vous aurez une clôture dans votre propre champ. Quoi qu’il arrive, il faudra revenir au contact de votre champ principal pour conclure une annexion."] }
+            A = [ Html.text "Ah\xa0! Voilà un cas intéressant. Effectivement, la jachère vous appartient toujours, mais elle ne sert à rien tant que vous n’avez pas réussi à reprendre les cases qui font la jonction. Elle est inactive et se comporte pour vous comme une case vide ( = “en friche”). Vous pouvez donc passer sur le bord ou à travers si cela vous chante. C’est d’ailleurs le seul cas où vous aurez une clôture dans votre propre champ. Quoi qu’il arrive, il faudra revenir au contact de votre champ principal pour conclure une annexion."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Encore plus incroyable\xa0: et si j’ai une clôture qui passe au contact de ma jachère et qu’un adversaire me coupe, est-ce que je peux garder la partie de ma clôture qui repart de ma Jachère (qui se transforme donc en champ principal à l’occasion)\xa0?"]
-            A = [ Html.text "Non, la clôture est coupée, elle disparaît entièrement. Cela peut effectivement entraîner un changement de champ principal/jachère, mais la clôture est perdue quoi qu’il arrive."] }
+            A = [ Html.text "Non, la clôture est coupée, elle disparaît entièrement. Cela peut effectivement entraîner un changement de champ principal/jachère, mais la clôture est perdue quoi qu’il arrive."]
+            Date = DateTime(2020,10,31) }
       ] }
 let rareEn =
     { Title = "Rares cases"
       Qs = [
           { Q = [ Html.text "What happens? I'm INSIDE one of my fallow land with a fence that starts from my main field."]
-            A = [ Html.text "Ah! This is an interesting case. Actually, the fallow land still belongs to you, but is useless as long as you did not take back the plots that connect it to your main field. It is inactive and behaves for you as an empty plot. You can move on the border or inside if you want. This is the only case where you can have a fence bordering your own plots. Whatever happens, you'll have to go back in contact to your main field to finish an annexation."] }
+            A = [ Html.text "Ah! This is an interesting case. Actually, the fallow land still belongs to you, but is useless as long as you did not take back the plots that connect it to your main field. It is inactive and behaves for you as an empty plot. You can move on the border or inside if you want. This is the only case where you can have a fence bordering your own plots. Whatever happens, you'll have to go back in contact to your main field to finish an annexation."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Even more involved: what if my fence goes through my fallow land and an opponent cuts it? Can I keep a part of my fence that now starts from the fallow land (that becomes a main field in the process)?"]
-            A = [ Html.text "No, the fence is cut, it disappears  totally. It can lead to a main field/fallow land switch, but the fence is lost anyway."] }
+            A = [ Html.text "No, the fence is cut, it disappears  totally. It can lead to a main field/fallow land switch, but the fence is lost anyway."]
+            Date = DateTime(2020,10,31) }
       ] }
 
 let card (name: string) =
@@ -317,17 +385,23 @@ let bonus =
     { Title = "Les Bonus"
       Qs = [
           { Q = [ Html.text "Puis-je jouer un bonus dès que je le pioche\xa0?"]
-            A = [ Html.text "Oui."] }
+            A = [ Html.text "Oui."] 
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Peut-on poser 2 "; card "Bottes de Foin"; Html.text " sur le même chemin\xa0?"]
-            A = [ Html.text "Non."] }
+            A = [ Html.text "Non."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Puis-je utiliser 2, voire 3 "; card "Hélicoptères"; Html.text " dans le même tour\xa0?"]
-            A = [ Html.text "Autant que vous voulez. Et combinés avec d'autres bonus si bon vous semble."] }
+            A = [ Html.text "Autant que vous voulez. Et combinés avec d'autres bonus si bon vous semble."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Un déplacement en "; card "Hélicoptère"; Html.text " coûte-t-il un déplacement\xa0?"]
-            A = [ Html.text "Non, c’est gratuit." ]}
+            A = [ Html.text "Non, c’est gratuit." ]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Peut-on traverser (sans la couper) une clôture après un "; card  "Hélicoptère" ; Html.text "\xa0?"]
-            A = [ Html.text "Non, après un Hélicoptère, on peut considérer que toutes les clôtures adverses sont indestructibles et infranchissables sur toute leur longueur jusqu’à la fin de son tour."] }
+            A = [ Html.text "Non, après un Hélicoptère, on peut considérer que toutes les clôtures adverses sont indestructibles et infranchissables sur toute leur longueur jusqu’à la fin de son tour."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "La "; card "Surcharge"; Html.text " protège-t-elle aussi le point de départ de ma clôture\xa0?"]
-            A = [ Html.text "Oui. Mais il reste un moyen de couper une clôture en Surcharge\xa0: prendre la parcelle de départ de cette clôture."] }
+            A = [ Html.text "Oui. Mais il reste un moyen de couper une clôture en Surcharge\xa0: prendre la parcelle de départ de cette clôture."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Je ne comprends pas bien sur quelles parcelles adverses exactement je peux utiliser un "; card "Pot de Vin"; Html.text "\xa0?"]
             A = [ Html.text "Le Pot de Vin a beaucoup de restrictions car la corruption, c’est mal, donc on se doit de rester discrets. Voici les conditions pour l’utiliser\xa0:"
                   Html.ul [
@@ -338,26 +412,34 @@ let bonus =
                       Html.li "et enfin, la partie ne peut être gagnée par l’effet immédiat d’un Pot de Vin (ou de toute autre carte bonus d’ailleurs)."
                   ]
                   Html.text "Par “effet immédiat”, nous voulons dire que si le Pot de Vin est utilisé pour prendre directement la dernière parcelle qui nous manquait pour gagner, il n’est pas autorisé. Par contre, si le Pot de Vin entraîne (par exemple) une fermeture de clôture qui produit une annexion permettant de gagner, ce n’est pas l’effet immédiat du Pot de Vin qui a permis la victoire. Il y avait des effets intermédiaires et donc le Pot de Vin est autorisé."
-                  ] }
+                  ]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Est-ce que le "; card "Chien de Garde"; Html.text " protège les champs en jachère\xa0? Et est-ce qu’il peut empêcher un Pot de Vin\xa0?"]
-            A = [ Html.text "Oui et oui."] }
+            A = [ Html.text "Oui et oui."]
+            Date = DateTime(2020,10,31) }
       ] }
 
 let bonusEn =
     { Title = "Bonus cards"
       Qs = [
           { Q = [ Html.text "Can I play a bonus card as soon as I draw it?"]
-            A = [ Html.text "Yes."] }
+            A = [ Html.text "Yes."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Can I place 2 "; card "Hay Bales"; Html.text " on the same path?"]
-            A = [ Html.text "No."] }
+            A = [ Html.text "No."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Can I use 2, or 3 "; card "Helicopters"; Html.text " in a single turn?"]
-            A = [ Html.text "As much as you wish. And combined with other bonus cards if you want."] }
+            A = [ Html.text "As much as you wish. And combined with other bonus cards if you want."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Does an "; card "Helicopter"; Html.text " move cost one standard move?"]
-            A = [ Html.text "No, it's free." ]}
+            A = [ Html.text "No, it's free." ]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "Can I cross a fence (without cutting) just after an "; card  "Helicopter" ; Html.text " card?"]
-            A = [ Html.text "No, after an Helicopter, you can assume that opponents fences are indestructible and uncrossable on their full length until the end of your turn."] }
+            A = [ Html.text "No, after an Helicopter, you can assume that opponents fences are indestructible and uncrossable on their full length until the end of your turn."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Does the "; card "High Voltage"; Html.text " protect also the starting point of my fence?"]
-            A = [ Html.text "Yes. But there is still a way to cut it: when an opponent takes the plot where your fence starts."] }
+            A = [ Html.text "Yes. But there is still a way to cut it: when an opponent takes the plot where your fence starts."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "I don't understand well which plots can be taken with a "; card "Bribe"; Html.text " card?"]
             A = [ Html.text "The Bribe has many restrictions because corruption is bad, and must remain discreet. Here are the conditions to use it:"
                   Html.ul [
@@ -368,9 +450,11 @@ let bonusEn =
                       Html.li "and finally, the game cannot be over by the immediate effect of the bribe (or any other bonus card by the way)."
                   ]
                   Html.text "By “immediate effect”, we mean when the Bribe is used to take directly the last plot needed to win, this is forbidden. However, if the Bribe is used to take a plot that closes a fence, which then causes an annexation which ends the game, the Bribe did not cause the end of the game by immediate effect. There were intermediate effects, thus the Bribe is allowed."
-                  ] }
+                  ]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Does the "; card "Watchdog"; Html.text " protect fallow lands? And does it protect against Bribe?"]
-            A = [ Html.text "Yes and yes. Good dog."] }
+            A = [ Html.text "Yes and yes. Good dog."]
+            Date = DateTime(2020,10,31) }
       ] }
 
 let crazyBonus =
@@ -378,7 +462,8 @@ let crazyBonus =
     Qs = 
       [
       { Q = [Html.text "Peut on poser la botte de foin d'un "; card "Blocus"; Html.text " sur un croisement du bord du terrain\xa0?"]
-        A = [Html.text "Oui, n'importe où et même sur le bord. Il est même permis d'enfermer un adversaire, c'est que pour un tour\xa0!" ]}
+        A = [Html.text "Oui, n'importe où et même sur le bord. Il est même permis d'enfermer un adversaire, c'est que pour un tour\xa0!" ]
+        Date = DateTime(2020,10,31) }
     ]
   }
 
@@ -387,7 +472,8 @@ let crazyBonusEn =
     Qs = 
       [
       { Q = [Html.text "Can I place the hay bale for a "; card "Blockade"; Html.text " on a crossroad on the border of the board\xa0?"]
-        A = [Html.text "Yes, wherever you want, even the border. It's even allowed to lock an opponent, it's for one turn only!" ]}
+        A = [Html.text "Yes, wherever you want, even the border. It's even allowed to lock an opponent, it's for one turn only!" ]
+        Date = DateTime(2020,10,31) }
     ]
   }
 let stadiumEvent =
@@ -395,7 +481,8 @@ let stadiumEvent =
     Qs = 
       [
       { Q = [Html.text "Avec le "; card "Verglas"; Html.text " que se passe-t-il si je ne peux plus avancer\xa0?"]
-        A = [Html.text "Tant qu'un chemin est possible vous devez avancer, mais si vous êtes bloqué, vous perdez les mouvements restant\xa0!" ]}
+        A = [Html.text "Tant qu'un chemin est possible vous devez avancer, mais si vous êtes bloqué, vous perdez les mouvements restant\xa0!" ]
+        Date = DateTime(2020,10,31) }
     ]
   }
 
@@ -404,7 +491,8 @@ let stadiumEventEn =
     Qs = 
       [
       { Q = [Html.text "Peut on poser la botte de foin d'un "; card "Blocus"; Html.text " sur un croisement du bord du terrain\xa0?"]
-        A = [Html.text "Oui, n'importe où et même sur le bord. Il est même permis d'enfermer un adversaire, c'est que pour un tour\xa0!" ]}
+        A = [Html.text "Oui, n'importe où et même sur le bord. Il est même permis d'enfermer un adversaire, c'est que pour un tour\xa0!" ]
+        Date = DateTime(2020,10,31) }
     ]
   }
 
@@ -416,13 +504,9 @@ let groupStagesFr =
                Html.text "Et comme le son est à bloque, elles font effet à un chemin de distance (toutes les cases marquées d'une étoile sur le schéma). "
                Html.text "A chaque déplacement sur un de ces croisements, le joueur tire une carte bonus, et doit la jouer immédiatement ou la défausser si elle ne peut faire effet tout de suite. "
                Html.text "Ca fait un gros paquet de bonus, alors n'attendez pas que les autres y aillent avant vous\xa0!"
-               Html.figure [
-                 Html.div [
-                  Html.img [ prop.src "img/group.jpg"; prop.style [ style.width (length.em 20) ] ]
-                 ]
-
-               ]
-          ] }
+               figures 20 ["img/group.jpg"]
+              ]
+          Date = DateTime(2020,11,15) }
       ]
   }
 let groupStagesEn =
@@ -433,20 +517,17 @@ let groupStagesEn =
                Html.text "And since the volume is pushed to the max, they take effect one path away (crossroads marked with a star on the schema). "
                Html.text "For each move on one of these crossroads, the player draws a bonus card and must play it immediately or discard it if not applicable instantly. "
                Html.text "That's a big load of bonus, so be sure the others won't benefit before you do!"
-               Html.figure [
-                 Html.div [
-                  Html.img [ prop.src "img/group.jpg"; prop.style [ style.width (length.em 20) ] ]
-                 ]
-
-               ]
-          ] }
+               figures 20 ["img/group.jpg"]
+              ]
+          Date = DateTime(2020,11,15) }
       ]
   }
 let cow =
     { Title = "Mode Vache folle"
       Qs = [
           { Q = [ Html.text "Y a-t-il un nombre de parcelles limité en mode Vache Folle\xa0?"]
-            A = [ Html.text "Non. Cela n’a pas beaucoup d’importance car, on n’y arrive pratiquement jamais. Si cela vous arrive quand même utilisez les parcelles d’une autre couleur pour finir la partie (et envoyez nous votre score, il sera probablement fameux\xa0!)."] }
+            A = [ Html.text "Non. Cela n’a pas beaucoup d’importance car, on n’y arrive pratiquement jamais. Si cela vous arrive quand même utilisez les parcelles d’une autre couleur pour finir la partie (et envoyez nous votre score, il sera probablement fameux\xa0!)."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "La vache, quand elle se déplace, elle doit exactement suivre le tracé de la flèche ou elle doit juste aller sur la case d'arrivée et en adopter l'orientation ?"]
             A = [ Html.text "La vache prend la case de destination uniquement. Sur un demi tour elle prend la case derrière elle et se retrouve dans la direction opposée."
                   Html.p "En partant de la position suivante:"
@@ -495,23 +576,28 @@ let cow =
                     ]
                   ]
                   Html.p "Si le chemin entre la parcelle de départ de la vache et celle d'arrivée contient un obstacle, la vache doit se réorienter. Si il contient une clôture non protégée, celle-ci est coupée."
-            ]}
+              ]
+            Date = DateTime(2020,11,06)}
           { Q = [ Html.text "Je n’ai pas bien compris comment la Vache Folle place ses Bottes de foin."]
             A = [ Html.text "Voici un schema pour vous aider, il complète l’explication de la règle."
                   Html.figure [
 
                       Html.img [ prop.src "./img/solo-bottes-fr.png"
-                                 prop.style [ style.width (length.em 20)] ] ] ]}
+                                 prop.style [ style.width (length.em 20)] ] ] ]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "En co-op, c’est quelle clôture qui compte pour déterminer le retour de bâton\xa0?"]
-            A = [ Html.text "C’est le total de toutes les clôtures des joueurs."] }
+            A = [ Html.text "C’est le total de toutes les clôtures des joueurs."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "La Vache Folle peut-elle gagner la partie sur un Pot de Vin\xa0?" ]
-            A = [ Html.text "Non, elle est soumise à la même contrainte que celle des joueurs. Par contre, si elle ne parvient pas à joueur son Pot de Vin, elle perd la carte."] }
+            A = [ Html.text "Non, elle est soumise à la même contrainte que celle des joueurs. Par contre, si elle ne parvient pas à joueur son Pot de Vin, elle perd la carte."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "La Vache folle prend l’Hélicoptère, a-t-elle le droit de couper ma clôture juste après\xa0?"]
-            A = [ Html.text "Oui, c’est une vache."] }
+            A = [ Html.text "Oui, c’est une vache."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "En coop on peut fermer une grande clôture à plusieurs. A-t-on le droit d'aller sur les deux dernières clôtures de ses alliés ? Est-ce que toutes les clôtures de l'allier disparaissent y compris celles qui partent des parcelles nouvellement annexées ?" ]
             A = [ Html.text "Oui, tu peux fermer sur les 2 dernières clôtures d'un allié, mais pas sur son tracteur. Il faut enlever toute les clôtures qui longent une parcelle du champ principal."
                   figures 10 ["img/coop-1.jpg"; "img/coop-2.jpg"; "img/coop-3.jpg"] ]
-            
+            Date = DateTime(2020,11,15)
              }
       ] }
 
@@ -519,7 +605,8 @@ let cowEn =
     { Title = "Mad Cow mode"
       Qs = [
           { Q = [ Html.text "Is there a limited number of plots for the Mad Cow mode?"]
-            A = [ Html.text "No. It's not a problem since it's really hard to reach. But if it happens to you, use plots of other colors to end the game (and send us your score, it should be impressive!)."] }
+            A = [ Html.text "No. It's not a problem since it's really hard to reach. But if it happens to you, use plots of other colors to end the game (and send us your score, it should be impressive!)."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "When the mad cow moves, does she follow the path of the arrow on the card or does she just go on the destination tile with a new orientation?"]
             A = [ Html.text "The mad cow only takes the destination parcel. On a U-Turn, she takes the parcel behind her and is now in the opposit direction."
                   Html.p "Starting from the following position:"
@@ -568,21 +655,27 @@ let cowEn =
                     ]
                   ]
                   Html.p "When the path between the starting tile and the destination tile contains an obstacle, the mad cow has to be reoriented. If it contains a fence that is not protected, the fence is cut."
-            ]}
+            ]
+            Date = DateTime(2020,11,06)}
           { Q = [ Html.text "I didn't really get how the Mad Cow places their Hay Bales."]
             A = [ Html.text "Here is a picture to help you, it should make it more obvious."
                   Html.figure [
                       Html.img [ prop.src "./img/solo-bottes-en.png"
-                                 prop.style [ style.width (length.em 20)] ] ] ]}
+                                 prop.style [ style.width (length.em 20)] ] ] ]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "In co-op mode, which fence should we take into account to determine bonus backlash mode?"]
-            A = [ Html.text "Use the total length of all players' fences."] }
+            A = [ Html.text "Use the total length of all players' fences."]
+            Date = DateTime(2020,10,31) }
           { Q = [ Html.text "Can the Mad Cow win with a Bribe?" ]
-            A = [ Html.text "No, the cow is limited to the same constraints as players. Moreover, if it cannot play a Bribe, the card is discarded."] }
+            A = [ Html.text "No, the cow is limited to the same constraints as players. Moreover, if it cannot play a Bribe, the card is discarded."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "The Mad Cow uses an Helicopter. Can it cut my fence just after?"]
-            A = [ Html.text "Yes, it's a cow."] }
+            A = [ Html.text "Yes, it's a cow."]
+            Date = DateTime(2020,10,31)}
           { Q = [ Html.text "In coop mode, you can close a fence with multiple players. Is it possible to connect to the last two fences of a partner? Do the partner fence disapear?" ]
             A = [ Html.text "Yes, you can close on the last two fences of a partner, but not on their tractor. You have to remove any fence along plots of the main field."
-                  figures 10 ["img/coop-1.jpg"; "img/coop-2.jpg"; "img/coop-3.jpg"] ] }
+                  figures 10 ["img/coop-1.jpg"; "img/coop-2.jpg"; "img/coop-3.jpg"] ]
+            Date = DateTime(2020,11,15) }
       ] } 
 
 let boutique name link =
@@ -1106,6 +1199,31 @@ let menuItem state (text: string) page =
       prop.text text
     ]
   ]
+
+
+let sectionsFr = 
+  [ field
+    fence
+    move
+    powerless
+    concepts
+    rare
+    bonus
+    crazyBonus
+    groupStagesFr
+    cow ]
+
+let sectionsEn =
+  [ fieldEn
+    fenceEn
+    moveEn
+    powerlessEn
+    conceptsEn
+    rareEn
+    bonusEn
+    crazyBonusEn
+    groupStagesEn
+    cowEn ]
 let render state dispatch =
   React.router [
         router.onUrlChanged (UrlChanged >> dispatch)
@@ -1162,16 +1280,7 @@ let render state dispatch =
              match state.Lang, state.Page with
              | Fr, Faq ->
                   intro
-                  section field
-                  section fence
-                  section move
-                  section powerless
-                  section concepts
-                  section rare
-                  section bonus
-                  section crazyBonus
-                  section groupStagesFr
-                  section cow
+                  sections {| sections = sectionsFr; lang = Fr |}
              | Fr, Videos -> videos
              | Fr, Variants -> variantes
              | Fr, GameStores -> boutiques
@@ -1179,16 +1288,7 @@ let render state dispatch =
              | Fr, Makers -> makersFr
              | En, Faq ->
                   introEn
-                  section fieldEn
-                  section fenceEn
-                  section moveEn
-                  section powerlessEn
-                  section conceptsEn
-                  section rareEn
-                  section bonusEn
-                  section crazyBonusEn
-                  section groupStagesEn
-                  section cowEn
+                  sections {| sections = sectionsEn; lang = En |}
              | En, Videos -> videosEn
              | En, Variants -> variantesEn
              | En, GameStores -> boutiquesEn
