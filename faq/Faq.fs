@@ -128,13 +128,14 @@ let intro =
             Html.ul [
                       Html.li [ Html.a [ prop.text "VIDEO RÈGLES EN 6'42\""; prop.href (pageLink Fr Videos) ]
                                 Html.text " (Nouvelle Version 2020\xa0!)"  ]
-                      Html.li [ Html.a [ prop.text "RÈGLES OFFICIELLES en pdf"; prop.href "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/FR-CrazyFarmers2k20RULES_v5.2.pdf"] ]
+                      Html.li [ Html.a [ prop.text "RÈGLES OFFICIELLES en pdf"; prop.href "https://doc.thefreaky42.com/crazyfarmers/RulesOPEN/FR-CrazyFarmers2k20RULES_v5.2.pdf"] ]
                       Html.li [ Html.a [ prop.text "LES VARIANTES"; prop.href "#variantes"] ]
                       Html.li [ Html.a [ prop.text "LA LISTE DES BOUTIQUES"; prop.href "#boutiques"] ]
                       Html.li [ Html.a [ prop.text "LES INSTRUCTIONS DE MONTAGE"; prop.href "#assembly"] ]
                       Html.li [ Html.a [ prop.text "LE COIN DES MAKERS"; prop.href (pageLink Fr Makers)] ]
                       Html.li [ Html.a [ prop.text "LA PAGE FACEBOOK DES AUTEURS"; prop.href "https://www.facebook.com/CrazyFarmersLeJeu"];
                                 Html.text " (sur laquelle vous pouvez nous envoyer vos questions, remarques, photos rigolotes… en MP ou directement sur la page)" ]
+                      Html.li [ Html.a [ prop.text "LE SITE WEB DE THE FREAKY 42"; prop.href "https://www.thefreaky42.com"] ]
                       Html.li [ Html.a [ prop.text "LA PAGE FACEBOOK DE THE FREAKY 42"; prop.href "https://www.facebook.com/TheFreaky42"] 
                                 Html.text " (pour ne rien rater des futurs projets)"]
                       Html.li [ Html.a [ prop.text "CRAZY FARMERS SUR BOARDGAMEARENA"; prop.href "https://boardgamearena.com/gamepanel?game=crazyfarmers"];
@@ -163,13 +164,14 @@ let introEn =
             Html.ul [
                       Html.li [ Html.a [ prop.text "VIDEO RULES IN 6'42\""; prop.href (pageLink En Videos) ]
                                 Html.text " (New version 2020! In french but you can activate subtitles)"  ]
-                      Html.li [ Html.a [ prop.text "OFFICIAL RULES in pdf"; prop.href "http://www.thefreaky42.com/crazyfarmers/RulesOPEN/EN-CrazyFarmers2k20RULES_v3.2.pdf"] ]
+                      Html.li [ Html.a [ prop.text "OFFICIAL RULES in pdf"; prop.href "https://doc.thefreaky42.com/crazyfarmers/RulesOPEN/EN-CrazyFarmers2k20RULES_v3.2.pdf"] ]
                       Html.li [ Html.a [ prop.text "VARIANTES"; prop.href "#en/variants"] ]
                       Html.li [ Html.a [ prop.text "GAME STORES"; prop.href "#en/gamestores"] ]
                       Html.li [ Html.a [ prop.text "ASSEMBLY INSTRUCTIONS"; prop.href "#en/assembly"] ]
                       Html.li [ Html.a [ prop.text "MAKERS' CORNER"; prop.href (pageLink En Makers)] ]
                       Html.li [ Html.a [ prop.text "AUTHORS' FACEBOOK PAGE"; prop.href "https://www.facebook.com/CrazyFarmersLeJeu"];
                                 Html.text " (where you can send your questions, remarks, crazy pictures… PM or directly on the page)" ]
+                      Html.li [ Html.a [ prop.text "THE FREAKY 42'S WEB SITE"; prop.href "https://www.thefreaky42.com"] ]
                       Html.li [ Html.a [ prop.text "THE FREAKY 42'S FACEBOOK PAGE"; prop.href "https://www.facebook.com/TheFreaky42"] 
                                 Html.text " (don't miss future projects)"]
                       Html.li [ Html.a [ prop.text "CRAZY FARMERS ON BOARDGAMEARENA"; prop.href "https://boardgamearena.com/gamepanel?game=crazyfarmers"];
